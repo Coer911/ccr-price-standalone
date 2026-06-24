@@ -1,0 +1,11 @@
+version: "1"
+project: ccr-price-standalone
+
+containers:
+  - name: ccr-price-standalone
+    image: .
+    replicas: 1
+    resources:
+      cpu: 1
+      cpu_fraction: 20
+      memory: 256MiB

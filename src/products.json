@@ -1,0 +1,1247 @@
+[
+  {
+    "sku": "kolumbiya-supremo-250-g",
+    "name": "Колумбия супремо",
+    "unit": "250 г",
+    "price": 660,
+    "kg": 0.25,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "kolumbiya-supremo-1-kg",
+    "name": "Колумбия супремо",
+    "unit": "1 кг",
+    "price": 2020,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "kolumbiya-alto-tabi-250-g",
+    "name": "Колумбия альто таби",
+    "unit": "250 г",
+    "price": 850,
+    "kg": 0.25,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "kolumbiya-alto-tabi-1-kg",
+    "name": "Колумбия альто таби",
+    "unit": "1 кг",
+    "price": 2750,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "keniya-kiri-250-g",
+    "name": "Кения кири",
+    "unit": "250 г",
+    "price": 780,
+    "kg": 0.25,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "keniya-kiri-1-kg",
+    "name": "Кения кири",
+    "unit": "1 кг",
+    "price": 2650,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "ruanda-nyarusiza-1-kg",
+    "name": "Руанда ньярусиза",
+    "unit": "1 кг",
+    "price": 2160,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "blyu-speshl",
+    "name": "Блю спешл",
+    "unit": "кг",
+    "price": 1890,
+    "tiers": [
+      1890,
+      1700,
+      1610
+    ],
+    "kg": 1.0,
+    "group": "espresso",
+    "accent": "coffee",
+    "slide": "05"
+  },
+  {
+    "sku": "blek-end-strong",
+    "name": "Блэк энд стронг",
+    "unit": "кг",
+    "price": 1650,
+    "tiers": [
+      1650,
+      1485,
+      1400
+    ],
+    "kg": 1.0,
+    "group": "espresso",
+    "accent": "coffee",
+    "slide": "05"
+  },
+  {
+    "sku": "efiopiya-irgacheff-4",
+    "name": "Эфиопия иргачефф 4",
+    "unit": "кг",
+    "price": 1850,
+    "tiers": [
+      1850,
+      1665,
+      1575
+    ],
+    "kg": 1.0,
+    "group": "espresso",
+    "accent": "coffee",
+    "slide": "05"
+  },
+  {
+    "sku": "braziliya-serrado-montanari",
+    "name": "Бразилия серрадо монтанари",
+    "unit": "кг",
+    "price": 1860,
+    "tiers": [
+      1860,
+      1675,
+      1580
+    ],
+    "kg": 1.0,
+    "group": "espresso",
+    "accent": "coffee",
+    "slide": "05"
+  },
+  {
+    "sku": "kolumbiya-supremo",
+    "name": "Колумбия супремо",
+    "unit": "кг",
+    "price": 2120,
+    "tiers": [
+      2120,
+      1930,
+      1810
+    ],
+    "kg": 1.0,
+    "group": "espresso",
+    "accent": "coffee",
+    "slide": "05"
+  },
+  {
+    "sku": "ceremonialnaya-100-g",
+    "name": "Церемониальная",
+    "unit": "100 г",
+    "price": 1600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "ceremonialnaya-500-g",
+    "name": "Церемониальная",
+    "unit": "500 г",
+    "price": 6090,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "tokusen-grei-d-100-g",
+    "name": "Токусэн Грейд",
+    "unit": "100 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "tokusen-grei-d-500-g",
+    "name": "Токусэн Грейд",
+    "unit": "500 г",
+    "price": 3750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "kulinari-grei-d-100-g",
+    "name": "Кулинари Грейд",
+    "unit": "100 г",
+    "price": 670,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "kulinari-grei-d-500-g",
+    "name": "Кулинари Грейд",
+    "unit": "500 г",
+    "price": 2290,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "08"
+  },
+  {
+    "sku": "drip-miks-6-sht",
+    "name": "Микс",
+    "unit": "6 шт",
+    "price": 295,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-keniya-6-sht",
+    "name": "Кения",
+    "unit": "6 шт",
+    "price": 315,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-efiopiya-6-sht",
+    "name": "Эфиопия",
+    "unit": "6 шт",
+    "price": 295,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-dekaf-6-sht",
+    "name": "Декаф",
+    "unit": "6 шт",
+    "price": 305,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-miks-24-sht",
+    "name": "Микс",
+    "unit": "24 шт",
+    "price": 850,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-dlya-molochka-50-sht",
+    "name": "Для молочка",
+    "unit": "50 шт",
+    "price": 1550,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-kolumbiya-50-sht",
+    "name": "Колумбия",
+    "unit": "50 шт",
+    "price": 1650,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-sht-braziliya-piberri",
+    "name": "Бразилия пиберри",
+    "unit": "шт",
+    "price": 40,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-sht-efiopiya-irgacheff",
+    "name": "Эфиопия иргачефф",
+    "unit": "шт",
+    "price": 40,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-sht-kolumbiya-pitai-o",
+    "name": "Колумбия питайо",
+    "unit": "шт",
+    "price": 45,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-sht-gonduras-dekaf",
+    "name": "Гондурас декаф",
+    "unit": "шт",
+    "price": 45,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "drip-sht-kolumbiya-tabi",
+    "name": "Колумбия таби",
+    "unit": "шт",
+    "price": 65,
+    "kg": 0.0,
+    "group": "drip",
+    "accent": "coffee",
+    "slide": "06"
+  },
+  {
+    "sku": "tea-assam-tippi-200-g",
+    "name": "Ассам Типпи",
+    "unit": "200 г",
+    "price": 630,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-assam-tippi-500-g",
+    "name": "Ассам Типпи",
+    "unit": "500 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-assam-pekoe-200-g",
+    "name": "Ассам Пекое",
+    "unit": "200 г",
+    "price": 550,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-assam-pekoe-500-g",
+    "name": "Ассам Пекое",
+    "unit": "500 г",
+    "price": 990,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-dyan-hun-200-g",
+    "name": "Дянь Хун",
+    "unit": "200 г",
+    "price": 575,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-dyan-hun-500-g",
+    "name": "Дянь Хун",
+    "unit": "500 г",
+    "price": 1080,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-lapsang-sushong-200-g",
+    "name": "Лапсанг Сушонг",
+    "unit": "200 г",
+    "price": 1050,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-lapsang-sushong-500-g",
+    "name": "Лапсанг Сушонг",
+    "unit": "500 г",
+    "price": 2050,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-dyan-hun-sun-chzhen-200-g",
+    "name": "Дянь Хун Сун Чжэнь",
+    "unit": "200 г",
+    "price": 1690,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-dyan-hun-sun-chzhen-500-g",
+    "name": "Дянь Хун Сун Чжэнь",
+    "unit": "500 г",
+    "price": 4600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-molochnyi-ulun-200-g",
+    "name": "Молочный улун",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-molochnyi-ulun-500-g",
+    "name": "Молочный улун",
+    "unit": "500 г",
+    "price": 1600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-molochnyi-ulun-200-g-2",
+    "name": "Молочный улун",
+    "unit": "200 г",
+    "price": 550,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-molochnyi-ulun-500-g-2",
+    "name": "Молочный улун",
+    "unit": "500 г",
+    "price": 1050,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-te-gun-in-van-200-g",
+    "name": "Те Гунь Инь Ван",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-te-gun-in-van-500-g",
+    "name": "Те Гунь Инь Ван",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-zhenshen-200-g",
+    "name": "Женьшень",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-zhenshen-500-g",
+    "name": "Женьшень",
+    "unit": "500 г",
+    "price": 1440,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-da-hun-pao-200-g",
+    "name": "Да Хун Пао",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-da-hun-pao-500-g",
+    "name": "Да Хун Пао",
+    "unit": "500 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-da-hun-pao-zhou-gui-200-g",
+    "name": "Да Хун Пао Жоу Гуй",
+    "unit": "200 г",
+    "price": 1050,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-da-hun-pao-zhou-gui-500-g",
+    "name": "Да Хун Пао Жоу Гуй",
+    "unit": "500 г",
+    "price": 1900,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-gaba-medovaya-200-g",
+    "name": "Габа Медовая",
+    "unit": "200 г",
+    "price": 3150,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-gaba-medovaya-500-g",
+    "name": "Габа Медовая",
+    "unit": "500 г",
+    "price": 5800,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-puer-lao-cha-tou-200-g",
+    "name": "Пуэр Лао Ча Тоу",
+    "unit": "200 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-puer-lao-cha-tou-500-g",
+    "name": "Пуэр Лао Ча Тоу",
+    "unit": "500 г",
+    "price": 2300,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-puer-gun-tin-200-g",
+    "name": "Пуэр Гун Тин",
+    "unit": "200 г",
+    "price": 590,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-puer-gun-tin-500-g",
+    "name": "Пуэр Гун Тин",
+    "unit": "500 г",
+    "price": 1250,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-sencha-200-g",
+    "name": "Сенча",
+    "unit": "200 г",
+    "price": 490,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-sencha-500-g",
+    "name": "Сенча",
+    "unit": "500 г",
+    "price": 990,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-genmai-cha-200-g",
+    "name": "Генмайча",
+    "unit": "200 г",
+    "price": 500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-genmai-cha-500-g",
+    "name": "Генмайча",
+    "unit": "500 г",
+    "price": 1050,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-moli-hua-cha-s-mao-fen-200-g",
+    "name": "Моли Хуа Ча с Мао Фэн",
+    "unit": "200 г",
+    "price": 680,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-moli-hua-cha-s-mao-fen-500-g",
+    "name": "Моли Хуа Ча с Мао Фэн",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-moli-hua-cha-200-g",
+    "name": "Моли Хуа Ча",
+    "unit": "200 г",
+    "price": 550,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-moli-hua-cha-500-g",
+    "name": "Моли Хуа Ча",
+    "unit": "500 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-lunczin-200-g",
+    "name": "Лунцзин",
+    "unit": "200 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-lunczin-500-g",
+    "name": "Лунцзин",
+    "unit": "500 г",
+    "price": 2900,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-bai-mu-dan-200-g",
+    "name": "Бай Му Дань",
+    "unit": "200 г",
+    "price": 850,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-bai-mu-dan-500-g",
+    "name": "Бай Му Дань",
+    "unit": "500 г",
+    "price": 1600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-bai-hao-in-chzhen-200-g",
+    "name": "Бай Хао Инь Чжэнь",
+    "unit": "200 г",
+    "price": 1800,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-bai-hao-in-chzhen-500-g",
+    "name": "Бай Хао Инь Чжэнь",
+    "unit": "500 г",
+    "price": 3990,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "09"
+  },
+  {
+    "sku": "tea-erl-grei-200-g",
+    "name": "Эрл Грей",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-erl-grei-500-g",
+    "name": "Эрл Грей",
+    "unit": "500 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-tae-zhnyi-200-g",
+    "name": "Таёжный",
+    "unit": "200 г",
+    "price": 800,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-tae-zhnyi-500-g",
+    "name": "Таёжный",
+    "unit": "500 г",
+    "price": 1750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-zele-nyi-tropicheskii-200-g",
+    "name": "Зелёный тропический",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-zele-nyi-tropicheskii-500-g",
+    "name": "Зелёный тропический",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-1001-noch-200-g",
+    "name": "1001 ночь",
+    "unit": "200 г",
+    "price": 650,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-1001-noch-500-g",
+    "name": "1001 ночь",
+    "unit": "500 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-masala-200-g",
+    "name": "Масала",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-masala-500-g",
+    "name": "Масала",
+    "unit": "500 г",
+    "price": 1600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-glintvei-n-200-g",
+    "name": "Глинтвейн",
+    "unit": "200 г",
+    "price": 500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-glintvei-n-500-g",
+    "name": "Глинтвейн",
+    "unit": "500 г",
+    "price": 1250,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-assam-s-chabrecom-200-g",
+    "name": "Ассам с чабрецом",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-assam-s-chabrecom-500-g",
+    "name": "Ассам с чабрецом",
+    "unit": "500 г",
+    "price": 1300,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-assam-s-lavandoi-200-g",
+    "name": "Ассам с лавандой",
+    "unit": "200 г",
+    "price": 650,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-assam-s-lavandoi-500-g",
+    "name": "Ассам с лавандой",
+    "unit": "500 г",
+    "price": 1200,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-dikaya-vishnya-200-g",
+    "name": "Дикая вишня",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-dikaya-vishnya-500-g",
+    "name": "Дикая вишня",
+    "unit": "500 г",
+    "price": 1600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-fruktovyi-chai-200-g",
+    "name": "Фруктовый чай",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-fruktovyi-chai-500-g",
+    "name": "Фруктовый чай",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-naglyi-apelsin-200-g",
+    "name": "Наглый апельсин",
+    "unit": "200 г",
+    "price": 750,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-naglyi-apelsin-500-g",
+    "name": "Наглый апельсин",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-fidzhi-mango-200-g",
+    "name": "Фиджи манго",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-fidzhi-mango-500-g",
+    "name": "Фиджи манго",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-malina-myata-200-g",
+    "name": "Малина мята",
+    "unit": "200 г",
+    "price": 650,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-malina-myata-500-g",
+    "name": "Малина мята",
+    "unit": "500 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-karamelnyi-ulun-200-g",
+    "name": "Карамельный улун",
+    "unit": "200 г",
+    "price": 665,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-karamelnyi-ulun-500-g",
+    "name": "Карамельный улун",
+    "unit": "500 г",
+    "price": 1300,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-tropicheskii-ulun-200-g",
+    "name": "Тропический улун",
+    "unit": "200 г",
+    "price": 500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-tropicheskii-ulun-500-g",
+    "name": "Тропический улун",
+    "unit": "500 г",
+    "price": 1000,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-mangovyi-ulun-200-g",
+    "name": "Манговый улун",
+    "unit": "200 г",
+    "price": 490,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-mangovyi-ulun-500-g",
+    "name": "Манговый улун",
+    "unit": "500 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-malinovyi-ulun-200-g",
+    "name": "Малиновый улун",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-malinovyi-ulun-500-g",
+    "name": "Малиновый улун",
+    "unit": "500 г",
+    "price": 1390,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-gornyi-altai-200-g",
+    "name": "Горный Алтай",
+    "unit": "200 г",
+    "price": 800,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-gornyi-altai-500-g",
+    "name": "Горный Алтай",
+    "unit": "500 г",
+    "price": 1350,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-spokoi-stvie-200-g",
+    "name": "Спокойствие",
+    "unit": "200 г",
+    "price": 800,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-spokoi-stvie-500-g",
+    "name": "Спокойствие",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-garmoniya-200-g",
+    "name": "Гармония",
+    "unit": "200 г",
+    "price": 550,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-garmoniya-500-g",
+    "name": "Гармония",
+    "unit": "500 г",
+    "price": 1100,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-lipa-myata-200-g",
+    "name": "Липа – Мята",
+    "unit": "200 г",
+    "price": 700,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-lipa-myata-500-g",
+    "name": "Липа – Мята",
+    "unit": "500 г",
+    "price": 1400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-200-g",
+    "name": "Гречишный",
+    "unit": "200 г",
+    "price": 400,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-500-g",
+    "name": "Гречишный",
+    "unit": "500 г",
+    "price": 1150,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-s-kokosom-200-g",
+    "name": "Гречишный с кокосом",
+    "unit": "200 г",
+    "price": 600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-s-kokosom-500-g",
+    "name": "Гречишный с кокосом",
+    "unit": "500 г",
+    "price": 1200,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-s-persikom-200-g",
+    "name": "Гречишный с персиком",
+    "unit": "200 г",
+    "price": 600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-s-persikom-500-g",
+    "name": "Гречишный с персиком",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-apelsin-i-korica-200-g",
+    "name": "Гречишный апельсин и корица",
+    "unit": "200 г",
+    "price": 600,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  },
+  {
+    "sku": "tea-grechishnyi-apelsin-i-korica-500-g",
+    "name": "Гречишный апельсин и корица",
+    "unit": "500 г",
+    "price": 1500,
+    "kg": 0.0,
+    "group": "tea",
+    "accent": "tea",
+    "slide": "10"
+  }
+]

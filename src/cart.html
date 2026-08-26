@@ -1,0 +1,36 @@
+<!-- КОРЗИНА -->
+<div class="cartbar" id="cartbar" hidden>
+  <div class="cartbar__hint" id="cartBarHint" hidden></div>
+  <button class="cartbar__main" id="cartbarOpen" type="button">
+    <span class="cartbar__left">
+      <span class="cartbar__count" id="cartCount">0</span>
+      <span class="cartbar__label" id="cartLabel">позиций</span>
+    </span>
+    <span class="cartbar__right">
+      <span class="cartbar__sum" id="cartSum">0 ₽</span>
+      <span class="cartbar__chev" aria-hidden="true">▲</span>
+    </span>
+  </button>
+</div>
+
+<div class="sheet" id="cartSheet" hidden>
+  <div class="sheet__scrim" id="cartScrim"></div>
+  <div class="sheet__panel" role="dialog" aria-modal="true" aria-label="Ваш заказ">
+    <div class="sheet__grab" aria-hidden="true"></div>
+    <div class="sheet__head">
+      <div class="sheet__title">Ваш заказ</div>
+      <button class="sheet__close" id="cartClose" type="button" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="sheet__body" id="cartLines"></div>
+    <div class="sheet__hints" id="cartHints"></div>
+    <div class="sheet__foot">
+      <div class="sheet__total">
+        <span class="sheet__total-lbl">Итого</span>
+        <span class="sheet__total-val" id="cartTotal">0 ₽</span>
+      </div>
+      <button class="sheet__clear" id="cartClear" type="button">Очистить</button>
+    </div>
+  </div>
+</div>
+
+<div class="cart-toast" id="cartToast" hidden></div>

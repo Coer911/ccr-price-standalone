@@ -1,0 +1,337 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   КОРЗИНА — тап по оптовой цене добавляет позицию в заказ.
+   Палитра и стекло — по дизайн-правилам прайса.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --cart-amber:#ec9a4d;
+  --cart-tea:#8fc45c;
+  --cart-cream:#f6e6c8;
+  --cart-text:#f7ecdc;
+  --cart-mute:rgba(247,236,220,.66);
+  --cart-faint:rgba(247,236,220,.44);
+  --cart-glass:linear-gradient(150deg,rgba(70,46,30,.90),rgba(34,22,15,.86) 48%,rgba(20,13,9,.88));
+  --cart-line:rgba(255,238,214,.14);
+}
+
+/* ── кликабельная цена ─────────────────────────────────────────────────────── */
+
+.is-buy{
+  position:relative;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;
+  user-select:none;
+  transition:transform .12s ease, box-shadow .18s ease;
+}
+.is-buy:focus-visible{
+  outline:2px solid var(--cart-amber);
+  outline-offset:2px;
+  border-radius:12px;
+}
+.is-buy:active{transform:scale(.96)}
+
+/* вспышка при добавлении */
+.is-buy.is-pop{animation:cartPop .34s ease}
+@keyframes cartPop{
+  0%{transform:scale(1)}
+  36%{transform:scale(1.07)}
+  100%{transform:scale(1)}
+}
+
+/* счётчик на ячейке — появляется только когда позиция в заказе */
+.qty{
+  position:absolute;
+  bottom:calc(100% - 5px); right:-7px;
+  min-width:21px; height:21px;
+  padding:0 6px;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:12px; font-weight:600; line-height:1;
+  color:#2a1a0e;
+  background:var(--cart-amber);
+  border-radius:999px;
+  box-shadow:0 3px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,243,224,.45);
+  z-index:3;
+  cursor:pointer;
+  animation:qtyIn .2s ease;
+}
+.qty--tea{background:var(--cart-tea)}
+@keyframes qtyIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* у ценовой колонки сверху своя подпись — значок поднимаем над ячейкой целиком */
+.pcell.is-buy .qty{bottom:calc(100% + 2px); right:-4px}
+
+/* строки чая и дрипа плотные — значок мельче и ближе */
+.tea-price.is-buy .qty,
+.pp.is-buy .qty,
+.spp.is-buy .qty{
+  min-width:18px; height:18px; padding:0 5px;
+  font-size:11px;
+  bottom:calc(100% - 3px); right:-5px;
+}
+
+/* активная ступень опта у эспрессо (подсвечивается, когда в заказе есть кофе) */
+.pcell.is-live{
+  background:rgba(236,154,77,.15);
+  border-radius:12px;
+  box-shadow:inset 0 1px 0 rgba(255,243,224,.18);
+}
+.pcell.is-live .pcell__cap{color:rgba(247,236,220,.85)}
+
+/* подсказка «коснитесь цены» */
+.buyhint{
+  margin:0 0 12px;
+  font-size:12.5px;
+  letter-spacing:.01em;
+  color:var(--cart-faint);
+  text-align:center;
+}
+.buyhint b{color:var(--cart-amber);font-weight:600}
+
+/* ── липкая плашка снизу ───────────────────────────────────────────────────── */
+
+.cartbar{
+  position:fixed;
+  left:50%; bottom:0;
+  transform:translateX(-50%);
+  width:min(440px,100%);
+  padding:0 12px calc(12px + env(safe-area-inset-bottom));
+  z-index:60;
+  animation:barIn .26s ease;
+}
+@keyframes barIn{from{transform:translate(-50%,110%)}to{transform:translate(-50%,0)}}
+
+.cartbar__main{
+  width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  padding:13px 16px;
+  font:inherit;
+  color:var(--cart-text);
+  background:var(--cart-glass);
+  border:1px solid rgba(255,238,214,.22);
+  border-radius:18px;
+  -webkit-backdrop-filter:saturate(150%) blur(22px);
+  backdrop-filter:saturate(150%) blur(22px);
+  box-shadow:0 14px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,243,224,.40);
+  cursor:pointer;
+}
+.cartbar__left{display:flex; align-items:center; gap:9px; min-width:0}
+.cartbar__count{
+  min-width:24px; height:24px; padding:0 7px;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:13px; font-weight:600; line-height:1;
+  color:#2a1a0e; background:var(--cart-amber);
+  border-radius:999px;
+}
+.cartbar__label{
+  font-size:13px; letter-spacing:.01em; color:var(--cart-mute);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.cartbar__right{display:flex; align-items:center; gap:10px}
+.cartbar__sum{
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:18px; font-weight:600; letter-spacing:-.02em;
+  color:var(--cart-cream);
+}
+.cartbar__chev{font-size:10px; color:var(--cart-faint)}
+
+.cartbar__hint{
+  margin-bottom:7px;
+  padding:8px 14px;
+  font-size:12px; line-height:1.35;
+  color:#2a1a0e;
+  background:rgba(236,154,77,.92);
+  border-radius:13px;
+  text-align:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.cartbar__hint b{font-weight:700}
+
+/* чтобы плашка не перекрывала последний слайд */
+body.has-cart{padding-bottom:104px}
+body.has-cart.has-hint{padding-bottom:150px}
+
+/* ── панель заказа ─────────────────────────────────────────────────────────── */
+
+.sheet{position:fixed; inset:0; z-index:70}
+.sheet__scrim{
+  position:absolute; inset:0;
+  background:rgba(12,8,5,.62);
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.sheet__panel{
+  position:absolute;
+  left:50%; bottom:0;
+  transform:translateX(-50%);
+  width:min(440px,100%);
+  max-height:86vh;
+  display:flex; flex-direction:column;
+  padding:0 16px calc(16px + env(safe-area-inset-bottom));
+  color:var(--cart-text);
+  background:var(--cart-glass);
+  border:1px solid rgba(255,238,214,.22);
+  border-bottom:0;
+  border-radius:26px 26px 0 0;
+  -webkit-backdrop-filter:saturate(150%) blur(24px);
+  backdrop-filter:saturate(150%) blur(24px);
+  box-shadow:0 -18px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,243,224,.40);
+  animation:sheetIn .28s cubic-bezier(.22,.9,.3,1);
+}
+@keyframes sheetIn{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
+
+.sheet__grab{
+  width:38px; height:4px; margin:9px auto 4px;
+  background:rgba(247,236,220,.28); border-radius:999px;
+}
+.sheet__head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6px 0 12px;
+}
+.sheet__title{
+  text-transform:uppercase; font-size:15px; font-weight:600;
+  letter-spacing:-.01em; color:var(--cart-cream);
+}
+.sheet__close{
+  width:32px; height:32px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; color:var(--cart-mute);
+  background:rgba(255,238,214,.08);
+  border:1px solid var(--cart-line);
+  border-radius:10px; cursor:pointer;
+}
+.sheet__body{
+  flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  margin:0 -4px; padding:0 4px;
+}
+
+.line{
+  display:flex; align-items:center; gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid var(--cart-line);
+}
+.line:last-child{border-bottom:0}
+.line__main{flex:1 1 auto; min-width:0}
+.line__name{
+  font-size:14px; font-weight:600; line-height:1.25;
+  color:var(--cart-text);
+}
+.line__meta{
+  margin-top:3px;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:12px; color:var(--cart-faint);
+}
+.line__dot{
+  display:inline-block; width:5px; height:5px; margin-right:6px;
+  border-radius:2px; background:var(--cart-amber);
+  vertical-align:middle;
+}
+.line__dot--tea{background:var(--cart-tea)}
+
+.step{display:flex; align-items:center; gap:2px; flex:0 0 auto}
+.step__btn{
+  width:29px; height:29px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; line-height:1; color:var(--cart-text);
+  background:rgba(255,238,214,.08);
+  border:1px solid var(--cart-line);
+  border-radius:9px; cursor:pointer;
+}
+.step__btn:active{background:rgba(255,238,214,.16)}
+.step__val{
+  min-width:34px; text-align:center;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:14px; font-weight:600; color:var(--cart-cream);
+}
+.line__sum{
+  flex:0 0 auto; min-width:74px; text-align:right;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:14px; font-weight:600; color:var(--cart-cream);
+}
+
+.sheet__hints{padding:10px 0 2px; display:grid; gap:7px}
+.hint{
+  display:flex; gap:8px; align-items:flex-start;
+  padding:9px 12px;
+  font-size:12.5px; line-height:1.4;
+  color:var(--cart-text);
+  background:rgba(255,238,214,.06);
+  border:1px solid var(--cart-line);
+  border-radius:13px;
+}
+.hint--win{
+  color:#2a1a0e;
+  background:rgba(236,154,77,.9);
+  border-color:transparent;
+}
+.hint b{font-weight:700}
+.hint__ico{flex:0 0 auto; opacity:.85}
+
+.sheet__foot{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  margin-top:12px; padding-top:13px;
+  border-top:1px solid rgba(255,238,214,.18);
+}
+.sheet__total{display:flex; align-items:baseline; gap:9px}
+.sheet__total-lbl{
+  text-transform:uppercase; font-size:11px; letter-spacing:.14em;
+  color:var(--cart-faint);
+}
+.sheet__total-val{
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:24px; font-weight:600; letter-spacing:-.03em;
+  color:var(--cart-cream);
+}
+.sheet__clear{
+  padding:9px 14px;
+  font-size:12.5px; color:var(--cart-mute);
+  background:transparent;
+  border:1px solid var(--cart-line);
+  border-radius:11px; cursor:pointer;
+}
+.sheet__empty{
+  padding:34px 0 30px;
+  text-align:center; font-size:13.5px; color:var(--cart-faint);
+}
+
+/* ── всплывашка ────────────────────────────────────────────────────────────── */
+
+.cart-toast{
+  position:fixed; left:50%; bottom:104px;
+  transform:translateX(-50%);
+  z-index:80;
+  max-width:min(400px,calc(100% - 32px));
+  padding:9px 15px;
+  font-size:12.5px; color:#2a1a0e;
+  background:rgba(246,230,200,.95);
+  border-radius:13px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  animation:fadeIn .16s ease;
+}
+
+/* ── доступность и печать ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion:reduce){
+  .cartbar,.sheet__panel,.sheet__scrim,.qty,.cart-toast,.is-buy.is-pop{animation:none}
+  .is-buy{transition:none}
+}
+
+@media print{
+  .cartbar,.sheet,.cart-toast,.qty,.buyhint{display:none !important}
+  body.has-cart{padding-bottom:0 !important}
+  .pcell.is-live{box-shadow:none !important}
+}

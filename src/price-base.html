@@ -342,346 +342,6 @@
   .pp__rrc{ font-family:var(--mono); font-weight:600; font-size:15px; letter-spacing:-.01em; font-variant-numeric:tabular-nums; color:var(--muted); white-space:nowrap; }
   .variant--min .pp__opt{ color:var(--amber); }
 </style>
-<style>
-/* ═══════════════════════════════════════════════════════════════════════════
-   КОРЗИНА — тап по оптовой цене добавляет позицию в заказ.
-   Палитра и стекло — по дизайн-правилам прайса.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-:root{
-  --cart-amber:#ec9a4d;
-  --cart-tea:#8fc45c;
-  --cart-cream:#f6e6c8;
-  --cart-text:#f7ecdc;
-  --cart-mute:rgba(247,236,220,.66);
-  --cart-faint:rgba(247,236,220,.44);
-  --cart-glass:linear-gradient(150deg,rgba(70,46,30,.90),rgba(34,22,15,.86) 48%,rgba(20,13,9,.88));
-  --cart-line:rgba(255,238,214,.14);
-}
-
-/* ── кликабельная цена ─────────────────────────────────────────────────────── */
-
-.is-buy{
-  position:relative;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-user-select:none;
-  user-select:none;
-  transition:transform .12s ease, box-shadow .18s ease;
-}
-.is-buy:focus-visible{
-  outline:2px solid var(--cart-amber);
-  outline-offset:2px;
-  border-radius:12px;
-}
-.is-buy:active{transform:scale(.96)}
-
-/* вспышка при добавлении */
-.is-buy.is-pop{animation:cartPop .34s ease}
-@keyframes cartPop{
-  0%{transform:scale(1)}
-  36%{transform:scale(1.07)}
-  100%{transform:scale(1)}
-}
-
-/* счётчик на ячейке — появляется только когда позиция в заказе */
-.qty{
-  position:absolute;
-  bottom:calc(100% - 5px); right:-7px;
-  min-width:21px; height:21px;
-  padding:0 6px;
-  display:inline-flex; align-items:center; justify-content:center;
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:12px; font-weight:600; line-height:1;
-  color:#2a1a0e;
-  background:var(--cart-amber);
-  border-radius:999px;
-  box-shadow:0 3px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,243,224,.45);
-  z-index:3;
-  cursor:pointer;
-  animation:qtyIn .2s ease;
-}
-.qty--tea{background:var(--cart-tea)}
-@keyframes qtyIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
-
-/* у ценовой колонки сверху своя подпись — значок поднимаем над ячейкой целиком */
-.pcell.is-buy .qty{bottom:calc(100% + 2px); right:-4px}
-
-/* строки чая и дрипа плотные — значок мельче и ближе */
-.tea-price.is-buy .qty,
-.pp.is-buy .qty,
-.spp.is-buy .qty{
-  min-width:18px; height:18px; padding:0 5px;
-  font-size:11px;
-  bottom:calc(100% - 3px); right:-5px;
-}
-
-/* активная ступень опта у эспрессо (подсвечивается, когда в заказе есть кофе) */
-.pcell.is-live{
-  background:rgba(236,154,77,.15);
-  border-radius:12px;
-  box-shadow:inset 0 1px 0 rgba(255,243,224,.18);
-}
-.pcell.is-live .pcell__cap{color:rgba(247,236,220,.85)}
-
-/* подсказка «коснитесь цены» */
-.buyhint{
-  margin:0 0 12px;
-  font-size:12.5px;
-  letter-spacing:.01em;
-  color:var(--cart-faint);
-  text-align:center;
-}
-.buyhint b{color:var(--cart-amber);font-weight:600}
-
-/* ── липкая плашка снизу ───────────────────────────────────────────────────── */
-
-.cartbar{
-  position:fixed;
-  left:50%; bottom:0;
-  transform:translateX(-50%);
-  width:min(440px,100%);
-  padding:0 12px calc(12px + env(safe-area-inset-bottom));
-  z-index:60;
-  animation:barIn .26s ease;
-}
-@keyframes barIn{from{transform:translate(-50%,110%)}to{transform:translate(-50%,0)}}
-
-.cartbar__main{
-  width:100%;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px;
-  padding:13px 16px;
-  font:inherit;
-  color:var(--cart-text);
-  background:var(--cart-glass);
-  border:1px solid rgba(255,238,214,.22);
-  border-radius:18px;
-  -webkit-backdrop-filter:saturate(150%) blur(22px);
-  backdrop-filter:saturate(150%) blur(22px);
-  box-shadow:0 14px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,243,224,.40);
-  cursor:pointer;
-}
-.cartbar__left{display:flex; align-items:center; gap:9px; min-width:0}
-.cartbar__count{
-  min-width:24px; height:24px; padding:0 7px;
-  display:inline-flex; align-items:center; justify-content:center;
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:13px; font-weight:600; line-height:1;
-  color:#2a1a0e; background:var(--cart-amber);
-  border-radius:999px;
-}
-.cartbar__label{
-  font-size:13px; letter-spacing:.01em; color:var(--cart-mute);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-.cartbar__right{display:flex; align-items:center; gap:10px}
-.cartbar__sum{
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:18px; font-weight:600; letter-spacing:-.02em;
-  color:var(--cart-cream);
-}
-.cartbar__chev{font-size:10px; color:var(--cart-faint)}
-
-.cartbar__hint{
-  margin-bottom:7px;
-  padding:8px 14px;
-  font-size:12px; line-height:1.35;
-  color:#2a1a0e;
-  background:rgba(236,154,77,.92);
-  border-radius:13px;
-  text-align:center;
-  box-shadow:0 8px 24px rgba(0,0,0,.35);
-}
-.cartbar__hint b{font-weight:700}
-
-/* чтобы плашка не перекрывала последний слайд */
-body.has-cart{padding-bottom:104px}
-body.has-cart.has-hint{padding-bottom:150px}
-
-/* ── панель заказа ─────────────────────────────────────────────────────────── */
-
-.sheet{position:fixed; inset:0; z-index:70}
-.sheet__scrim{
-  position:absolute; inset:0;
-  background:rgba(12,8,5,.62);
-  -webkit-backdrop-filter:blur(3px);
-  backdrop-filter:blur(3px);
-  animation:fadeIn .2s ease;
-}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.sheet__panel{
-  position:absolute;
-  left:50%; bottom:0;
-  transform:translateX(-50%);
-  width:min(440px,100%);
-  max-height:86vh;
-  display:flex; flex-direction:column;
-  padding:0 16px calc(16px + env(safe-area-inset-bottom));
-  color:var(--cart-text);
-  background:var(--cart-glass);
-  border:1px solid rgba(255,238,214,.22);
-  border-bottom:0;
-  border-radius:26px 26px 0 0;
-  -webkit-backdrop-filter:saturate(150%) blur(24px);
-  backdrop-filter:saturate(150%) blur(24px);
-  box-shadow:0 -18px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,243,224,.40);
-  animation:sheetIn .28s cubic-bezier(.22,.9,.3,1);
-}
-@keyframes sheetIn{from{transform:translate(-50%,100%)}to{transform:translate(-50%,0)}}
-
-.sheet__grab{
-  width:38px; height:4px; margin:9px auto 4px;
-  background:rgba(247,236,220,.28); border-radius:999px;
-}
-.sheet__head{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:6px 0 12px;
-}
-.sheet__title{
-  text-transform:uppercase; font-size:15px; font-weight:600;
-  letter-spacing:-.01em; color:var(--cart-cream);
-}
-.sheet__close{
-  width:32px; height:32px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:14px; color:var(--cart-mute);
-  background:rgba(255,238,214,.08);
-  border:1px solid var(--cart-line);
-  border-radius:10px; cursor:pointer;
-}
-.sheet__body{
-  flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch;
-  margin:0 -4px; padding:0 4px;
-}
-
-.line{
-  display:flex; align-items:center; gap:10px;
-  padding:11px 0;
-  border-bottom:1px solid var(--cart-line);
-}
-.line:last-child{border-bottom:0}
-.line__main{flex:1 1 auto; min-width:0}
-.line__name{
-  font-size:14px; font-weight:600; line-height:1.25;
-  color:var(--cart-text);
-}
-.line__meta{
-  margin-top:3px;
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:12px; color:var(--cart-faint);
-}
-.line__dot{
-  display:inline-block; width:5px; height:5px; margin-right:6px;
-  border-radius:2px; background:var(--cart-amber);
-  vertical-align:middle;
-}
-.line__dot--tea{background:var(--cart-tea)}
-
-.step{display:flex; align-items:center; gap:2px; flex:0 0 auto}
-.step__btn{
-  width:29px; height:29px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:15px; line-height:1; color:var(--cart-text);
-  background:rgba(255,238,214,.08);
-  border:1px solid var(--cart-line);
-  border-radius:9px; cursor:pointer;
-}
-.step__btn:active{background:rgba(255,238,214,.16)}
-.step__val{
-  min-width:34px; text-align:center;
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:14px; font-weight:600; color:var(--cart-cream);
-}
-.line__sum{
-  flex:0 0 auto; min-width:74px; text-align:right;
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:14px; font-weight:600; color:var(--cart-cream);
-}
-
-.sheet__hints{padding:10px 0 2px; display:grid; gap:7px}
-.hint{
-  display:flex; gap:8px; align-items:flex-start;
-  padding:9px 12px;
-  font-size:12.5px; line-height:1.4;
-  color:var(--cart-text);
-  background:rgba(255,238,214,.06);
-  border:1px solid var(--cart-line);
-  border-radius:13px;
-}
-.hint--win{
-  color:#2a1a0e;
-  background:rgba(236,154,77,.9);
-  border-color:transparent;
-}
-.hint b{font-weight:700}
-.hint__ico{flex:0 0 auto; opacity:.85}
-
-.sheet__foot{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px;
-  margin-top:12px; padding-top:13px;
-  border-top:1px solid rgba(255,238,214,.18);
-}
-.sheet__total{display:flex; align-items:baseline; gap:9px}
-.sheet__total-lbl{
-  text-transform:uppercase; font-size:11px; letter-spacing:.14em;
-  color:var(--cart-faint);
-}
-.sheet__total-val{
-  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
-  font-variant-numeric:tabular-nums;
-  font-size:24px; font-weight:600; letter-spacing:-.03em;
-  color:var(--cart-cream);
-}
-.sheet__clear{
-  padding:9px 14px;
-  font-size:12.5px; color:var(--cart-mute);
-  background:transparent;
-  border:1px solid var(--cart-line);
-  border-radius:11px; cursor:pointer;
-}
-.sheet__empty{
-  padding:34px 0 30px;
-  text-align:center; font-size:13.5px; color:var(--cart-faint);
-}
-
-/* ── всплывашка ────────────────────────────────────────────────────────────── */
-
-.cart-toast{
-  position:fixed; left:50%; bottom:104px;
-  transform:translateX(-50%);
-  z-index:80;
-  max-width:min(400px,calc(100% - 32px));
-  padding:9px 15px;
-  font-size:12.5px; color:#2a1a0e;
-  background:rgba(246,230,200,.95);
-  border-radius:13px;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
-  animation:fadeIn .16s ease;
-}
-
-/* ── доступность и печать ──────────────────────────────────────────────────── */
-
-@media (prefers-reduced-motion:reduce){
-  .cartbar,.sheet__panel,.sheet__scrim,.qty,.cart-toast,.is-buy.is-pop{animation:none}
-  .is-buy{transition:none}
-}
-
-@media print{
-  .cartbar,.sheet,.cart-toast,.qty,.buyhint{display:none !important}
-  body.has-cart{padding-bottom:0 !important}
-  .pcell.is-live{box-shadow:none !important}
-}
-
-</style>
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -788,8 +448,8 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">какао / слива / яблоко</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
           <div class="prices cols-2">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="kolumbiya-supremo-250-g" data-name="Колумбия супремо" data-unit="250 г" data-price="660" data-kg="0.25" data-accent="coffee"><div class="pcell__cap">250 г</div><div class="pcell__opt">660 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="kolumbiya-supremo-1-kg" data-name="Колумбия супремо" data-unit="1 кг" data-price="2020" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 020 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">250 г</div><div class="pcell__opt">660 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 020 ₽</div></div>
           </div>
         </div>
 
@@ -798,8 +458,8 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">маракуйя / ваниль / дыня</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-2">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="kolumbiya-alto-tabi-250-g" data-name="Колумбия альто таби" data-unit="250 г" data-price="850" data-kg="0.25" data-accent="coffee"><div class="pcell__cap">250 г</div><div class="pcell__opt">850 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="kolumbiya-alto-tabi-1-kg" data-name="Колумбия альто таби" data-unit="1 кг" data-price="2750" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 750 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">250 г</div><div class="pcell__opt">850 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 750 ₽</div></div>
           </div>
         </div>
 
@@ -808,8 +468,8 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">цветы / карамель / смородина</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
           <div class="prices cols-2">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="keniya-kiri-250-g" data-name="Кения кири" data-unit="250 г" data-price="780" data-kg="0.25" data-accent="coffee"><div class="pcell__cap">250 г</div><div class="pcell__opt">780 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="keniya-kiri-1-kg" data-name="Кения кири" data-unit="1 кг" data-price="2650" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 650 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">250 г</div><div class="pcell__opt">780 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 650 ₽</div></div>
           </div>
         </div>
 
@@ -818,7 +478,7 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">вишня / абрикос / карамель</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
           <div class="prices cols-2" style="justify-content:center;">
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="ruanda-nyarusiza-1-kg" data-name="Руанда ньярусиза" data-unit="1 кг" data-price="2160" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 160 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 160 ₽</div></div>
           </div>
         </div>
 
@@ -841,9 +501,9 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">идеально для напитков с молоком</div>
           <div class="item__proc"><span class="lbl">Состав</span><span class="val">эфиопия · бразилия арабика</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blyu-speshl" data-name="Блю спешл" data-unit="кг" data-price="1890" data-tiers="1890,1700,1610" data-tier="0" data-kg="1" data-accent="coffee"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 890 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blyu-speshl" data-name="Блю спешл" data-unit="кг" data-price="1890" data-tiers="1890,1700,1610" data-tier="1" data-kg="1" data-accent="coffee"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 700 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="blyu-speshl" data-name="Блю спешл" data-unit="кг" data-price="1890" data-tiers="1890,1700,1610" data-tier="2" data-kg="1" data-accent="coffee"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 610 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 890 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 700 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 610 ₽</div></div>
           </div>
         </div>
 
@@ -852,9 +512,9 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">горький шоколад / орехи</div>
           <div class="item__proc"><span class="lbl">Состав</span><span class="val">бразилия арабика · уганда робуста</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-tiers="1650,1485,1400" data-tier="0" data-kg="1" data-accent="coffee"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 650 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-tiers="1650,1485,1400" data-tier="1" data-kg="1" data-accent="coffee"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 485 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-tiers="1650,1485,1400" data-tier="2" data-kg="1" data-accent="coffee"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 400 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 650 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 485 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 400 ₽</div></div>
           </div>
         </div>
 
@@ -863,9 +523,9 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">голубика / шоколад</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-tiers="1850,1665,1575" data-tier="0" data-kg="1" data-accent="coffee"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 850 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-tiers="1850,1665,1575" data-tier="1" data-kg="1" data-accent="coffee"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 665 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-tiers="1850,1665,1575" data-tier="2" data-kg="1" data-accent="coffee"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 575 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 850 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 665 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 575 ₽</div></div>
           </div>
         </div>
 
@@ -874,9 +534,9 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">сухофрукты / мёд / орех</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-tiers="1860,1675,1580" data-tier="0" data-kg="1" data-accent="coffee"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 860 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-tiers="1860,1675,1580" data-tier="1" data-kg="1" data-accent="coffee"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 675 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-tiers="1860,1675,1580" data-tier="2" data-kg="1" data-accent="coffee"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 580 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 860 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 675 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 580 ₽</div></div>
           </div>
         </div>
 
@@ -885,9 +545,9 @@ body.has-cart.has-hint{padding-bottom:150px}
           <div class="item__taste">какао / слива / яблоко</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="kolumbiya-supremo" data-name="Колумбия супремо" data-unit="кг" data-price="2120" data-tiers="2120,1930,1810" data-tier="0" data-kg="1" data-accent="coffee"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">2 120 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="kolumbiya-supremo" data-name="Колумбия супремо" data-unit="кг" data-price="2120" data-tiers="2120,1930,1810" data-tier="1" data-kg="1" data-accent="coffee"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 930 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="kolumbiya-supremo" data-name="Колумбия супремо" data-unit="кг" data-price="2120" data-tiers="2120,1930,1810" data-tier="2" data-kg="1" data-accent="coffee"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 810 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">2 120 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 930 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 810 ₽</div></div>
           </div>
         </div>
       </div>
@@ -912,10 +572,10 @@ body.has-cart.has-hint{padding-bottom:150px}
             <div class="box__qty"><span class="box__num">6</span><span class="box__unit">шт</span></div>
             <div class="box__body">
               <div class="variants">
-                <div class="variant variant--min"><span class="variant__name">Микс</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-miks-6-sht" data-name="Микс" data-unit="6 шт" data-price="295" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">295 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">354 ₽</span></span></span></div>
-                <div class="variant"><span class="variant__name">Кения</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-keniya-6-sht" data-name="Кения" data-unit="6 шт" data-price="315" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">315 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">378 ₽</span></span></span></div>
-                <div class="variant"><span class="variant__name">Эфиопия</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-efiopiya-6-sht" data-name="Эфиопия" data-unit="6 шт" data-price="295" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">295 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">354 ₽</span></span></span></div>
-                <div class="variant"><span class="variant__name">Декаф</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-dekaf-6-sht" data-name="Декаф" data-unit="6 шт" data-price="305" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">305 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">366 ₽</span></span></span></div>
+                <div class="variant variant--min"><span class="variant__name">Микс</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">295 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">354 ₽</span></span></span></div>
+                <div class="variant"><span class="variant__name">Кения</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">315 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">378 ₽</span></span></span></div>
+                <div class="variant"><span class="variant__name">Эфиопия</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">295 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">354 ₽</span></span></span></div>
+                <div class="variant"><span class="variant__name">Декаф</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">305 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">366 ₽</span></span></span></div>
               </div>
             </div>
           </div>
@@ -926,7 +586,7 @@ body.has-cart.has-hint{padding-bottom:150px}
               <div class="box__kind">Микс</div>
               <div class="box__fill">Набор кофе</div>
             </div>
-            <div class="box__price"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-miks-24-sht" data-name="Микс" data-unit="24 шт" data-price="850" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">850 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 020 ₽</span></span></div>
+            <div class="box__price"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">850 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 020 ₽</span></span></div>
           </div>
 
           <div class="box box--variants">
@@ -934,8 +594,8 @@ body.has-cart.has-hint{padding-bottom:150px}
             <div class="box__body">
               <div class="box__kind">биг пак</div>
               <div class="variants">
-                <div class="variant"><span class="variant__name">Для молочка</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-dlya-molochka-50-sht" data-name="Для молочка" data-unit="50 шт" data-price="1550" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">1 550 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 860 ₽</span></span></span></div>
-                <div class="variant"><span class="variant__name">Колумбия</span><span class="variant__prices"><span class="pp is-buy" role="button" tabindex="0" data-sku="drip-kolumbiya-50-sht" data-name="Колумбия" data-unit="50 шт" data-price="1650" data-kg="0" data-accent="coffee"><span class="pp__lbl">опт</span><span class="pp__opt">1 650 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 980 ₽</span></span></span></div>
+                <div class="variant"><span class="variant__name">Для молочка</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">1 550 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 860 ₽</span></span></span></div>
+                <div class="variant"><span class="variant__name">Колумбия</span><span class="variant__prices"><span class="pp"><span class="pp__lbl">опт</span><span class="pp__opt">1 650 ₽</span></span><span class="pp"><span class="pp__lbl">ррц</span><span class="pp__rrc">1 980 ₽</span></span></span></div>
               </div>
             </div>
           </div>
@@ -946,11 +606,11 @@ body.has-cart.has-hint{padding-bottom:150px}
         <div class="part__title">Штучные</div>
         <div class="singles">
           <div class="singles__cap">Цена за 1 шт</div>
-          <div class="single"><span class="single__name">Бразилия пиберри</span><span class="single__prices"><span class="spp is-buy" role="button" tabindex="0" data-sku="drip-sht-braziliya-piberri" data-name="Бразилия пиберри" data-unit="шт" data-price="40" data-kg="0" data-accent="coffee"><span class="spp__lbl">опт</span><span class="single__opt">40 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">70 ₽</span></span></span></div>
-          <div class="single"><span class="single__name">Эфиопия иргачефф</span><span class="single__prices"><span class="spp is-buy" role="button" tabindex="0" data-sku="drip-sht-efiopiya-irgacheff" data-name="Эфиопия иргачефф" data-unit="шт" data-price="40" data-kg="0" data-accent="coffee"><span class="spp__lbl">опт</span><span class="single__opt">40 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">70 ₽</span></span></span></div>
-          <div class="single"><span class="single__name">Колумбия питайо</span><span class="single__prices"><span class="spp is-buy" role="button" tabindex="0" data-sku="drip-sht-kolumbiya-pitai-o" data-name="Колумбия питайо" data-unit="шт" data-price="45" data-kg="0" data-accent="coffee"><span class="spp__lbl">опт</span><span class="single__opt">45 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">80 ₽</span></span></span></div>
-          <div class="single"><span class="single__name">Гондурас декаф</span><span class="single__prices"><span class="spp is-buy" role="button" tabindex="0" data-sku="drip-sht-gonduras-dekaf" data-name="Гондурас декаф" data-unit="шт" data-price="45" data-kg="0" data-accent="coffee"><span class="spp__lbl">опт</span><span class="single__opt">45 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">80 ₽</span></span></span></div>
-          <div class="single"><span class="single__name">Колумбия таби</span><span class="single__prices"><span class="spp is-buy" role="button" tabindex="0" data-sku="drip-sht-kolumbiya-tabi" data-name="Колумбия таби" data-unit="шт" data-price="65" data-kg="0" data-accent="coffee"><span class="spp__lbl">опт</span><span class="single__opt">65 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">120 ₽</span></span></span></div>
+          <div class="single"><span class="single__name">Бразилия пиберри</span><span class="single__prices"><span class="spp"><span class="spp__lbl">опт</span><span class="single__opt">40 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">70 ₽</span></span></span></div>
+          <div class="single"><span class="single__name">Эфиопия иргачефф</span><span class="single__prices"><span class="spp"><span class="spp__lbl">опт</span><span class="single__opt">40 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">70 ₽</span></span></span></div>
+          <div class="single"><span class="single__name">Колумбия питайо</span><span class="single__prices"><span class="spp"><span class="spp__lbl">опт</span><span class="single__opt">45 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">80 ₽</span></span></span></div>
+          <div class="single"><span class="single__name">Гондурас декаф</span><span class="single__prices"><span class="spp"><span class="spp__lbl">опт</span><span class="single__opt">45 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">80 ₽</span></span></span></div>
+          <div class="single"><span class="single__name">Колумбия таби</span><span class="single__prices"><span class="spp"><span class="spp__lbl">опт</span><span class="single__opt">65 ₽</span></span><span class="spp"><span class="spp__lbl">ррц</span><span class="single__rrc">120 ₽</span></span></span></div>
         </div>
       </div>
 
@@ -1017,8 +677,8 @@ body.has-cart.has-hint{padding-bottom:150px}
             <div class="item__desc">Отборная матча из Удзи и Сидзуоки. Сливочность, мягкая травянистость, лёгкое умами.</div>
             <div class="item__for">матча латте, матча шот · ежедневный ритуал</div>
             <div class="prices cols-2">
-              <div class="pcell is-buy" role="button" tabindex="0" data-sku="ceremonialnaya-100-g" data-name="Церемониальная" data-unit="100 г" data-price="1600" data-kg="0" data-accent="tea"><div class="pcell__cap">100 г</div><div class="pcell__opt">1 600 ₽</div></div>
-              <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="ceremonialnaya-500-g" data-name="Церемониальная" data-unit="500 г" data-price="6090" data-kg="0" data-accent="tea"><div class="pcell__cap">500 г</div><div class="pcell__opt">6 090 ₽</div></div>
+              <div class="pcell"><div class="pcell__cap">100 г</div><div class="pcell__opt">1 600 ₽</div></div>
+              <div class="pcell pcell--best"><div class="pcell__cap">500 г</div><div class="pcell__opt">6 090 ₽</div></div>
             </div>
           </div>
 
@@ -1028,8 +688,8 @@ body.has-cart.has-hint{padding-bottom:150px}
             <div class="item__desc">Премиальная: выраженный травяной вкус и высокая насыщенность.</div>
             <div class="item__for">матча латте, смузи, холодные напитки</div>
             <div class="prices cols-2">
-              <div class="pcell is-buy" role="button" tabindex="0" data-sku="tokusen-grei-d-100-g" data-name="Токусэн Грейд" data-unit="100 г" data-price="1100" data-kg="0" data-accent="tea"><div class="pcell__cap">100 г</div><div class="pcell__opt">1 100 ₽</div></div>
-              <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="tokusen-grei-d-500-g" data-name="Токусэн Грейд" data-unit="500 г" data-price="3750" data-kg="0" data-accent="tea"><div class="pcell__cap">500 г</div><div class="pcell__opt">3 750 ₽</div></div>
+              <div class="pcell"><div class="pcell__cap">100 г</div><div class="pcell__opt">1 100 ₽</div></div>
+              <div class="pcell pcell--best"><div class="pcell__cap">500 г</div><div class="pcell__opt">3 750 ₽</div></div>
             </div>
           </div>
 
@@ -1039,8 +699,8 @@ body.has-cart.has-hint{padding-bottom:150px}
             <div class="item__desc">Доступная матча для смузи, десертов, выпечки. Больше насыщенности, меньше затрат.</div>
             <div class="item__for">смузи, выпечка, напитки</div>
             <div class="prices cols-2">
-              <div class="pcell is-buy" role="button" tabindex="0" data-sku="kulinari-grei-d-100-g" data-name="Кулинари Грейд" data-unit="100 г" data-price="670" data-kg="0" data-accent="tea"><div class="pcell__cap">100 г</div><div class="pcell__opt">670 ₽</div></div>
-              <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="kulinari-grei-d-500-g" data-name="Кулинари Грейд" data-unit="500 г" data-price="2290" data-kg="0" data-accent="tea"><div class="pcell__cap">500 г</div><div class="pcell__opt">2 290 ₽</div></div>
+              <div class="pcell"><div class="pcell__cap">100 г</div><div class="pcell__opt">670 ₽</div></div>
+              <div class="pcell pcell--best"><div class="pcell__cap">500 г</div><div class="pcell__opt">2 290 ₽</div></div>
             </div>
           </div>
         </div>
@@ -1057,50 +717,51 @@ body.has-cart.has-hint{padding-bottom:150px}
         <h2>Базовый чай</h2>
         <div class="sub">Моносорта и классика · цена за упаковку</div>
       </div>
+      <div class="price-legend">В колонке: <b>опт</b> сверху · <i>ррц</i> снизу</div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Красный чай</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам Типпи</div><div class="tea-row__from">Индия</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-tippi-200-g" data-name="Ассам Типпи" data-unit="200 г" data-price="630" data-kg="0" data-accent="tea"><div class="tea-price__opt">630 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-tippi-500-g" data-name="Ассам Типпи" data-unit="500 г" data-price="1100" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам Пекое</div><div class="tea-row__from">Индия</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-pekoe-200-g" data-name="Ассам Пекое" data-unit="200 г" data-price="550" data-kg="0" data-accent="tea"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-pekoe-500-g" data-name="Ассам Пекое" data-unit="500 г" data-price="990" data-kg="0" data-accent="tea"><div class="tea-price__opt">990 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дянь Хун</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dyan-hun-200-g" data-name="Дянь Хун" data-unit="200 г" data-price="575" data-kg="0" data-accent="tea"><div class="tea-price__opt">575 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dyan-hun-500-g" data-name="Дянь Хун" data-unit="500 г" data-price="1080" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 080 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Лапсанг Сушонг</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lapsang-sushong-200-g" data-name="Лапсанг Сушонг" data-unit="200 г" data-price="1050" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 050 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lapsang-sushong-500-g" data-name="Лапсанг Сушонг" data-unit="500 г" data-price="2050" data-kg="0" data-accent="tea"><div class="tea-price__opt">2 050 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дянь Хун Сун Чжэнь</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dyan-hun-sun-chzhen-200-g" data-name="Дянь Хун Сун Чжэнь" data-unit="200 г" data-price="1690" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 690 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dyan-hun-sun-chzhen-500-g" data-name="Дянь Хун Сун Чжэнь" data-unit="500 г" data-price="4600" data-kg="0" data-accent="tea"><div class="tea-price__opt">4 600 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам Типпи</div><div class="tea-row__from">Индия</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">630 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам Пекое</div><div class="tea-row__from">Индия</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price"><div class="tea-price__opt">990 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дянь Хун</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">575 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 080 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Лапсанг Сушонг</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 050 ₽</div></div><div class="tea-price"><div class="tea-price__opt">2 050 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дянь Хун Сун Чжэнь</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 690 ₽</div></div><div class="tea-price"><div class="tea-price__opt">4 600 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Лёгкие улуны</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Молочный улун</div><div class="tea-row__from">Китай · Анси</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-molochnyi-ulun-200-g" data-name="Молочный улун" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-molochnyi-ulun-500-g" data-name="Молочный улун" data-unit="500 г" data-price="1600" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Молочный улун</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-molochnyi-ulun-200-g-2" data-name="Молочный улун" data-unit="200 г" data-price="550" data-kg="0" data-accent="tea"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-molochnyi-ulun-500-g-2" data-name="Молочный улун" data-unit="500 г" data-price="1050" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 050 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Те Гунь Инь Ван</div><div class="tea-row__from">Китай · Анси</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-te-gun-in-van-200-g" data-name="Те Гунь Инь Ван" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-te-gun-in-van-500-g" data-name="Те Гунь Инь Ван" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Женьшень</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-zhenshen-200-g" data-name="Женьшень" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-zhenshen-500-g" data-name="Женьшень" data-unit="500 г" data-price="1440" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 440 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Молочный улун</div><div class="tea-row__from">Китай · Анси</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Молочный улун</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 050 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Те Гунь Инь Ван</div><div class="tea-row__from">Китай · Анси</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Женьшень</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 440 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Тёмные улуны</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Да Хун Пао</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-da-hun-pao-200-g" data-name="Да Хун Пао" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-da-hun-pao-500-g" data-name="Да Хун Пао" data-unit="500 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Да Хун Пао Жоу Гуй</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-da-hun-pao-zhou-gui-200-g" data-name="Да Хун Пао Жоу Гуй" data-unit="200 г" data-price="1050" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 050 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-da-hun-pao-zhou-gui-500-g" data-name="Да Хун Пао Жоу Гуй" data-unit="500 г" data-price="1900" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 900 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Габа Медовая</div><div class="tea-row__from">Тайвань · Алишань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-gaba-medovaya-200-g" data-name="Габа Медовая" data-unit="200 г" data-price="3150" data-kg="0" data-accent="tea"><div class="tea-price__opt">3 150 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-gaba-medovaya-500-g" data-name="Габа Медовая" data-unit="500 г" data-price="5800" data-kg="0" data-accent="tea"><div class="tea-price__opt">5 800 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Да Хун Пао</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Да Хун Пао Жоу Гуй</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 050 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 900 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Габа Медовая</div><div class="tea-row__from">Тайвань · Алишань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">3 150 ₽</div></div><div class="tea-price"><div class="tea-price__opt">5 800 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Пуэр</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Пуэр Лао Ча Тоу</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-puer-lao-cha-tou-200-g" data-name="Пуэр Лао Ча Тоу" data-unit="200 г" data-price="1100" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 100 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-puer-lao-cha-tou-500-g" data-name="Пуэр Лао Ча Тоу" data-unit="500 г" data-price="2300" data-kg="0" data-accent="tea"><div class="tea-price__opt">2 300 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Пуэр Гун Тин</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-puer-gun-tin-200-g" data-name="Пуэр Гун Тин" data-unit="200 г" data-price="590" data-kg="0" data-accent="tea"><div class="tea-price__opt">590 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-puer-gun-tin-500-g" data-name="Пуэр Гун Тин" data-unit="500 г" data-price="1250" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 250 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Пуэр Лао Ча Тоу</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 100 ₽</div></div><div class="tea-price"><div class="tea-price__opt">2 300 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Пуэр Гун Тин</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">590 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 250 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Зелёный</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Сенча</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-sencha-200-g" data-name="Сенча" data-unit="200 г" data-price="490" data-kg="0" data-accent="tea"><div class="tea-price__opt">490 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-sencha-500-g" data-name="Сенча" data-unit="500 г" data-price="990" data-kg="0" data-accent="tea"><div class="tea-price__opt">990 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Генмайча</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-genmai-cha-200-g" data-name="Генмайча" data-unit="200 г" data-price="500" data-kg="0" data-accent="tea"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-genmai-cha-500-g" data-name="Генмайча" data-unit="500 г" data-price="1050" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 050 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Моли Хуа Ча с Мао Фэн</div><div class="tea-row__from">Китай · Фуцзянь · премиум</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-moli-hua-cha-s-mao-fen-200-g" data-name="Моли Хуа Ча с Мао Фэн" data-unit="200 г" data-price="680" data-kg="0" data-accent="tea"><div class="tea-price__opt">680 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-moli-hua-cha-s-mao-fen-500-g" data-name="Моли Хуа Ча с Мао Фэн" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Моли Хуа Ча</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-moli-hua-cha-200-g" data-name="Моли Хуа Ча" data-unit="200 г" data-price="550" data-kg="0" data-accent="tea"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-moli-hua-cha-500-g" data-name="Моли Хуа Ча" data-unit="500 г" data-price="1100" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Лунцзин</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lunczin-200-g" data-name="Лунцзин" data-unit="200 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lunczin-500-g" data-name="Лунцзин" data-unit="500 г" data-price="2900" data-kg="0" data-accent="tea"><div class="tea-price__opt">2 900 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Сенча</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">490 ₽</div></div><div class="tea-price"><div class="tea-price__opt">990 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Генмайча</div><div class="tea-row__from">Китай</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 050 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Моли Хуа Ча с Мао Фэн</div><div class="tea-row__from">Китай · Фуцзянь · премиум</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">680 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Моли Хуа Ча</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Лунцзин</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div><div class="tea-price"><div class="tea-price__opt">2 900 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat">
         <div class="tea-cat__h"><div class="tea-cat__name">Белый</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Бай Му Дань</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-bai-mu-dan-200-g" data-name="Бай Му Дань" data-unit="200 г" data-price="850" data-kg="0" data-accent="tea"><div class="tea-price__opt">850 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-bai-mu-dan-500-g" data-name="Бай Му Дань" data-unit="500 г" data-price="1600" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Бай Хао Инь Чжэнь</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-bai-hao-in-chzhen-200-g" data-name="Бай Хао Инь Чжэнь" data-unit="200 г" data-price="1800" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 800 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-bai-hao-in-chzhen-500-g" data-name="Бай Хао Инь Чжэнь" data-unit="500 г" data-price="3990" data-kg="0" data-accent="tea"><div class="tea-price__opt">3 990 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Бай Му Дань</div><div class="tea-row__from">Китай · Фуцзянь</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">850 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Бай Хао Инь Чжэнь</div><div class="tea-row__from">Китай · Юньнань</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">1 800 ₽</div></div><div class="tea-price"><div class="tea-price__opt">3 990 ₽</div></div></div></div>
       </div>
 
       <div class="card__scroll" aria-hidden="true">↓</div>
@@ -1114,51 +775,52 @@ body.has-cart.has-hint{padding-bottom:150px}
         <h2>Тизан</h2>
         <div class="sub">Купажи и ароматика · цена за упаковку</div>
       </div>
+      <div class="price-legend">В колонке: <b>опт</b> сверху · <i>ррц</i> снизу</div>
 
       <div class="tea-cat is-tisane">
         <div class="tea-cat__h"><div class="tea-cat__name">Яркий чай</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Эрл Грей</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, бергамот</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-erl-grei-200-g" data-name="Эрл Грей" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-erl-grei-500-g" data-name="Эрл Грей" data-unit="500 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Таёжный</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, клубника, можжевельник, толокнянка, мята</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-tae-zhnyi-200-g" data-name="Таёжный" data-unit="200 г" data-price="800" data-kg="0" data-accent="tea"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-tae-zhnyi-500-g" data-name="Таёжный" data-unit="500 г" data-price="1750" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 750 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Зелёный тропический</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Сенча, лепестки манго, лилия, клубника</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-zele-nyi-tropicheskii-200-g" data-name="Зелёный тропический" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-zele-nyi-tropicheskii-500-g" data-name="Зелёный тропический" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">1001 ночь</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, сенча, календула, роза, цукаты, изюм</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-1001-noch-200-g" data-name="1001 ночь" data-unit="200 г" data-price="650" data-kg="0" data-accent="tea"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-1001-noch-500-g" data-name="1001 ночь" data-unit="500 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Масала</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, имбирь, корица, бадьян, гвоздика, кассия, перец, кардамон</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-masala-200-g" data-name="Масала" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-masala-500-g" data-name="Масала" data-unit="500 г" data-price="1600" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Глинтвейн</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, яблоко, цедра апельсина, специи, шиповник, цукаты</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-glintvei-n-200-g" data-name="Глинтвейн" data-unit="200 г" data-price="500" data-kg="0" data-accent="tea"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-glintvei-n-500-g" data-name="Глинтвейн" data-unit="500 г" data-price="1250" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 250 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам с чабрецом</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, чабрец</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-s-chabrecom-200-g" data-name="Ассам с чабрецом" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-s-chabrecom-500-g" data-name="Ассам с чабрецом" data-unit="500 г" data-price="1300" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 300 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам с лавандой</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, лаванда</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-s-lavandoi-200-g" data-name="Ассам с лавандой" data-unit="200 г" data-price="650" data-kg="0" data-accent="tea"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-assam-s-lavandoi-500-g" data-name="Ассам с лавандой" data-unit="500 г" data-price="1200" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 200 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Эрл Грей</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, бергамот</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Таёжный</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, клубника, можжевельник, толокнянка, мята</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 750 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Зелёный тропический</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Сенча, лепестки манго, лилия, клубника</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">1001 ночь</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, сенча, календула, роза, цукаты, изюм</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Масала</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Чёрный чай, имбирь, корица, бадьян, гвоздика, кассия, перец, кардамон</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Глинтвейн</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, яблоко, цедра апельсина, специи, шиповник, цукаты</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 250 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам с чабрецом</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, чабрец</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 300 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Ассам с лавандой</div><div class="tea-row__from">Индия</div><div class="tea-row__mix">Чёрный чай, лаванда</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 200 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat is-tisane">
         <div class="tea-cat__h"><div class="tea-cat__name">Фруктовый</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дикая вишня</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, роза, вишня, яблоко, шиповник</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dikaya-vishnya-200-g" data-name="Дикая вишня" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-dikaya-vishnya-500-g" data-name="Дикая вишня" data-unit="500 г" data-price="1600" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Фруктовый чай</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, яблоко, ананас, шиповник, изюм, клубника</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-fruktovyi-chai-200-g" data-name="Фруктовый чай" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-fruktovyi-chai-500-g" data-name="Фруктовый чай" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Наглый апельсин</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, рябина, ананас, цедра апельсина, лилия, яблоко</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-naglyi-apelsin-200-g" data-name="Наглый апельсин" data-unit="200 г" data-price="750" data-kg="0" data-accent="tea"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-naglyi-apelsin-500-g" data-name="Наглый апельсин" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Фиджи манго</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, манго, яблоко, шиповник, ананас, вишня, календула</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-fidzhi-mango-200-g" data-name="Фиджи манго" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-fidzhi-mango-500-g" data-name="Фиджи манго" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Малина мята</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Мята, груша, малина, каркаде, календула, ромашка</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-malina-myata-200-g" data-name="Малина мята" data-unit="200 г" data-price="650" data-kg="0" data-accent="tea"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-malina-myata-500-g" data-name="Малина мята" data-unit="500 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Дикая вишня</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, роза, вишня, яблоко, шиповник</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 600 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Фруктовый чай</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, яблоко, ананас, шиповник, изюм, клубника</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Наглый апельсин</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, рябина, ананас, цедра апельсина, лилия, яблоко</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">750 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Фиджи манго</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Каркаде, манго, яблоко, шиповник, ананас, вишня, календула</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Малина мята</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Мята, груша, малина, каркаде, календула, ромашка</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">650 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat is-tisane">
         <div class="tea-cat__h"><div class="tea-cat__name">Ароматические улуны</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Карамельный улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, ароматизатор</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-karamelnyi-ulun-200-g" data-name="Карамельный улун" data-unit="200 г" data-price="665" data-kg="0" data-accent="tea"><div class="tea-price__opt">665 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-karamelnyi-ulun-500-g" data-name="Карамельный улун" data-unit="500 г" data-price="1300" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 300 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Тропический улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, ананас, василёк, яблоко, календула, роза</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-tropicheskii-ulun-200-g" data-name="Тропический улун" data-unit="200 г" data-price="500" data-kg="0" data-accent="tea"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-tropicheskii-ulun-500-g" data-name="Тропический улун" data-unit="500 г" data-price="1000" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 000 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Манговый улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, манго</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-mangovyi-ulun-200-g" data-name="Манговый улун" data-unit="200 г" data-price="490" data-kg="0" data-accent="tea"><div class="tea-price__opt">490 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-mangovyi-ulun-500-g" data-name="Манговый улун" data-unit="500 г" data-price="1100" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Малиновый улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, малина</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-malinovyi-ulun-200-g" data-name="Малиновый улун" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-malinovyi-ulun-500-g" data-name="Малиновый улун" data-unit="500 г" data-price="1390" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 390 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Карамельный улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, ароматизатор</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">665 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 300 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Тропический улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, ананас, василёк, яблоко, календула, роза</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">500 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 000 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Манговый улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, манго</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">490 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Малиновый улун</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Те Гуань Инь, малина</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 390 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat is-tisane">
         <div class="tea-cat__h"><div class="tea-cat__name">Травяные купажи</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Горный Алтай</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Бадан, чабрец, мелисса, душица, омела, саган-дайля, бессмертник, зверобой, боярышник</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-gornyi-altai-200-g" data-name="Горный Алтай" data-unit="200 г" data-price="800" data-kg="0" data-accent="tea"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-gornyi-altai-500-g" data-name="Горный Алтай" data-unit="500 г" data-price="1350" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 350 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Спокойствие</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Душица, омела, мята, рябина, малина, боярышник, ромашка, иван-чай, ежевичный лист</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-spokoi-stvie-200-g" data-name="Спокойствие" data-unit="200 г" data-price="800" data-kg="0" data-accent="tea"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-spokoi-stvie-500-g" data-name="Спокойствие" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гармония</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Лемонграсс, яблоко, цедра апельсина, ромашка, ройбуш, фенхель, кардамон</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-garmoniya-200-g" data-name="Гармония" data-unit="200 г" data-price="550" data-kg="0" data-accent="tea"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-garmoniya-500-g" data-name="Гармония" data-unit="500 г" data-price="1100" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Горный Алтай</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Бадан, чабрец, мелисса, душица, омела, саган-дайля, бессмертник, зверобой, боярышник</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 350 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Спокойствие</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Душица, омела, мята, рябина, малина, боярышник, ромашка, иван-чай, ежевичный лист</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">800 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гармония</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Лемонграсс, яблоко, цедра апельсина, ромашка, ройбуш, фенхель, кардамон</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">550 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 100 ₽</div></div></div></div>
         <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Тонус</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Смородина лист, ежевика лист, шалфей, шиповник, мята</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">—</div></div><div class="tea-price"><div class="tea-price__opt">—</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Липа – Мята</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Липа и мята</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lipa-myata-200-g" data-name="Липа – Мята" data-unit="200 г" data-price="700" data-kg="0" data-accent="tea"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-lipa-myata-500-g" data-name="Липа – Мята" data-unit="500 г" data-price="1400" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Липа – Мята</div><div class="tea-row__from">Россия</div><div class="tea-row__mix">Липа и мята</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">700 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 400 ₽</div></div></div></div>
       </div>
 
       <div class="tea-cat is-tisane">
         <div class="tea-cat__h"><div class="tea-cat__name">Гречишный</div><div class="tea-cat__cols"><span>200 г</span><span>500 г</span></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Напиток из семян татарской гречихи</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-200-g" data-name="Гречишный" data-unit="200 г" data-price="400" data-kg="0" data-accent="tea"><div class="tea-price__opt">400 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-500-g" data-name="Гречишный" data-unit="500 г" data-price="1150" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 150 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный с кокосом</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, кокосовая стружка</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-s-kokosom-200-g" data-name="Гречишный с кокосом" data-unit="200 г" data-price="600" data-kg="0" data-accent="tea"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-s-kokosom-500-g" data-name="Гречишный с кокосом" data-unit="500 г" data-price="1200" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 200 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный с персиком</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, цукаты, шафран</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-s-persikom-200-g" data-name="Гречишный с персиком" data-unit="200 г" data-price="600" data-kg="0" data-accent="tea"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-s-persikom-500-g" data-name="Гречишный с персиком" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
-        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный апельсин и корица</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, ананас, апельсин, шафран, корица</div></div><div class="tea-row__prices"><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-apelsin-i-korica-200-g" data-name="Гречишный апельсин и корица" data-unit="200 г" data-price="600" data-kg="0" data-accent="tea"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price is-buy" role="button" tabindex="0" data-sku="tea-grechishnyi-apelsin-i-korica-500-g" data-name="Гречишный апельсин и корица" data-unit="500 г" data-price="1500" data-kg="0" data-accent="tea"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Напиток из семян татарской гречихи</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">400 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 150 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный с кокосом</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, кокосовая стружка</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 200 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный с персиком</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, цукаты, шафран</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
+        <div class="tea-row"><div class="tea-row__main"><div class="tea-row__name">Гречишный апельсин и корица</div><div class="tea-row__from">Китай</div><div class="tea-row__mix">Гранулированный гречишный, ананас, апельсин, шафран, корица</div></div><div class="tea-row__prices"><div class="tea-price"><div class="tea-price__opt">600 ₽</div></div><div class="tea-price"><div class="tea-price__opt">1 500 ₽</div></div></div></div>
       </div>
 
       <div class="card__scroll" aria-hidden="true">↓</div>
@@ -1209,421 +871,5 @@ body.has-cart.has-hint{padding-bottom:150px}
       <text x="600" y="690" text-anchor="middle" fill="#f6e6c8" font-family="Helvetica,Arial,sans-serif" font-size="64" font-weight="700" letter-spacing="6">CULTURA COFFEE</text>
     </svg>
   </template>
-<!-- КОРЗИНА -->
-<div class="cartbar" id="cartbar" hidden>
-  <div class="cartbar__hint" id="cartBarHint" hidden></div>
-  <button class="cartbar__main" id="cartbarOpen" type="button">
-    <span class="cartbar__left">
-      <span class="cartbar__count" id="cartCount">0</span>
-      <span class="cartbar__label" id="cartLabel">позиций</span>
-    </span>
-    <span class="cartbar__right">
-      <span class="cartbar__sum" id="cartSum">0 ₽</span>
-      <span class="cartbar__chev" aria-hidden="true">▲</span>
-    </span>
-  </button>
-</div>
-
-<div class="sheet" id="cartSheet" hidden>
-  <div class="sheet__scrim" id="cartScrim"></div>
-  <div class="sheet__panel" role="dialog" aria-modal="true" aria-label="Ваш заказ">
-    <div class="sheet__grab" aria-hidden="true"></div>
-    <div class="sheet__head">
-      <div class="sheet__title">Ваш заказ</div>
-      <button class="sheet__close" id="cartClose" type="button" aria-label="Закрыть">✕</button>
-    </div>
-    <div class="sheet__body" id="cartLines"></div>
-    <div class="sheet__hints" id="cartHints"></div>
-    <div class="sheet__foot">
-      <div class="sheet__total">
-        <span class="sheet__total-lbl">Итого</span>
-        <span class="sheet__total-val" id="cartTotal">0 ₽</span>
-      </div>
-      <button class="sheet__clear" id="cartClear" type="button">Очистить</button>
-    </div>
-  </div>
-</div>
-
-<div class="cart-toast" id="cartToast" hidden></div>
-
-<script>
-/* ═══════════════════════════════════════════════════════════════════════════
-   КОРЗИНА ПРАЙСА CULTURA COFFEE
-   Тап по оптовой цене — позиция уходит в заказ.
-   Ступень опта по эспрессо считается от суммарного веса кофе в заказе.
-   Данные читаются из data-атрибутов разметки, внешних запросов нет.
-   ═══════════════════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-
-  var STORE_KEY = 'ccr-cart-v1';
-  var FREE_DELIVERY = 6000;      // ₽, слайд «Условия заказа»
-  var TIERS = [0, 20, 50];       // кг: 1–19 / 20–49 / от 50
-
-  var state = load();
-  var els = {};
-  var nodes = [];                // все кликабельные ячейки
-  var bySku = {};                // sku -> [ячейки]
-  var meta = {};                 // sku -> данные позиции
-
-  // ── хранилище ──────────────────────────────────────────────────────────────
-
-  function load() {
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      var obj = raw ? JSON.parse(raw) : {};
-      return obj && typeof obj === 'object' ? obj : {};
-    } catch (e) { return {}; }
-  }
-
-  function save() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
-  }
-
-  // ── формат ─────────────────────────────────────────────────────────────────
-
-  function money(n) {
-    return Math.round(n).toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
-  }
-
-  function kgFmt(n) {
-    return (Math.round(n * 100) / 100).toLocaleString('ru-RU').replace(/ /g, ' ');
-  }
-
-  function plural(n, one, few, many) {
-    var a = Math.abs(n) % 100, b = a % 10;
-    if (a > 10 && a < 20) return many;
-    if (b > 1 && b < 5) return few;
-    if (b === 1) return one;
-    return many;
-  }
-
-  // ── расчёт ─────────────────────────────────────────────────────────────────
-
-  function coffeeKg() {
-    var kg = 0;
-    for (var sku in state) {
-      if (!state[sku] || !meta[sku]) continue;
-      kg += state[sku] * (meta[sku].kg || 0);
-    }
-    return kg;
-  }
-
-  function tierIndex() {
-    var kg = coffeeKg();
-    if (kg >= TIERS[2]) return 2;
-    if (kg >= TIERS[1]) return 1;
-    return 0;
-  }
-
-  function unitPrice(sku) {
-    var m = meta[sku];
-    if (!m) return 0;
-    if (m.tiers) return m.tiers[tierIndex()];
-    return m.price;
-  }
-
-  function totals() {
-    var sum = 0, count = 0;
-    for (var sku in state) {
-      var q = state[sku];
-      if (!q || !meta[sku]) continue;
-      sum += q * unitPrice(sku);
-      count += 1;
-    }
-    return { sum: sum, count: count };
-  }
-
-  // ── изменение количества ───────────────────────────────────────────────────
-
-  function add(sku, delta) {
-    var q = (state[sku] || 0) + delta;
-    if (q <= 0) delete state[sku]; else state[sku] = q;
-    save();
-    render();
-  }
-
-  function clear() {
-    state = {};
-    save();
-    render();
-  }
-
-  // ── отрисовка ──────────────────────────────────────────────────────────────
-
-  function renderBadges() {
-    var ti = tierIndex();
-    var kg = coffeeKg();
-
-    nodes.forEach(function (el) {
-      var sku = el.dataset.sku;
-      var q = state[sku] || 0;
-      var isTiered = el.dataset.tiers != null;
-      var tier = isTiered ? parseInt(el.dataset.tier, 10) : -1;
-
-      // подсветка действующей ступени опта
-      if (isTiered) {
-        el.classList.toggle('is-live', kg > 0 && tier === ti);
-      }
-
-      // значок с количеством: у эспрессо — только на действующей ступени
-      var show = q > 0 && (!isTiered || tier === ti);
-      var badge = el.querySelector('.qty');
-      if (show) {
-        if (!badge) {
-          badge = document.createElement('span');
-          badge.className = 'qty' + (el.dataset.accent === 'tea' ? ' qty--tea' : '');
-          badge.setAttribute('role', 'button');
-          badge.setAttribute('aria-label', 'Убрать одну единицу');
-          el.appendChild(badge);
-        }
-        badge.textContent = q;
-      } else if (badge) {
-        badge.remove();
-      }
-    });
-  }
-
-  function hints() {
-    var list = [];
-    var t = totals();
-    var kg = coffeeKg();
-    var ti = tierIndex();
-
-    // ступень опта по кофе
-    if (kg > 0 && ti < 2) {
-      var need = TIERS[ti + 1] - kg;
-      list.push({
-        win: false,
-        html: 'Ещё <b>' + kgFmt(need) + ' кг</b> кофе — и весь эспрессо уйдёт на ступень «' +
-              (ti === 0 ? '20–49 кг' : 'от 50 кг') + '»'
-      });
-    } else if (kg >= TIERS[2]) {
-      list.push({ win: true, html: 'В заказе <b>' + kgFmt(kg) + ' кг</b> кофе — действует лучшая цена «от 50 кг»' });
-    }
-
-    // бесплатная доставка
-    if (t.sum > 0 && t.sum < FREE_DELIVERY) {
-      list.push({
-        win: false,
-        html: 'До бесплатной доставки не хватает <b>' + money(FREE_DELIVERY - t.sum) + '</b>'
-      });
-    } else if (t.sum >= FREE_DELIVERY) {
-      list.push({ win: true, html: 'Доставка бесплатно — заказ больше ' + money(FREE_DELIVERY) });
-    }
-
-    return list;
-  }
-
-  function renderSheet() {
-    var body = els.lines;
-    body.innerHTML = '';
-
-    var skus = Object.keys(state).filter(function (s) { return state[s] > 0 && meta[s]; });
-    if (!skus.length) {
-      body.innerHTML = '<div class="sheet__empty">Заказ пуст.<br>Коснитесь оптовой цены, чтобы добавить позицию.</div>';
-    } else {
-      skus.forEach(function (sku) {
-        var m = meta[sku], q = state[sku], p = unitPrice(sku);
-
-        var line = document.createElement('div');
-        line.className = 'line';
-
-        var main = document.createElement('div');
-        main.className = 'line__main';
-        var name = document.createElement('div');
-        name.className = 'line__name';
-        name.textContent = m.name;
-        var metaEl = document.createElement('div');
-        metaEl.className = 'line__meta';
-        metaEl.innerHTML = '<span class="line__dot' + (m.accent === 'tea' ? ' line__dot--tea' : '') +
-                           '"></span>' + m.unit + ' · ' + money(p);
-        main.appendChild(name);
-        main.appendChild(metaEl);
-
-        var step = document.createElement('div');
-        step.className = 'step';
-        var minus = document.createElement('button');
-        minus.className = 'step__btn';
-        minus.type = 'button';
-        minus.textContent = '−';
-        minus.setAttribute('aria-label', 'Убрать одну единицу');
-        minus.addEventListener('click', function () { add(sku, -1); });
-        var val = document.createElement('span');
-        val.className = 'step__val';
-        val.textContent = q;
-        var plus = document.createElement('button');
-        plus.className = 'step__btn';
-        plus.type = 'button';
-        plus.textContent = '+';
-        plus.setAttribute('aria-label', 'Добавить одну единицу');
-        plus.addEventListener('click', function () { add(sku, 1); });
-        step.appendChild(minus);
-        step.appendChild(val);
-        step.appendChild(plus);
-
-        var sum = document.createElement('div');
-        sum.className = 'line__sum';
-        sum.textContent = money(q * p);
-
-        line.appendChild(main);
-        line.appendChild(step);
-        line.appendChild(sum);
-        body.appendChild(line);
-      });
-    }
-
-    els.hints.innerHTML = '';
-    hints().forEach(function (h) {
-      var d = document.createElement('div');
-      d.className = 'hint' + (h.win ? ' hint--win' : '');
-      d.innerHTML = '<span class="hint__ico">' + (h.win ? '✓' : '→') + '</span><span>' + h.html + '</span>';
-      els.hints.appendChild(d);
-    });
-
-    els.total.textContent = money(totals().sum);
-  }
-
-  function render() {
-    var t = totals();
-
-    renderBadges();
-
-    if (t.count > 0) {
-      els.bar.hidden = false;
-      document.body.classList.add('has-cart');
-      els.count.textContent = t.count;
-      els.label.textContent = plural(t.count, 'позиция', 'позиции', 'позиций');
-      els.sum.textContent = money(t.sum);
-
-      var hs = hints();
-      els.barHint.hidden = !hs.length;
-      document.body.classList.toggle('has-hint', hs.length > 0);
-      if (hs.length) els.barHint.innerHTML = hs[0].html;
-    } else {
-      els.bar.hidden = true;
-      els.barHint.hidden = true;
-      document.body.classList.remove('has-cart');
-      document.body.classList.remove('has-hint');
-      closeSheet();
-    }
-
-    if (els.hint) els.hint.style.display = t.count > 0 ? 'none' : '';
-
-    if (!els.sheet.hidden) renderSheet();
-  }
-
-  // ── панель ─────────────────────────────────────────────────────────────────
-
-  function openSheet() {
-    els.sheet.hidden = false;
-    document.documentElement.style.overflow = 'hidden';
-    renderSheet();
-  }
-
-  function closeSheet() {
-    els.sheet.hidden = true;
-    document.documentElement.style.overflow = '';
-  }
-
-  // ── подсказка на первом ценовом слайде ─────────────────────────────────────
-
-  function mountHint() {
-    var first = document.querySelector('.is-buy');
-    if (!first) return;
-    var card = first.closest('.card');
-    if (!card) return;
-    var head = card.querySelector('.head');
-    if (!head) return;
-    var hint = document.createElement('div');
-    hint.className = 'buyhint';
-    hint.innerHTML = 'Коснитесь <b>оптовой цены</b> — позиция уйдёт в заказ';
-    head.insertAdjacentElement('afterend', hint);
-    els.hint = hint;
-  }
-
-  // ── инициализация ──────────────────────────────────────────────────────────
-
-  function init() {
-    els = {
-      bar: document.getElementById('cartbar'),
-      barHint: document.getElementById('cartBarHint'),
-      count: document.getElementById('cartCount'),
-      label: document.getElementById('cartLabel'),
-      sum: document.getElementById('cartSum'),
-      sheet: document.getElementById('cartSheet'),
-      lines: document.getElementById('cartLines'),
-      hints: document.getElementById('cartHints'),
-      total: document.getElementById('cartTotal')
-    };
-    if (!els.bar || !els.sheet) return;
-
-    nodes = Array.prototype.slice.call(document.querySelectorAll('.is-buy'));
-    nodes.forEach(function (el) {
-      var sku = el.dataset.sku;
-      if (!sku) return;
-      (bySku[sku] = bySku[sku] || []).push(el);
-      if (!meta[sku]) {
-        meta[sku] = {
-          name: el.dataset.name,
-          unit: el.dataset.unit,
-          price: parseInt(el.dataset.price, 10) || 0,
-          kg: parseFloat(el.dataset.kg) || 0,
-          accent: el.dataset.accent,
-          tiers: el.dataset.tiers
-            ? el.dataset.tiers.split(',').map(function (x) { return parseInt(x, 10); })
-            : null
-        };
-      }
-    });
-
-    // чистим состояние от позиций, которых больше нет в прайсе
-    for (var sku in state) if (!meta[sku]) delete state[sku];
-
-    document.addEventListener('click', function (e) {
-      var badge = e.target.closest && e.target.closest('.qty');
-      if (badge) {
-        e.preventDefault();
-        e.stopPropagation();
-        var host = badge.closest('.is-buy');
-        if (host) add(host.dataset.sku, -1);
-        return;
-      }
-      var cell = e.target.closest && e.target.closest('.is-buy');
-      if (cell) {
-        e.preventDefault();
-        add(cell.dataset.sku, 1);
-        cell.classList.remove('is-pop');
-        void cell.offsetWidth;
-        cell.classList.add('is-pop');
-      }
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !els.sheet.hidden) closeSheet();
-      if ((e.key === 'Enter' || e.key === ' ') &&
-          e.target.classList && e.target.classList.contains('is-buy')) {
-        e.preventDefault();
-        add(e.target.dataset.sku, 1);
-      }
-    });
-
-    document.getElementById('cartbarOpen').addEventListener('click', openSheet);
-    document.getElementById('cartClose').addEventListener('click', closeSheet);
-    document.getElementById('cartScrim').addEventListener('click', closeSheet);
-    document.getElementById('cartClear').addEventListener('click', clear);
-
-    mountHint();
-    render();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-
-</script>
 </body>
 </html>

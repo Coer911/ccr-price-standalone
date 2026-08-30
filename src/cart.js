@@ -7,6 +7,11 @@
 (function () {
   'use strict';
 
+  // Разметка корзины лежит в странице всегда, но показываем её только когда
+  // скрипт действительно выполнился — иначе кнопки выглядели бы рабочими,
+  // а тап по ним ничего не делал.
+  document.documentElement.className += ' has-cart-js';
+
   var STORE_KEY = 'ccr-cart-v1';
   var FREE_DELIVERY = 6000;      // ₽, слайд «Условия заказа»
   var TIERS = [0, 20, 50];       // кг: 1–19 / 20–49 / от 50
@@ -352,7 +357,7 @@
     // выкидываем из сохранённого заказа позиции, которых больше нет в прайсе
     for (var sku in state) if (!meta[sku]) delete state[sku];
 
-    document.addEventListener('click', function (e) {
+    (document.body || document).addEventListener('click', function (e) {
       var btn = e.target.closest && e.target.closest('.buyctl__b');
       if (btn) {
         e.preventDefault();

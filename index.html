@@ -348,6 +348,16 @@
    Палитра и стекло — по дизайн-правилам прайса.
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* Пока скрипт не поднялся, корзины нет: часть просмотрщиков файлов на
+   телефоне открывает HTML без выполнения JavaScript. Лучше показать чистый
+   прайс, чем живые на вид, но мёртвые кнопки. */
+html:not(.has-cart-js) .buyctl,
+html:not(.has-cart-js) .cartbar,
+html:not(.has-cart-js) .sheet,
+html:not(.has-cart-js) .cart-toast,
+html:not(.has-cart-js) .buyhint{display:none !important}
+html:not(.has-cart-js) body{padding-bottom:0 !important}
+
 :root{
   --cart-amber:#ec9a4d;
   --cart-tea:#8fc45c;
@@ -364,6 +374,7 @@
 .is-buy{
   position:relative;
   cursor:pointer;
+  touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
   -webkit-user-select:none;
   user-select:none;
@@ -392,6 +403,7 @@
 }
 .buyctl__b{
   flex:0 0 auto;
+  touch-action:manipulation;
   width:27px; height:27px; padding:0;
   display:flex; align-items:center; justify-content:center;
   font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
@@ -513,6 +525,7 @@
 
 .cartbar__main{
   width:100%;
+  touch-action:manipulation;
   display:flex; align-items:center; justify-content:space-between;
   gap:12px;
   padding:13px 16px;
@@ -664,6 +677,7 @@ body.has-hint{padding-bottom:152px}
 .step{display:flex; align-items:center; gap:2px; flex:0 0 auto}
 .step__btn{
   width:29px; height:29px;
+  touch-action:manipulation;
   display:flex; align-items:center; justify-content:center;
   font-size:15px; line-height:1; color:var(--cart-text);
   background:rgba(255,238,214,.08);
@@ -1372,6 +1386,11 @@ body.has-hint{padding-bottom:152px}
 (function () {
   'use strict';
 
+  // Разметка корзины лежит в странице всегда, но показываем её только когда
+  // скрипт действительно выполнился — иначе кнопки выглядели бы рабочими,
+  // а тап по ним ничего не делал.
+  document.documentElement.className += ' has-cart-js';
+
   var STORE_KEY = 'ccr-cart-v1';
   var FREE_DELIVERY = 6000;      // ₽, слайд «Условия заказа»
   var TIERS = [0, 20, 50];       // кг: 1–19 / 20–49 / от 50
@@ -1717,7 +1736,7 @@ body.has-hint{padding-bottom:152px}
     // выкидываем из сохранённого заказа позиции, которых больше нет в прайсе
     for (var sku in state) if (!meta[sku]) delete state[sku];
 
-    document.addEventListener('click', function (e) {
+    (document.body || document).addEventListener('click', function (e) {
       var btn = e.target.closest && e.target.closest('.buyctl__b');
       if (btn) {
         e.preventDefault();

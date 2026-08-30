@@ -166,7 +166,21 @@ with sync_playwright() as pw:
     (ROOT / "shots" / "print.pdf").write_bytes(pdf)
     check("PDF собрался", len(pdf) > 50000, f"{len(pdf)//1024} КБ")
 
-    print("\n9. Ошибки консоли за весь прогон")
+    print("\n9. Просмотрщик без JavaScript — мёртвых кнопок быть не должно")
+    nojs = b.new_context(viewport={"width": 393, "height": 852},
+                         has_touch=True, is_mobile=True, java_script_enabled=False)
+    np = nojs.new_page()
+    np.goto(URL)
+    np.wait_for_timeout(400)
+    check("кнопки + скрыты", np.locator(".buyctl").first.is_hidden())
+    check("плашка корзины скрыта", np.locator("#cartbar").is_hidden())
+    check("панель заказа скрыта", np.locator("#cartSheet").is_hidden())
+    check("цены на месте", np.locator(".pcell__opt").first.is_visible())
+    check("названия позиций на месте", np.locator(".item__name").first.is_visible())
+    np.screenshot(path=str(SHOTS / "06-nojs.png"))
+    nojs.close()
+
+    print("\n10. Ошибки консоли за весь прогон")
     check("консоль чистая", not errors, "; ".join(errors[:3]))
 
     b.close()

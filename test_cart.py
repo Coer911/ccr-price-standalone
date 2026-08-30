@@ -89,6 +89,8 @@ with sync_playwright() as pw:
     check("две строки в заказе", page.locator(".line").count() == 2,
           f"строк {page.locator('.line').count()}")
     check("есть подсказка про ступень или доставку", page.locator(".hint").count() >= 1)
+    check("есть призыв отправить скриншот менеджеру",
+          "скриншот" in page.locator("#cartCta").inner_text())
     page.screenshot(path=str(SHOTS / "04-sheet.png"))
 
     print("\n5. Минус в панели и удаление")
@@ -105,6 +107,7 @@ with sync_playwright() as pw:
           "is-empty" in (page.locator("#cartbar").get_attribute("class") or ""))
     check("счётчиков не осталось", page.locator(".buyctl.is-on").count() == 0)
     check("строка выгоды скрыта", page.locator("#cartSave").is_hidden())
+    check("призыв к заказу скрыт при пустом заказе", page.locator("#cartCta").is_hidden())
     check("пустая панель подсказывает про +",
           "Нажмите +" in page.locator(".sheet__empty").inner_text())
     page.locator("#cartClose").click()

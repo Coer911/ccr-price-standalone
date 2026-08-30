@@ -247,6 +247,7 @@
     });
 
     var t = totals();
+    els.cta.hidden = t.count === 0;
     els.save.hidden = t.save <= 0;
     els.saveVal.textContent = '−' + money(t.save);
     els.total.textContent = money(t.sum);
@@ -313,6 +314,7 @@
       lines: document.getElementById('cartLines'),
       hints: document.getElementById('cartHints'),
       save: document.getElementById('cartSave'),
+      cta: document.getElementById('cartCta'),
       saveVal: document.getElementById('cartSaveVal'),
       total: document.getElementById('cartTotal')
     };

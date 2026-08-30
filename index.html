@@ -713,6 +713,18 @@ body.has-hint{padding-bottom:152px}
   border:1px solid var(--cart-line);
   border-radius:11px; cursor:pointer;
 }
+.sheet__cta[hidden]{display:none !important}
+.sheet__cta{
+  margin-top:12px;
+  padding:12px 14px;
+  font-size:13px; line-height:1.4; text-align:center;
+  color:var(--cart-text);
+  background:rgba(236,154,77,.14);
+  border:1px solid rgba(236,154,77,.36);
+  border-radius:14px;
+}
+.sheet__cta b{color:var(--cart-cream); font-weight:600}
+
 .sheet__empty{
   padding:34px 0 30px;
   text-align:center; font-size:13.5px; color:var(--cart-faint);
@@ -1310,6 +1322,9 @@ body.has-hint{padding-bottom:152px}
       </div>
       <button class="sheet__clear" id="cartClear" type="button">Очистить</button>
     </div>
+    <div class="sheet__cta" id="cartCta" hidden>
+      Чтобы оформить заказ — отправьте <b>скриншот этого экрана</b> вашему менеджеру
+    </div>
   </div>
 </div>
 
@@ -1565,6 +1580,7 @@ body.has-hint{padding-bottom:152px}
     });
 
     var t = totals();
+    els.cta.hidden = t.count === 0;
     els.save.hidden = t.save <= 0;
     els.saveVal.textContent = '−' + money(t.save);
     els.total.textContent = money(t.sum);
@@ -1631,6 +1647,7 @@ body.has-hint{padding-bottom:152px}
       lines: document.getElementById('cartLines'),
       hints: document.getElementById('cartHints'),
       save: document.getElementById('cartSave'),
+      cta: document.getElementById('cartCta'),
       saveVal: document.getElementById('cartSaveVal'),
       total: document.getElementById('cartTotal')
     };

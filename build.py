@@ -134,6 +134,17 @@ def build_html(base: str, with_cart: bool):
     products = []
     seen = {}
     replacements = []            # (начало, конец, новый текст) — по base
+    name_skus = {}               # (начало, конец) названия -> [sku]
+    name_wrap = {}               # (начало, конец) -> (префикс, суффикс) для дрипа
+    name_accent = {}             # (начало, конец) -> акцент подчёркивания
+
+    def bind(anc, sku, accent):
+        """Привязать название к позиции — по нему будет идти подчёркивание."""
+        if not anc:
+            return
+        key = (anc[0], anc[1])
+        name_skus.setdefault(key, []).append(sku)
+        name_accent[key] = accent
 
     def uniq(b):
         seen[b] = seen.get(b, 0) + 1
@@ -182,6 +193,7 @@ def build_html(base: str, with_cart: bool):
                        + f'><div class="pcell__cap">{c.group(2)}</div>'
                        + f'<div class="pcell__opt">{c.group(3)}</div></div>')
                 new = new[:c.start()] + rep + new[c.end():]
+            bind(anc, sku, "coffee")
             new += ctl(sku, "coffee", "buyctl--wide")
             replacements.append((cont.start(), cont.end(), new))
             continue
@@ -199,6 +211,7 @@ def build_html(base: str, with_cart: bool):
             products.append({"sku": sku, "name": pname, "unit": cap, "price": price,
                              "kg": kg, "group": "coffee" if accent == "coffee" else "tea",
                              "accent": accent, "slide": no})
+            bind(anc, sku, accent)
             rep = ('<div class="pcell' + c.group(1)
                    + cell_attrs(sku, pname, cap, price, kg, accent)
                    + f'><div class="pcell__cap">{c.group(2)}</div>'
@@ -224,13 +237,14 @@ def build_html(base: str, with_cart: bool):
             '<span class="pp' + cell_attrs(sku, nm, cap, price, 0.0, "coffee")
             + '><span class="pp__lbl">опт</span>'
             + f'<span class="pp__opt">{m.group(1)}</span></span>'))
+        bind(anc, sku, "coffee")
         if anc:
             tag = base[anc[0]:anc[1]]
             if tag.startswith('<span class="variant__name"'):
                 # имя и кнопку кладём в колонку, иначе строка не помещается по ширине
-                replacements.append((anc[0], anc[1],
-                    '<span class="variant__head">' + tag
-                    + ctl(sku, "coffee", "buyctl--under") + '</span>'))
+                name_wrap[(anc[0], anc[1])] = (
+                    '<span class="variant__head">',
+                    ctl(sku, "coffee", "buyctl--under") + '</span>')
             else:
                 # коробка «24 шт»: название сверху, под ним подпись, кнопка после неё
                 fill = re.compile(r'\s*<div class="box__fill">.*?</div>', re.S).match(base, anc[1])
@@ -252,10 +266,11 @@ def build_html(base: str, with_cart: bool):
             '<span class="spp' + cell_attrs(sku, nm, "шт", price, 0.0, "coffee")
             + '><span class="spp__lbl">опт</span>'
             + f'<span class="single__opt">{m.group(1)}</span></span>'))
+        bind(anc, sku, "coffee")
         if anc:
-            replacements.append((anc[0], anc[1],
-                '<span class="single__head">' + base[anc[0]:anc[1]]
-                + ctl(sku, "coffee", "buyctl--under") + '</span>'))
+            name_wrap[(anc[0], anc[1])] = (
+                '<span class="single__head">',
+                ctl(sku, "coffee", "buyctl--under") + '</span>')
 
     # ── 4. чай: + под каждой ценой ────────────────────────────────────────────
     col_pos = {}
@@ -276,10 +291,20 @@ def build_html(base: str, with_cart: bool):
         sku = uniq(f"tea-{slug(nm)}-{slug(cap)}")
         products.append({"sku": sku, "name": nm, "unit": cap, "price": price, "kg": 0.0,
                          "group": "tea", "accent": "tea", "slide": no})
+        bind(anc, sku, "tea")
         replacements.append((m.start(), m.end(),
             '<div class="tea-price' + cell_attrs(sku, nm, cap, price, 0.0, "tea")
             + f'><div class="tea-price__opt">{m.group(1)}</div>'
             + ctl(sku, "tea") + '</div>'))
+
+    # названия получают привязку к позициям — по ней рисуется подчёркивание
+    for (ns, ne), skus in name_skus.items():
+        tag = base[ns:ne]
+        acc = name_accent.get((ns, ne), "coffee")
+        tag = re.sub(r"^(<[a-z]+)", r'\1 data-buy-name="' + " ".join(skus) + '"'
+                     + f' data-buy-accent="{acc}"', tag, count=1)
+        pre, post = name_wrap.get((ns, ne), ("", ""))
+        replacements.append((ns, ne, pre + tag + post))
 
     # применяем справа налево, чтобы не сдвигать смещения
     out = base

@@ -108,6 +108,29 @@
 .tea-price .buyctl__b{width:23px; height:23px; font-size:14px; border-radius:8px}
 .tea-price .buyctl__n{min-width:20px; font-size:12.5px}
 
+/* выбранная позиция — жирное подчёркивание названия */
+[data-buy-name]{
+  text-decoration-color:transparent;
+  text-underline-offset:6px;
+  transition:text-decoration-color .16s ease;
+}
+[data-buy-name].is-picked{
+  text-decoration:underline;
+  text-decoration-thickness:3px;
+  text-underline-offset:6px;
+  text-decoration-color:var(--cart-amber);
+}
+[data-buy-name][data-buy-accent="tea"].is-picked{text-decoration-color:var(--cart-tea)}
+
+/* в плотных строках чая и дрипа подчёркивание прижимаем ближе */
+.tea-row__name.is-picked,
+.variant__name.is-picked,
+.single__name.is-picked,
+.box__kind.is-picked{
+  text-decoration-thickness:2.5px;
+  text-underline-offset:3px;
+}
+
 /* активная ступень опта у эспрессо (подсвечивается, когда в заказе есть кофе) */
 .pcell.is-live{
   background:rgba(236,154,77,.15);
@@ -115,6 +138,7 @@
   box-shadow:inset 0 1px 0 rgba(255,243,224,.18);
 }
 .pcell.is-live .pcell__cap{color:rgba(247,236,220,.85)}
+.pcell.is-live .pcell__opt{color:var(--cart-amber)}
 
 /* подсказка «коснитесь цены» */
 .buyhint{
@@ -416,5 +440,6 @@ body.has-hint{padding-bottom:152px}
 @media print{
   .cartbar,.sheet,.cart-toast,.buyctl,.buyhint{display:none !important}
   body,body.has-hint{padding-bottom:0 !important}
-  .pcell.is-live{box-shadow:none !important}
+  .pcell.is-live{background:none !important; box-shadow:none !important}
+  [data-buy-name].is-picked{text-decoration:none !important}
 }

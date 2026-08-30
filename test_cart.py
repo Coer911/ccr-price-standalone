@@ -45,6 +45,9 @@ with sync_playwright() as pw:
     check("кнопок + ровно 122", page.locator(".buyctl").count() == 122,
           f"найдено {page.locator('.buyctl').count()}")
     check("ни один счётчик не раскрыт", page.locator(".buyctl.is-on").count() == 0)
+    check("названия привязаны к позициям", page.locator("[data-buy-name]").count() > 60,
+          f"{page.locator('[data-buy-name]').count()}")
+    check("ничего не подчёркнуто", page.locator("[data-buy-name].is-picked").count() == 0)
     check("подсказка показана", page.locator(".buyhint").count() == 1)
     page.locator(".card").nth(3).scroll_into_view_if_needed()
     page.wait_for_timeout(400)
@@ -65,6 +68,13 @@ with sync_playwright() as pw:
           page.locator("#cartNote").inner_text() == "· 1 позиция",
           page.locator("#cartNote").inner_text())
     check("подсказка скрылась", page.locator(".buyhint").is_hidden())
+    check("название позиции подчёркнулось",
+          page.locator('.item__name.is-picked').count() == 1)
+    check("подчёркнуто именно «Колумбия супремо»",
+          page.locator('.item__name.is-picked').inner_text().strip().lower() == "колумбия супремо",
+          page.locator('.item__name.is-picked').inner_text())
+    check("базовая ступень не подсвечивается",
+          page.locator('.pcell.is-live').count() == 0)
     page.screenshot(path=str(SHOTS / "02-added.png"))
 
     print("\n3. Ступень опта считается от суммарных кг кофе")
@@ -73,9 +83,10 @@ with sync_playwright() as pw:
     for _ in range(19):
         esp.click()
     page.wait_for_timeout(300)
-    live = page.locator('.pcell.is-live[data-name="Блю спешл"]')
-    check("активна первая ступень при 19,25 кг", live.get_attribute("data-tier") == "0",
-          f'tier={live.get_attribute("data-tier")}')
+    check("на базовой ступени подсветки нет", page.locator('.pcell.is-live').count() == 0)
+    check("название эспрессо подчёркнуто",
+          page.locator('.item__name.is-picked').count() == 2,
+          f"{page.locator('.item__name.is-picked').count()}")
     esp.click()  # 20.25 кг -> ступень 20-49
     page.wait_for_timeout(300)
     live = page.locator('.pcell.is-live[data-name="Блю спешл"]')
@@ -113,6 +124,7 @@ with sync_playwright() as pw:
     check("после очистки плашка пуста",
           "is-empty" in (page.locator("#cartbar").get_attribute("class") or ""))
     check("счётчиков не осталось", page.locator(".buyctl.is-on").count() == 0)
+    check("подчёркивания сняты", page.locator("[data-buy-name].is-picked").count() == 0)
     check("строка выгоды скрыта", page.locator("#cartSave").is_hidden())
     check("призыв к заказу скрыт при пустом заказе", page.locator("#cartCta").is_hidden())
     check("пустая панель подсказывает про +",

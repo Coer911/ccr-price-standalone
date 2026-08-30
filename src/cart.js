@@ -14,6 +14,7 @@
   var state = load();
   var els = {};
   var cells = [];                // ценовые ячейки
+  var names = [];                // названия позиций (для подчёркивания)
   var ctls = [];                 // кнопки-счётчики
   var meta = {};                 // sku -> данные позиции
 
@@ -127,8 +128,15 @@
 
     cells.forEach(function (el) {
       if (el.dataset.tiers == null) return;
-      // подсвечиваем ступень, по которой сейчас идёт расчёт
-      el.classList.toggle('is-live', kg > 0 && parseInt(el.dataset.tier, 10) === ti);
+      // ступень подсвечиваем только когда скидка реально включилась:
+      // на базовой ступени подсвечивать нечего
+      el.classList.toggle('is-live', ti > 0 && parseInt(el.dataset.tier, 10) === ti);
+    });
+
+    // название позиции подчёркивается, когда она в заказе
+    names.forEach(function (el) {
+      var picked = el.dataset.buyName.split(' ').some(function (s) { return state[s] > 0; });
+      el.classList.toggle('is-picked', picked);
     });
 
     ctls.forEach(function (c) {
@@ -324,6 +332,7 @@
 
     cells = Array.prototype.slice.call(document.querySelectorAll('.is-buy'));
     ctls = Array.prototype.slice.call(document.querySelectorAll('.buyctl'));
+    names = Array.prototype.slice.call(document.querySelectorAll('[data-buy-name]'));
 
     cells.forEach(function (el) {
       var sku = el.dataset.sku;

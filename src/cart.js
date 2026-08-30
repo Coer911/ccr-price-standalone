@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    КОРЗИНА ПРАЙСА CULTURA COFFEE
-   Тап по оптовой цене — позиция уходит в заказ.
+   У каждой позиции своя кнопка +, она же счётчик −N+. Тап по цене тоже добавляет.
    Ступень опта по эспрессо считается от суммарного веса кофе в заказе.
-   Данные читаются из data-атрибутов разметки, внешних запросов нет.
+   Внешних запросов нет, данные берутся из data-атрибутов разметки.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -13,8 +13,8 @@
 
   var state = load();
   var els = {};
-  var nodes = [];                // все кликабельные ячейки
-  var bySku = {};                // sku -> [ячейки]
+  var cells = [];                // ценовые ячейки
+  var ctls = [];                 // кнопки-счётчики
   var meta = {};                 // sku -> данные позиции
 
   // ── хранилище ──────────────────────────────────────────────────────────────
@@ -60,34 +60,53 @@
     return kg;
   }
 
-  function tierIndex() {
-    var kg = coffeeKg();
+  function tierFor(kg) {
     if (kg >= TIERS[2]) return 2;
     if (kg >= TIERS[1]) return 1;
     return 0;
   }
 
-  function unitPrice(sku) {
+  function tierIndex() { return tierFor(coffeeKg()); }
+
+  function priceAt(sku, ti) {
     var m = meta[sku];
     if (!m) return 0;
-    if (m.tiers) return m.tiers[tierIndex()];
-    return m.price;
+    return m.tiers ? m.tiers[ti] : m.price;
   }
 
+  function unitPrice(sku) { return priceAt(sku, tierIndex()); }
+
   function totals() {
-    var sum = 0, count = 0;
+    var ti = tierIndex();
+    var sum = 0, base = 0, count = 0, units = 0;
     for (var sku in state) {
       var q = state[sku];
       if (!q || !meta[sku]) continue;
-      sum += q * unitPrice(sku);
+      sum += q * priceAt(sku, ti);
+      base += q * priceAt(sku, 0);     // цена без объёмной скидки
       count += 1;
+      units += q;
     }
-    return { sum: sum, count: count };
+    return { sum: sum, base: base, save: base - sum, count: count, units: units };
+  }
+
+  /** Сколько сэкономит текущий заказ, если объём дотянет до следующей ступени. */
+  function saveIfNextTier() {
+    var ti = tierIndex();
+    if (ti >= 2) return 0;
+    var diff = 0;
+    for (var sku in state) {
+      var q = state[sku];
+      if (!q || !meta[sku] || !meta[sku].tiers) continue;
+      diff += q * (priceAt(sku, ti) - priceAt(sku, ti + 1));
+    }
+    return diff;
   }
 
   // ── изменение количества ───────────────────────────────────────────────────
 
   function add(sku, delta) {
+    if (!meta[sku]) return;
     var q = (state[sku] || 0) + delta;
     if (q <= 0) delete state[sku]; else state[sku] = q;
     save();
@@ -100,40 +119,26 @@
     render();
   }
 
-  // ── отрисовка ──────────────────────────────────────────────────────────────
+  // ── отрисовка прайса ───────────────────────────────────────────────────────
 
-  function renderBadges() {
+  function renderCells() {
     var ti = tierIndex();
     var kg = coffeeKg();
 
-    nodes.forEach(function (el) {
-      var sku = el.dataset.sku;
-      var q = state[sku] || 0;
-      var isTiered = el.dataset.tiers != null;
-      var tier = isTiered ? parseInt(el.dataset.tier, 10) : -1;
+    cells.forEach(function (el) {
+      if (el.dataset.tiers == null) return;
+      // подсвечиваем ступень, по которой сейчас идёт расчёт
+      el.classList.toggle('is-live', kg > 0 && parseInt(el.dataset.tier, 10) === ti);
+    });
 
-      // подсветка действующей ступени опта
-      if (isTiered) {
-        el.classList.toggle('is-live', kg > 0 && tier === ti);
-      }
-
-      // значок с количеством: у эспрессо — только на действующей ступени
-      var show = q > 0 && (!isTiered || tier === ti);
-      var badge = el.querySelector('.qty');
-      if (show) {
-        if (!badge) {
-          badge = document.createElement('span');
-          badge.className = 'qty' + (el.dataset.accent === 'tea' ? ' qty--tea' : '');
-          badge.setAttribute('role', 'button');
-          badge.setAttribute('aria-label', 'Убрать одну единицу');
-          el.appendChild(badge);
-        }
-        badge.textContent = q;
-      } else if (badge) {
-        badge.remove();
-      }
+    ctls.forEach(function (c) {
+      var q = state[c.dataset.ctl] || 0;
+      c.classList.toggle('is-on', q > 0);
+      c.querySelector('.buyctl__n').textContent = q;
     });
   }
+
+  // ── подсказки ──────────────────────────────────────────────────────────────
 
   function hints() {
     var list = [];
@@ -141,19 +146,21 @@
     var kg = coffeeKg();
     var ti = tierIndex();
 
-    // ступень опта по кофе
     if (kg > 0 && ti < 2) {
       var need = TIERS[ti + 1] - kg;
+      var gain = saveIfNextTier();
       list.push({
         win: false,
-        html: 'Ещё <b>' + kgFmt(need) + ' кг</b> кофе — и весь эспрессо уйдёт на ступень «' +
-              (ti === 0 ? '20–49 кг' : 'от 50 кг') + '»'
+        html: 'До скидки осталось <b>' + kgFmt(need) + ' кг</b> кофе' +
+              (gain > 0 ? ' — сэкономите <b>' + money(gain) + '</b>' : '')
       });
     } else if (kg >= TIERS[2]) {
-      list.push({ win: true, html: 'В заказе <b>' + kgFmt(kg) + ' кг</b> кофе — действует лучшая цена «от 50 кг»' });
+      list.push({
+        win: true,
+        html: 'В заказе <b>' + kgFmt(kg) + ' кг</b> кофе — действует лучшая цена «от 50 кг»'
+      });
     }
 
-    // бесплатная доставка
     if (t.sum > 0 && t.sum < FREE_DELIVERY) {
       list.push({
         win: false,
@@ -166,105 +173,106 @@
     return list;
   }
 
+  // ── панель заказа ──────────────────────────────────────────────────────────
+
+  function lineNode(sku) {
+    var m = meta[sku], q = state[sku], p = unitPrice(sku), full = priceAt(sku, 0);
+
+    var line = document.createElement('div');
+    line.className = 'line';
+
+    var main = document.createElement('div');
+    main.className = 'line__main';
+
+    var name = document.createElement('div');
+    name.className = 'line__name';
+    name.textContent = m.name;
+
+    var info = document.createElement('div');
+    info.className = 'line__meta';
+    info.innerHTML = '<span class="line__dot' + (m.accent === 'tea' ? ' line__dot--tea' : '') +
+                     '"></span>' + m.unit + ' · ' + money(p) +
+                     (p < full ? ' <s>' + money(full) + '</s>' : '');
+    main.appendChild(name);
+    main.appendChild(info);
+
+    var step = document.createElement('div');
+    step.className = 'step';
+    ['−', null, '+'].forEach(function (label) {
+      if (label === null) {
+        var val = document.createElement('span');
+        val.className = 'step__val';
+        val.textContent = q;
+        step.appendChild(val);
+        return;
+      }
+      var b = document.createElement('button');
+      b.className = 'step__btn';
+      b.type = 'button';
+      b.textContent = label;
+      b.setAttribute('aria-label', label === '+' ? 'Добавить одну единицу' : 'Убрать одну единицу');
+      b.addEventListener('click', function () { add(sku, label === '+' ? 1 : -1); });
+      step.appendChild(b);
+    });
+
+    var sum = document.createElement('div');
+    sum.className = 'line__sum';
+    sum.textContent = money(q * p);
+
+    line.appendChild(main);
+    line.appendChild(step);
+    line.appendChild(sum);
+    return line;
+  }
+
   function renderSheet() {
     var body = els.lines;
     body.innerHTML = '';
 
     var skus = Object.keys(state).filter(function (s) { return state[s] > 0 && meta[s]; });
     if (!skus.length) {
-      body.innerHTML = '<div class="sheet__empty">Заказ пуст.<br>Коснитесь оптовой цены, чтобы добавить позицию.</div>';
+      body.innerHTML = '<div class="sheet__empty">Заказ пуст.<br>' +
+                       'Нажмите + у нужной позиции.</div>';
     } else {
-      skus.forEach(function (sku) {
-        var m = meta[sku], q = state[sku], p = unitPrice(sku);
-
-        var line = document.createElement('div');
-        line.className = 'line';
-
-        var main = document.createElement('div');
-        main.className = 'line__main';
-        var name = document.createElement('div');
-        name.className = 'line__name';
-        name.textContent = m.name;
-        var metaEl = document.createElement('div');
-        metaEl.className = 'line__meta';
-        metaEl.innerHTML = '<span class="line__dot' + (m.accent === 'tea' ? ' line__dot--tea' : '') +
-                           '"></span>' + m.unit + ' · ' + money(p);
-        main.appendChild(name);
-        main.appendChild(metaEl);
-
-        var step = document.createElement('div');
-        step.className = 'step';
-        var minus = document.createElement('button');
-        minus.className = 'step__btn';
-        minus.type = 'button';
-        minus.textContent = '−';
-        minus.setAttribute('aria-label', 'Убрать одну единицу');
-        minus.addEventListener('click', function () { add(sku, -1); });
-        var val = document.createElement('span');
-        val.className = 'step__val';
-        val.textContent = q;
-        var plus = document.createElement('button');
-        plus.className = 'step__btn';
-        plus.type = 'button';
-        plus.textContent = '+';
-        plus.setAttribute('aria-label', 'Добавить одну единицу');
-        plus.addEventListener('click', function () { add(sku, 1); });
-        step.appendChild(minus);
-        step.appendChild(val);
-        step.appendChild(plus);
-
-        var sum = document.createElement('div');
-        sum.className = 'line__sum';
-        sum.textContent = money(q * p);
-
-        line.appendChild(main);
-        line.appendChild(step);
-        line.appendChild(sum);
-        body.appendChild(line);
-      });
+      skus.forEach(function (sku) { body.appendChild(lineNode(sku)); });
     }
 
     els.hints.innerHTML = '';
     hints().forEach(function (h) {
       var d = document.createElement('div');
       d.className = 'hint' + (h.win ? ' hint--win' : '');
-      d.innerHTML = '<span class="hint__ico">' + (h.win ? '✓' : '→') + '</span><span>' + h.html + '</span>';
+      d.innerHTML = '<span class="hint__ico">' + (h.win ? '✓' : '→') + '</span><span>' +
+                    h.html + '</span>';
       els.hints.appendChild(d);
     });
 
-    els.total.textContent = money(totals().sum);
+    var t = totals();
+    els.save.hidden = t.save <= 0;
+    els.saveVal.textContent = '−' + money(t.save);
+    els.total.textContent = money(t.sum);
   }
+
+  // ── общий рендер ───────────────────────────────────────────────────────────
 
   function render() {
     var t = totals();
 
-    renderBadges();
+    renderCells();
 
-    if (t.count > 0) {
-      els.bar.hidden = false;
-      document.body.classList.add('has-cart');
-      els.count.textContent = t.count;
-      els.label.textContent = plural(t.count, 'позиция', 'позиции', 'позиций');
-      els.sum.textContent = money(t.sum);
+    els.bar.classList.toggle('is-empty', t.count === 0);
+    els.count.textContent = t.count;
+    els.label.textContent = plural(t.count, 'позиция', 'позиции', 'позиций');
+    els.sum.textContent = money(t.sum);
 
-      var hs = hints();
-      els.barHint.hidden = !hs.length;
-      document.body.classList.toggle('has-hint', hs.length > 0);
-      if (hs.length) els.barHint.innerHTML = hs[0].html;
-    } else {
-      els.bar.hidden = true;
-      els.barHint.hidden = true;
-      document.body.classList.remove('has-cart');
-      document.body.classList.remove('has-hint');
-      closeSheet();
-    }
+    var hs = hints();
+    els.barHint.hidden = !hs.length;
+    document.body.classList.toggle('has-hint', hs.length > 0);
+    if (hs.length) els.barHint.innerHTML = hs[0].html;
 
     if (els.hint) els.hint.style.display = t.count > 0 ? 'none' : '';
 
     if (!els.sheet.hidden) renderSheet();
   }
-
-  // ── панель ─────────────────────────────────────────────────────────────────
 
   function openSheet() {
     els.sheet.hidden = false;
@@ -283,12 +291,11 @@
     var first = document.querySelector('.is-buy');
     if (!first) return;
     var card = first.closest('.card');
-    if (!card) return;
-    var head = card.querySelector('.head');
+    var head = card && card.querySelector('.head');
     if (!head) return;
     var hint = document.createElement('div');
     hint.className = 'buyhint';
-    hint.innerHTML = 'Коснитесь <b>оптовой цены</b> — позиция уйдёт в заказ';
+    hint.innerHTML = 'Нажмите <b>+</b> у позиции — она уйдёт в заказ';
     head.insertAdjacentElement('afterend', hint);
     els.hint = hint;
   }
@@ -305,39 +312,40 @@
       sheet: document.getElementById('cartSheet'),
       lines: document.getElementById('cartLines'),
       hints: document.getElementById('cartHints'),
+      save: document.getElementById('cartSave'),
+      saveVal: document.getElementById('cartSaveVal'),
       total: document.getElementById('cartTotal')
     };
     if (!els.bar || !els.sheet) return;
 
-    nodes = Array.prototype.slice.call(document.querySelectorAll('.is-buy'));
-    nodes.forEach(function (el) {
+    cells = Array.prototype.slice.call(document.querySelectorAll('.is-buy'));
+    ctls = Array.prototype.slice.call(document.querySelectorAll('.buyctl'));
+
+    cells.forEach(function (el) {
       var sku = el.dataset.sku;
-      if (!sku) return;
-      (bySku[sku] = bySku[sku] || []).push(el);
-      if (!meta[sku]) {
-        meta[sku] = {
-          name: el.dataset.name,
-          unit: el.dataset.unit,
-          price: parseInt(el.dataset.price, 10) || 0,
-          kg: parseFloat(el.dataset.kg) || 0,
-          accent: el.dataset.accent,
-          tiers: el.dataset.tiers
-            ? el.dataset.tiers.split(',').map(function (x) { return parseInt(x, 10); })
-            : null
-        };
-      }
+      if (!sku || meta[sku]) return;
+      meta[sku] = {
+        name: el.dataset.name,
+        unit: el.dataset.unit,
+        price: parseInt(el.dataset.price, 10) || 0,
+        kg: parseFloat(el.dataset.kg) || 0,
+        accent: el.dataset.accent,
+        tiers: el.dataset.tiers
+          ? el.dataset.tiers.split(',').map(function (x) { return parseInt(x, 10); })
+          : null
+      };
     });
 
-    // чистим состояние от позиций, которых больше нет в прайсе
+    // выкидываем из сохранённого заказа позиции, которых больше нет в прайсе
     for (var sku in state) if (!meta[sku]) delete state[sku];
 
     document.addEventListener('click', function (e) {
-      var badge = e.target.closest && e.target.closest('.qty');
-      if (badge) {
+      var btn = e.target.closest && e.target.closest('.buyctl__b');
+      if (btn) {
         e.preventDefault();
         e.stopPropagation();
-        var host = badge.closest('.is-buy');
-        if (host) add(host.dataset.sku, -1);
+        var ctl = btn.closest('.buyctl');
+        add(ctl.dataset.ctl, btn.classList.contains('buyctl__plus') ? 1 : -1);
         return;
       }
       var cell = e.target.closest && e.target.closest('.is-buy');
@@ -352,8 +360,8 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !els.sheet.hidden) closeSheet();
-      if ((e.key === 'Enter' || e.key === ' ') &&
-          e.target.classList && e.target.classList.contains('is-buy')) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList &&
+          e.target.classList.contains('is-buy')) {
         e.preventDefault();
         add(e.target.dataset.sku, 1);
       }

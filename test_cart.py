@@ -34,7 +34,13 @@ with sync_playwright() as pw:
     skus = page.evaluate(
         "Array.from(document.querySelectorAll('.is-buy')).map(e=>e.dataset.sku)")
     check("уникальных sku 122", len(set(skus)) == 122, f"{len(set(skus))}")
-    check("плашка корзины скрыта", page.locator("#cartbar").is_hidden())
+    check("плашка корзины видна всегда", page.locator("#cartbar").is_visible())
+    check("в пустой корзине 0", page.locator("#cartCount").inner_text() == "0",
+          page.locator("#cartCount").inner_text())
+    check("плашка помечена пустой", "is-empty" in (page.locator("#cartbar").get_attribute("class") or ""))
+    check("кнопок + ровно 122", page.locator(".buyctl").count() == 122,
+          f"найдено {page.locator('.buyctl').count()}")
+    check("ни один счётчик не раскрыт", page.locator(".buyctl.is-on").count() == 0)
     check("подсказка показана", page.locator(".buyhint").count() == 1)
     page.locator(".card").nth(3).scroll_into_view_if_needed()
     page.wait_for_timeout(400)
@@ -44,9 +50,11 @@ with sync_playwright() as pw:
     cell = page.locator('.pcell.is-buy[data-name="Колумбия супремо"]').first
     cell.click()
     page.wait_for_timeout(350)
-    check("значок с количеством появился", cell.locator(".qty").count() == 1)
-    check("значок показывает 1", cell.locator(".qty").inner_text() == "1")
-    check("плашка появилась", page.locator("#cartbar").is_visible())
+    check("счётчик раскрылся", page.locator(".buyctl.is-on").count() == 1)
+    check("счётчик показывает 1",
+          page.locator(".buyctl.is-on .buyctl__n").inner_text() == "1")
+    check("плашка перестала быть пустой",
+          "is-empty" not in (page.locator("#cartbar").get_attribute("class") or ""))
     check("сумма 660 ₽", "660" in page.locator("#cartSum").inner_text(),
           page.locator("#cartSum").inner_text())
     check("подсказка скрылась", page.locator(".buyhint").is_hidden())
@@ -66,8 +74,8 @@ with sync_playwright() as pw:
     live = page.locator('.pcell.is-live[data-name="Блю спешл"]')
     check("на 20,25 кг ступень переключилась", live.get_attribute("data-tier") == "1",
           f'tier={live.get_attribute("data-tier")}')
-    check("значок переехал на активную ступень",
-          page.locator('.pcell.is-buy[data-name="Блю спешл"][data-tier="1"] .qty').count() == 1)
+    check("у эспрессо один общий счётчик на позицию",
+          page.locator('.buyctl--wide.is-on').count() == 1)
     # 20 кг по 1700 + фильтр 660
     check("сумма пересчиталась по новой ступени",
           "34 660" in page.locator("#cartSum").inner_text().replace(" ", " "),
@@ -88,24 +96,41 @@ with sync_playwright() as pw:
     page.wait_for_timeout(250)
     check("количество уменьшилось",
           page.locator("#cartTotal").inner_text() != "", page.locator("#cartTotal").inner_text())
+    check("выгода от объёма показана", not page.locator("#cartSave").is_hidden())
+    check("выгода посчитана", page.locator("#cartSaveVal").inner_text() != "−0 ₽",
+          page.locator("#cartSaveVal").inner_text())
     page.locator("#cartClear").click()
     page.wait_for_timeout(350)
-    check("после очистки плашка скрыта", page.locator("#cartbar").is_hidden())
-    check("значков не осталось", page.locator(".qty").count() == 0)
+    check("после очистки плашка пуста",
+          "is-empty" in (page.locator("#cartbar").get_attribute("class") or ""))
+    check("счётчиков не осталось", page.locator(".buyctl.is-on").count() == 0)
+    check("строка выгоды скрыта", page.locator("#cartSave").is_hidden())
+    check("пустая панель подсказывает про +",
+          "Нажмите +" in page.locator(".sheet__empty").inner_text())
+    page.locator("#cartClose").click()
+    page.wait_for_timeout(350)
 
     print("\n6. Чай — зелёный акцент и свои позиции")
     tea = page.locator('.tea-price.is-buy').first
     tea.scroll_into_view_if_needed()
-    tea.click()
+    tea.locator('.buyctl__plus').click()
     page.wait_for_timeout(300)
-    check("значок чая зелёный", "qty--tea" in (tea.locator(".qty").get_attribute("class") or ""))
+    check("кнопка чая зелёная",
+          "buyctl--tea" in (tea.locator(".buyctl").get_attribute("class") or ""))
+    check("счётчик чая раскрылся", page.locator(".buyctl.is-on").count() == 1)
+    tea.locator('.buyctl__minus').click()
+    page.wait_for_timeout(250)
+    check("минус у позиции убирает из заказа", page.locator(".buyctl.is-on").count() == 0)
+    tea.locator('.buyctl__plus').click()
+    page.wait_for_timeout(250)
     page.screenshot(path=str(SHOTS / "05-tea.png"))
 
     print("\n7. Сохранение между визитами")
     page.reload()
     page.wait_for_timeout(600)
-    check("заказ восстановился", page.locator("#cartbar").is_visible())
-    check("значок на месте", page.locator(".qty").count() == 1)
+    check("заказ восстановился",
+          "is-empty" not in (page.locator("#cartbar").get_attribute("class") or ""))
+    check("счётчик на месте", page.locator(".buyctl.is-on").count() == 1)
 
     print("\n8. Печать")
     pdf_page = b.new_page()
@@ -114,6 +139,7 @@ with sync_playwright() as pw:
     pdf_page.emulate_media(media="print")
     pdf_page.wait_for_timeout(200)
     check("плашка не печатается", pdf_page.locator("#cartbar").is_hidden())
+    check("кнопки + не печатаются", pdf_page.locator(".buyctl").first.is_hidden())
     pdf = pdf_page.pdf(format="A4", print_background=True)
     (ROOT / "shots" / "print.pdf").write_bytes(pdf)
     check("PDF собрался", len(pdf) > 50000, f"{len(pdf)//1024} КБ")

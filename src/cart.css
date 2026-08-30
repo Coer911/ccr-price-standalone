@@ -39,38 +39,74 @@
   100%{transform:scale(1)}
 }
 
-/* счётчик на ячейке — появляется только когда позиция в заказе */
-.qty{
-  position:absolute;
-  bottom:calc(100% - 5px); right:-7px;
-  min-width:21px; height:21px;
-  padding:0 6px;
-  display:inline-flex; align-items:center; justify-content:center;
+/* ── кнопка + у позиции (она же счётчик −N+) ──────────────────────────────── */
+
+.buyctl{
+  display:flex; align-items:center; justify-content:center; gap:3px;
+  margin-top:8px;
+}
+.buyctl__b{
+  flex:0 0 auto;
+  width:27px; height:27px; padding:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-size:16px; font-weight:500; line-height:1;
+  color:var(--cart-cream);
+  background:rgba(236,154,77,.13);
+  border:1px solid rgba(236,154,77,.42);
+  border-radius:9px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .14s ease, transform .1s ease;
+}
+.buyctl__b:hover{background:rgba(236,154,77,.24)}
+.buyctl__b:active{transform:scale(.9)}
+.buyctl__n{
+  min-width:26px;
+  display:none; align-items:center; justify-content:center;
   font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
   font-variant-numeric:tabular-nums;
-  font-size:12px; font-weight:600; line-height:1;
-  color:#2a1a0e;
-  background:var(--cart-amber);
-  border-radius:999px;
-  box-shadow:0 3px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,243,224,.45);
-  z-index:3;
-  cursor:pointer;
-  animation:qtyIn .2s ease;
+  font-size:13.5px; font-weight:600; line-height:1;
+  color:var(--cart-cream);
 }
-.qty--tea{background:var(--cart-tea)}
-@keyframes qtyIn{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
-
-/* у ценовой колонки сверху своя подпись — значок поднимаем над ячейкой целиком */
-.pcell.is-buy .qty{bottom:calc(100% + 2px); right:-4px}
-
-/* строки чая и дрипа плотные — значок мельче и ближе */
-.tea-price.is-buy .qty,
-.pp.is-buy .qty,
-.spp.is-buy .qty{
-  min-width:18px; height:18px; padding:0 5px;
-  font-size:11px;
-  bottom:calc(100% - 3px); right:-5px;
+.buyctl__minus{display:none}
+.buyctl.is-on .buyctl__minus,
+.buyctl.is-on .buyctl__n{display:flex}
+.buyctl.is-on .buyctl__b{
+  background:rgba(236,154,77,.22);
+  border-color:rgba(236,154,77,.6);
 }
+
+/* чайный акцент */
+.buyctl--tea .buyctl__b{
+  background:rgba(143,196,92,.13);
+  border-color:rgba(143,196,92,.42);
+}
+.buyctl--tea .buyctl__b:hover{background:rgba(143,196,92,.24)}
+.buyctl--tea.is-on .buyctl__b{
+  background:rgba(143,196,92,.22);
+  border-color:rgba(143,196,92,.6);
+}
+
+/* эспрессо: один счётчик на позицию, под всеми тремя ступенями */
+.buyctl--wide{margin-top:12px}
+.buyctl--wide .buyctl__b{width:31px; height:31px; border-radius:10px}
+.buyctl--wide .buyctl__n{min-width:44px; font-size:14.5px}
+
+/* дрип: кнопка стоит у названия — колонкой, чтобы строка не сжималась по ширине */
+.variant__head,.single__head{
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:6px; min-width:0;
+}
+.buyctl--under{margin-top:0; justify-content:flex-start}
+.buyctl--under .buyctl__b{width:24px; height:24px; font-size:14px; border-radius:8px}
+.buyctl--under .buyctl__n{min-width:22px; font-size:12.5px}
+.box__body .buyctl--under{margin-top:8px}
+
+/* чай: строки плотные — кнопки компактнее */
+.tea-price .buyctl{margin-top:5px; gap:2px}
+.tea-price .buyctl__b{width:23px; height:23px; font-size:14px; border-radius:8px}
+.tea-price .buyctl__n{min-width:20px; font-size:12.5px}
 
 /* активная ступень опта у эспрессо (подсвечивается, когда в заказе есть кофе) */
 .pcell.is-live{
@@ -92,6 +128,9 @@
 
 /* ── липкая плашка снизу ───────────────────────────────────────────────────── */
 
+.cartbar[hidden],.sheet[hidden],.cart-toast[hidden],.cartbar__hint[hidden]{
+  display:none !important;
+}
 .cartbar{
   position:fixed;
   left:50%; bottom:0;
@@ -141,6 +180,14 @@
 }
 .cartbar__chev{font-size:10px; color:var(--cart-faint)}
 
+/* пустой заказ — плашка на месте, но не кричит */
+.cartbar.is-empty .cartbar__main{opacity:.72}
+.cartbar.is-empty .cartbar__count{
+  color:var(--cart-mute);
+  background:rgba(255,238,214,.12);
+}
+.cartbar.is-empty .cartbar__sum{color:var(--cart-mute)}
+
 .cartbar__hint{
   margin-bottom:7px;
   padding:8px 14px;
@@ -154,8 +201,8 @@
 .cartbar__hint b{font-weight:700}
 
 /* чтобы плашка не перекрывала последний слайд */
-body.has-cart{padding-bottom:104px}
-body.has-cart.has-hint{padding-bottom:150px}
+body{padding-bottom:104px}
+body.has-hint{padding-bottom:152px}
 
 /* ── панель заказа ─────────────────────────────────────────────────────────── */
 
@@ -237,6 +284,7 @@ body.has-cart.has-hint{padding-bottom:150px}
   vertical-align:middle;
 }
 .line__dot--tea{background:var(--cart-tea)}
+.line__meta s{margin-left:5px; color:rgba(247,236,220,.3)}
 
 .step{display:flex; align-items:center; gap:2px; flex:0 0 auto}
 .step__btn{
@@ -278,6 +326,23 @@ body.has-cart.has-hint{padding-bottom:150px}
 }
 .hint b{font-weight:700}
 .hint__ico{flex:0 0 auto; opacity:.85}
+
+.sheet__save[hidden]{display:none !important}
+.sheet__save{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:10px;
+  margin-top:11px; padding:10px 13px;
+  background:rgba(143,196,92,.14);
+  border:1px solid rgba(143,196,92,.34);
+  border-radius:13px;
+}
+.sheet__save-lbl{font-size:12.5px; color:var(--cart-text)}
+.sheet__save-val{
+  font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;
+  font-size:16px; font-weight:600; letter-spacing:-.02em;
+  color:#a8db6e;
+}
 
 .sheet__foot{
   display:flex; align-items:center; justify-content:space-between;
@@ -326,12 +391,12 @@ body.has-cart.has-hint{padding-bottom:150px}
 /* ── доступность и печать ──────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion:reduce){
-  .cartbar,.sheet__panel,.sheet__scrim,.qty,.cart-toast,.is-buy.is-pop{animation:none}
+  .cartbar,.sheet__panel,.sheet__scrim,.cart-toast,.is-buy.is-pop{animation:none}
   .is-buy{transition:none}
 }
 
 @media print{
-  .cartbar,.sheet,.cart-toast,.qty,.buyhint{display:none !important}
-  body.has-cart{padding-bottom:0 !important}
+  .cartbar,.sheet,.cart-toast,.buyctl,.buyhint{display:none !important}
+  body,body.has-hint{padding-bottom:0 !important}
   .pcell.is-live{box-shadow:none !important}
 }

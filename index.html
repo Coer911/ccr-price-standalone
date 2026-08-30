@@ -513,9 +513,15 @@
   border-radius:999px;
 }
 .cartbar__label{
-  font-size:13px; letter-spacing:.01em; color:var(--cart-mute);
+  font-size:14px; font-weight:600; letter-spacing:-.01em;
+  color:var(--cart-text);
+  white-space:nowrap;
+}
+.cartbar__note{
+  font-size:12.5px; letter-spacing:.01em; color:var(--cart-faint);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
+.cartbar.is-empty .cartbar__label{color:var(--cart-mute); font-weight:500}
 .cartbar__right{display:flex; align-items:center; gap:10px}
 .cartbar__sum{
   font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;
@@ -1292,7 +1298,8 @@ body.has-hint{padding-bottom:152px}
   <button class="cartbar__main" id="cartbarOpen" type="button">
     <span class="cartbar__left">
       <span class="cartbar__count" id="cartCount">0</span>
-      <span class="cartbar__label" id="cartLabel">позиций</span>
+      <span class="cartbar__label">Корзина</span>
+      <span class="cartbar__note" id="cartNote"></span>
     </span>
     <span class="cartbar__right">
       <span class="cartbar__sum" id="cartSum">0 ₽</span>
@@ -1595,7 +1602,9 @@ body.has-hint{padding-bottom:152px}
 
     els.bar.classList.toggle('is-empty', t.count === 0);
     els.count.textContent = t.count;
-    els.label.textContent = plural(t.count, 'позиция', 'позиции', 'позиций');
+    els.note.textContent = t.count
+      ? '· ' + t.count + ' ' + plural(t.count, 'позиция', 'позиции', 'позиций')
+      : '';
     els.sum.textContent = money(t.sum);
 
     var hs = hints();
@@ -1641,7 +1650,7 @@ body.has-hint{padding-bottom:152px}
       bar: document.getElementById('cartbar'),
       barHint: document.getElementById('cartBarHint'),
       count: document.getElementById('cartCount'),
-      label: document.getElementById('cartLabel'),
+      note: document.getElementById('cartNote'),
       sum: document.getElementById('cartSum'),
       sheet: document.getElementById('cartSheet'),
       lines: document.getElementById('cartLines'),

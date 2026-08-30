@@ -38,6 +38,10 @@ with sync_playwright() as pw:
     check("в пустой корзине 0", page.locator("#cartCount").inner_text() == "0",
           page.locator("#cartCount").inner_text())
     check("плашка помечена пустой", "is-empty" in (page.locator("#cartbar").get_attribute("class") or ""))
+    check("плашка подписана «Корзина»",
+          page.locator(".cartbar__label").inner_text() == "Корзина",
+          page.locator(".cartbar__label").inner_text())
+    check("в пустой корзине приписки нет", page.locator("#cartNote").inner_text() == "")
     check("кнопок + ровно 122", page.locator(".buyctl").count() == 122,
           f"найдено {page.locator('.buyctl').count()}")
     check("ни один счётчик не раскрыт", page.locator(".buyctl.is-on").count() == 0)
@@ -57,6 +61,9 @@ with sync_playwright() as pw:
           "is-empty" not in (page.locator("#cartbar").get_attribute("class") or ""))
     check("сумма 660 ₽", "660" in page.locator("#cartSum").inner_text(),
           page.locator("#cartSum").inner_text())
+    check("приписка про количество позиций",
+          page.locator("#cartNote").inner_text() == "· 1 позиция",
+          page.locator("#cartNote").inner_text())
     check("подсказка скрылась", page.locator(".buyhint").is_hidden())
     page.screenshot(path=str(SHOTS / "02-added.png"))
 

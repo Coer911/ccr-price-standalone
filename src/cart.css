@@ -168,9 +168,15 @@
   border-radius:999px;
 }
 .cartbar__label{
-  font-size:13px; letter-spacing:.01em; color:var(--cart-mute);
+  font-size:14px; font-weight:600; letter-spacing:-.01em;
+  color:var(--cart-text);
+  white-space:nowrap;
+}
+.cartbar__note{
+  font-size:12.5px; letter-spacing:.01em; color:var(--cart-faint);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
+.cartbar.is-empty .cartbar__label{color:var(--cart-mute); font-weight:500}
 .cartbar__right{display:flex; align-items:center; gap:10px}
 .cartbar__sum{
   font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;

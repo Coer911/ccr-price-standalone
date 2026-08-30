@@ -262,7 +262,9 @@
 
     els.bar.classList.toggle('is-empty', t.count === 0);
     els.count.textContent = t.count;
-    els.label.textContent = plural(t.count, 'позиция', 'позиции', 'позиций');
+    els.note.textContent = t.count
+      ? '· ' + t.count + ' ' + plural(t.count, 'позиция', 'позиции', 'позиций')
+      : '';
     els.sum.textContent = money(t.sum);
 
     var hs = hints();
@@ -308,7 +310,7 @@
       bar: document.getElementById('cartbar'),
       barHint: document.getElementById('cartBarHint'),
       count: document.getElementById('cartCount'),
-      label: document.getElementById('cartLabel'),
+      note: document.getElementById('cartNote'),
       sum: document.getElementById('cartSum'),
       sheet: document.getElementById('cartSheet'),
       lines: document.getElementById('cartLines'),

@@ -60,6 +60,26 @@
     "slide": "04"
   },
   {
+    "sku": "keniya-elgon-1-kg",
+    "name": "Кения элгон",
+    "unit": "1 кг",
+    "price": 2590,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "keniya-elgon-250-g",
+    "name": "Кения элгон",
+    "unit": "250 г",
+    "price": 860,
+    "kg": 0.25,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
     "sku": "ruanda-nyarusiza-1-kg",
     "name": "Руанда ньярусиза",
     "unit": "1 кг",

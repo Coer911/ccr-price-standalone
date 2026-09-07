@@ -8,6 +8,12 @@ URL = "file://" + str(ROOT / "index.html")
 SHOTS = ROOT / "shots"
 SHOTS.mkdir(exist_ok=True)
 
+# ожидаемые количества берём из каталога, чтобы они не разъезжались при правках прайса
+PRODUCTS = json.loads((ROOT / "src" / "products.json").read_text(encoding="utf-8"))
+N_SKU = len(PRODUCTS)
+# у эспрессо одна позиция, но три ячейки-ступени
+N_CELLS = N_SKU + sum(len(p["tiers"]) - 1 for p in PRODUCTS if p.get("tiers"))
+
 fails = []
 
 
@@ -28,12 +34,11 @@ with sync_playwright() as pw:
 
     print("\n1. Исходное состояние")
     check("нет ошибок JS", not errors, "; ".join(errors[:3]))
-    # 122 позиции, но у 5 эспрессо по 3 ячейки-ступени -> 122 + 5*2 = 132 элемента
-    check("кликабельных ячеек 132", page.locator(".is-buy").count() == 132,
+    check(f"кликабельных ячеек {N_CELLS}", page.locator(".is-buy").count() == N_CELLS,
           f"найдено {page.locator('.is-buy').count()}")
     skus = page.evaluate(
         "Array.from(document.querySelectorAll('.is-buy')).map(e=>e.dataset.sku)")
-    check("уникальных sku 122", len(set(skus)) == 122, f"{len(set(skus))}")
+    check(f"уникальных sku {N_SKU}", len(set(skus)) == N_SKU, f"{len(set(skus))}")
     check("плашка корзины видна всегда", page.locator("#cartbar").is_visible())
     check("в пустой корзине 0", page.locator("#cartCount").inner_text() == "0",
           page.locator("#cartCount").inner_text())
@@ -42,7 +47,7 @@ with sync_playwright() as pw:
           page.locator(".cartbar__label").inner_text() == "Корзина",
           page.locator(".cartbar__label").inner_text())
     check("в пустой корзине приписки нет", page.locator("#cartNote").inner_text() == "")
-    check("кнопок + ровно 122", page.locator(".buyctl").count() == 122,
+    check(f"кнопок + ровно {N_SKU}", page.locator(".buyctl").count() == N_SKU,
           f"найдено {page.locator('.buyctl').count()}")
     check("ни один счётчик не раскрыт", page.locator(".buyctl.is-on").count() == 0)
     check("названия привязаны к позициям", page.locator("[data-buy-name]").count() > 60,

@@ -40,26 +40,6 @@
     "slide": "04"
   },
   {
-    "sku": "keniya-kiri-1-kg",
-    "name": "Кения кири",
-    "unit": "1 кг",
-    "price": 2650,
-    "kg": 1.0,
-    "group": "coffee",
-    "accent": "coffee",
-    "slide": "04"
-  },
-  {
-    "sku": "keniya-kiri-250-g",
-    "name": "Кения кири",
-    "unit": "250 г",
-    "price": 780,
-    "kg": 0.25,
-    "group": "coffee",
-    "accent": "coffee",
-    "slide": "04"
-  },
-  {
     "sku": "keniya-elgon-1-kg",
     "name": "Кения элгон",
     "unit": "1 кг",

@@ -25,8 +25,9 @@ SRC = ROOT / "src"
 BASE = SRC / "price-base.html"
 OUT = ROOT / "index.html"
 
-TEA_SLIDES = {"08", "09", "10"}
+TEA_SLIDES = {"09", "10", "11"}
 COFFEE_WEIGHT_SLIDES = {"04", "05"}          # кофе на вес — формирует ступень опта
+CAPSULE_SLIDES = {"07"}                      # капсулы — вёрстка общая с дрипом
 ESPRESSO_CAPS = ("1–19 кг", "20–49 кг", "от 50 кг")
 
 PCELL = (r'<div class="pcell(?: [^"]*)?"><div class="pcell__cap">.*?</div>'
@@ -230,9 +231,11 @@ def build_html(base: str, with_cart: bool):
         price = to_num(m.group(1))
         if not price:
             continue
-        sku = uniq(f"drip-{slug(nm)}-{slug(cap)}")
+        no = slide_of(spans, m.start())
+        kind = "caps" if no in CAPSULE_SLIDES else "drip"
+        sku = uniq(f"{kind}-{slug(nm)}-{slug(cap)}")
         products.append({"sku": sku, "name": nm, "unit": cap, "price": price, "kg": 0.0,
-                         "group": "drip", "accent": "coffee", "slide": "06"})
+                         "group": kind, "accent": "coffee", "slide": no})
         replacements.append((m.start(), m.end(),
             '<span class="pp' + cell_attrs(sku, nm, cap, price, 0.0, "coffee")
             + '><span class="pp__lbl">опт</span>'
@@ -259,9 +262,11 @@ def build_html(base: str, with_cart: bool):
         price = to_num(m.group(1))
         if not price:
             continue
-        sku = uniq(f"drip-sht-{slug(nm)}")
+        no = slide_of(spans, m.start())
+        kind = "caps" if no in CAPSULE_SLIDES else "drip"
+        sku = uniq(f"{kind}-sht-{slug(nm)}")
         products.append({"sku": sku, "name": nm, "unit": "шт", "price": price, "kg": 0.0,
-                         "group": "drip", "accent": "coffee", "slide": "06"})
+                         "group": kind, "accent": "coffee", "slide": no})
         replacements.append((m.start(), m.end(),
             '<span class="spp' + cell_attrs(sku, nm, "шт", price, 0.0, "coffee")
             + '><span class="spp__lbl">опт</span>'

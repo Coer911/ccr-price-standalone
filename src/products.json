@@ -152,7 +152,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "ceremonialnaya-100-g",
@@ -162,7 +162,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "tokusen-grei-d-500-g",
@@ -172,7 +172,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "tokusen-grei-d-100-g",
@@ -182,7 +182,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "kulinari-grei-d-500-g",
@@ -192,7 +192,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "kulinari-grei-d-100-g",
@@ -202,7 +202,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "08"
+    "slide": "09"
   },
   {
     "sku": "drip-miks-6-sht",
@@ -275,6 +275,26 @@
     "slide": "06"
   },
   {
+    "sku": "caps-black-strong-10-sht",
+    "name": "Black strong",
+    "unit": "10 шт",
+    "price": 350,
+    "kg": 0.0,
+    "group": "caps",
+    "accent": "coffee",
+    "slide": "07"
+  },
+  {
+    "sku": "caps-very-special-10-sht",
+    "name": "Very special",
+    "unit": "10 шт",
+    "price": 350,
+    "kg": 0.0,
+    "group": "caps",
+    "accent": "coffee",
+    "slide": "07"
+  },
+  {
     "sku": "drip-sht-braziliya-piberri",
     "name": "Бразилия пиберри",
     "unit": "шт",
@@ -332,7 +352,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-assam-tippi-500-g",
@@ -342,7 +362,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-assam-pekoe-200-g",
@@ -352,7 +372,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-assam-pekoe-500-g",
@@ -362,7 +382,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-dyan-hun-200-g",
@@ -372,7 +392,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-dyan-hun-500-g",
@@ -382,7 +402,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-lapsang-sushong-200-g",
@@ -392,7 +412,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-lapsang-sushong-500-g",
@@ -402,7 +422,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-dyan-hun-sun-chzhen-200-g",
@@ -412,7 +432,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-dyan-hun-sun-chzhen-500-g",
@@ -422,7 +442,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-molochnyi-ulun-200-g",
@@ -432,7 +452,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-molochnyi-ulun-500-g",
@@ -442,7 +462,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-molochnyi-ulun-200-g-2",
@@ -452,7 +472,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-molochnyi-ulun-500-g-2",
@@ -462,7 +482,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-te-gun-in-van-200-g",
@@ -472,7 +492,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-te-gun-in-van-500-g",
@@ -482,7 +502,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-zhenshen-200-g",
@@ -492,7 +512,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-zhenshen-500-g",
@@ -502,7 +522,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-da-hun-pao-200-g",
@@ -512,7 +532,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-da-hun-pao-500-g",
@@ -522,7 +542,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-da-hun-pao-zhou-gui-200-g",
@@ -532,7 +552,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-da-hun-pao-zhou-gui-500-g",
@@ -542,7 +562,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-gaba-medovaya-200-g",
@@ -552,7 +572,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-gaba-medovaya-500-g",
@@ -562,7 +582,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-puer-lao-cha-tou-200-g",
@@ -572,7 +592,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-puer-lao-cha-tou-500-g",
@@ -582,7 +602,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-puer-gun-tin-200-g",
@@ -592,7 +612,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-puer-gun-tin-500-g",
@@ -602,7 +622,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-sencha-200-g",
@@ -612,7 +632,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-sencha-500-g",
@@ -622,7 +642,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-genmai-cha-200-g",
@@ -632,7 +652,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-genmai-cha-500-g",
@@ -642,7 +662,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-moli-hua-cha-s-mao-fen-200-g",
@@ -652,7 +672,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-moli-hua-cha-s-mao-fen-500-g",
@@ -662,7 +682,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-moli-hua-cha-200-g",
@@ -672,7 +692,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-moli-hua-cha-500-g",
@@ -682,7 +702,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-lunczin-200-g",
@@ -692,7 +712,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-lunczin-500-g",
@@ -702,7 +722,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-bai-mu-dan-200-g",
@@ -712,7 +732,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-bai-mu-dan-500-g",
@@ -722,7 +742,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-bai-hao-in-chzhen-200-g",
@@ -732,7 +752,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-bai-hao-in-chzhen-500-g",
@@ -742,7 +762,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "09"
+    "slide": "10"
   },
   {
     "sku": "tea-erl-grei-200-g",
@@ -752,7 +772,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-erl-grei-500-g",
@@ -762,7 +782,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-tae-zhnyi-200-g",
@@ -772,7 +792,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-tae-zhnyi-500-g",
@@ -782,7 +802,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-zele-nyi-tropicheskii-200-g",
@@ -792,7 +812,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-zele-nyi-tropicheskii-500-g",
@@ -802,7 +822,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-1001-noch-200-g",
@@ -812,7 +832,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-1001-noch-500-g",
@@ -822,7 +842,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-masala-200-g",
@@ -832,7 +852,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-masala-500-g",
@@ -842,7 +862,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-glintvei-n-200-g",
@@ -852,7 +872,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-glintvei-n-500-g",
@@ -862,7 +882,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-assam-s-chabrecom-200-g",
@@ -872,7 +892,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-assam-s-chabrecom-500-g",
@@ -882,7 +902,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-assam-s-lavandoi-200-g",
@@ -892,7 +912,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-assam-s-lavandoi-500-g",
@@ -902,7 +922,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-dikaya-vishnya-200-g",
@@ -912,7 +932,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-dikaya-vishnya-500-g",
@@ -922,7 +942,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-fruktovyi-chai-200-g",
@@ -932,7 +952,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-fruktovyi-chai-500-g",
@@ -942,7 +962,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-naglyi-apelsin-200-g",
@@ -952,7 +972,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-naglyi-apelsin-500-g",
@@ -962,7 +982,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-fidzhi-mango-200-g",
@@ -972,7 +992,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-fidzhi-mango-500-g",
@@ -982,7 +1002,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-malina-myata-200-g",
@@ -992,7 +1012,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-malina-myata-500-g",
@@ -1002,7 +1022,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-karamelnyi-ulun-200-g",
@@ -1012,7 +1032,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-karamelnyi-ulun-500-g",
@@ -1022,7 +1042,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-tropicheskii-ulun-200-g",
@@ -1032,7 +1052,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-tropicheskii-ulun-500-g",
@@ -1042,7 +1062,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-mangovyi-ulun-200-g",
@@ -1052,7 +1072,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-mangovyi-ulun-500-g",
@@ -1062,7 +1082,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-malinovyi-ulun-200-g",
@@ -1072,7 +1092,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-malinovyi-ulun-500-g",
@@ -1082,7 +1102,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-gornyi-altai-200-g",
@@ -1092,7 +1112,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-gornyi-altai-500-g",
@@ -1102,7 +1122,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-spokoi-stvie-200-g",
@@ -1112,7 +1132,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-spokoi-stvie-500-g",
@@ -1122,7 +1142,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-garmoniya-200-g",
@@ -1132,7 +1152,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-garmoniya-500-g",
@@ -1142,7 +1162,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-lipa-myata-200-g",
@@ -1152,7 +1172,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-lipa-myata-500-g",
@@ -1162,7 +1182,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-200-g",
@@ -1172,7 +1192,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-500-g",
@@ -1182,7 +1202,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-s-kokosom-200-g",
@@ -1192,7 +1212,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-s-kokosom-500-g",
@@ -1202,7 +1222,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-s-persikom-200-g",
@@ -1212,7 +1232,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-s-persikom-500-g",
@@ -1222,7 +1242,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-apelsin-i-korica-200-g",
@@ -1232,7 +1252,7 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   },
   {
     "sku": "tea-grechishnyi-apelsin-i-korica-500-g",
@@ -1242,6 +1262,6 @@
     "kg": 0.0,
     "group": "tea",
     "accent": "tea",
-    "slide": "10"
+    "slide": "11"
   }
 ]

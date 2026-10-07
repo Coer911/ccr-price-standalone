@@ -74,13 +74,12 @@
   .hero__sub{ margin-top:16px;font-size:15px;line-height:1.45; letter-spacing:-.01em;color:var(--muted);max-width:30ch; }
   .hero__sub2{ margin-top:14px;font-size:15px;line-height:1.45; letter-spacing:-.01em;color:var(--muted);max-width:30ch; }
   .hero__bottom{ display:flex;flex-direction:column;align-items:center; }
-  .inside{ border-radius:22px; padding:18px 22px; max-width:32ch; text-align:center;
-    background:rgba(255,243,224,.10); border:1px solid rgba(255,243,224,.24); box-shadow:inset 0 1px 0 rgba(255,243,224,.35);
-    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
-  .inside__lbl{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); margin-bottom:11px; }
-  .inside__txt{ font-size:14px; line-height:1.5; letter-spacing:-.01em; color:var(--text); }
-  .inside__note{ margin-top:9px; font-size:13px; line-height:1.4; letter-spacing:-.01em; color:var(--muted); }
-  .hero__foot{ margin-top:18px;text-align:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint); }
+  .hero__sign{ display:flex; flex-direction:column; align-items:center; }
+  .hero__rule{ width:124px; height:1px; margin-bottom:24px; background:linear-gradient(90deg,transparent,rgba(255,238,214,.32),transparent); }
+  .hero__site{ position:relative; font-size:19px; letter-spacing:.055em; color:var(--amber); text-decoration:none; padding-bottom:9px; }
+  .hero__site::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(236,154,77,.70),transparent); }
+  .hero__foot{ margin-top:22px;text-align:center;font-size:12px;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--faint); }
 
   /* ЗАГОЛОВКИ */
   .head h2{ margin:0;font-weight:400; font-size:clamp(30px,8vw,38px); line-height:1.04;letter-spacing:-.045em;text-transform:uppercase; }
@@ -256,12 +255,12 @@
       break-inside:avoid; page-break-inside:avoid; margin-top:6mm !important;
     }
 
-    .note,.proof,.fact,.probat,.tier,.kp,.item,.box,.singles,.concept__block,.inside,.part__title,.facts .fact{
+    .note,.proof,.fact,.probat,.tier,.kp,.item,.box,.singles,.concept__block,.part__title,.facts .fact{
       -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
     }
 
     /* смысловые единицы — целиком, не рвём между страницами */
-    .item,.box,.kp,.tea-row,.probat,.tier,.single,.variant,.concept__block,.note,.fact,.proof,.inside,.tiers,.boxes{
+    .item,.box,.kp,.tea-row,.probat,.tier,.single,.variant,.concept__block,.note,.fact,.proof,.tiers,.boxes{
       break-inside:avoid; page-break-inside:avoid;
     }
     /* заголовок не отрывается от своего контента */
@@ -358,10 +357,9 @@
         <div class="hero__sub2">Дегустации, подбор вкуса под ваше меню и оборудование</div>
       </div>
       <div class="hero__bottom">
-        <div class="inside">
-          <div class="inside__lbl">что внутри</div>
-          <div class="inside__txt">9 позиций кофе в фильтр- и эспрессо-обжарке, дрип и капсулы, 48 наименований чая и три грейда матчи.</div>
-          <div class="inside__note">Цены оптовые — скидка растёт от объёма.</div>
+        <div class="hero__sign">
+          <div class="hero__rule"></div>
+          <a class="hero__site" href="https://cultura-coffee.ru" target="_blank" rel="noopener noreferrer">cultura-coffee.ru</a>
         </div>
         <div class="hero__foot">2026</div>
       </div>

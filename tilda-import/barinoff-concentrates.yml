@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2026-10-07T00:00:00+03:00">
+	<shop>
+		<name>Культура кофе</name>
+		<company>CCR</company>
+		<url>https://cultura-coffee.ru</url>
+		<currencies>
+			<currency id="RUR" rate="1"/>
+		</currencies>
+		<categories>
+			<category id="367001772802">концентраты Баринофф</category>
+		</categories>
+		<offers>
+		<offer id="910000000411">
+			<name>КОНЦЕНТРАТ «АПЕЛЬСИН» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_ORANGE_1KG</vendorCode>
+			<description>
+<![CDATA[
+Яркий сочный апельсин с лёгкой цитрусовой горчинкой цедры. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>397.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466219</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000412">
+			<name>КОНЦЕНТРАТ «АПЕЛЬСИН ИМБИРЬ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_ORANGEGINGER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Сладкий апельсин и жгучий имбирь — согревающее цитрусовое сочетание. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>462.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467179</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000413">
+			<name>КОНЦЕНТРАТ «БАНАН» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BANANA_1KG</vendorCode>
+			<description>
+<![CDATA[
+Насыщенный вкус спелого банана с мягкой сладостью. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466967</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000414">
+			<name>КОНЦЕНТРАТ «ГРЕЙПФРУКТ БУЗИНА» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_GRAPEFRUITELDER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Горьковатый грейпфрут и цветочная бузина — освежающий и необычный дуэт. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467049</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000415">
+			<name>КОНЦЕНТРАТ «КИВИ» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_KIWI_1KG</vendorCode>
+			<description>
+<![CDATA[
+Сочный киви с тропической сладостью и лёгкой кислинкой. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466974</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000416">
+			<name>КОНЦЕНТРАТ «КЛУБНИКА» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_STRAWBERRY_1KG</vendorCode>
+			<description>
+<![CDATA[
+Вкус спелой летней клубники. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467193</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000417">
+			<name>КОНЦЕНТРАТ «КЛЮКВА АПЕЛЬСИН» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_CRANBERRYORANGE_1KG</vendorCode>
+			<description>
+<![CDATA[
+Кислая клюква и сладкий апельсин — яркий ягодно-цитрусовый баланс. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>397.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466981</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000418">
+			<name>КОНЦЕНТРАТ «КЛЮКВА МОЖЖЕВЕЛЬНИК» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_CRANBERRYJUNIPER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Северная клюква с хвойными нотами можжевельника. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>397.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466998</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000419">
+			<name>КОНЦЕНТРАТ «ЛЕСНЫЕ ЯГОДЫ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_FORESTBERRIES_1KG</vendorCode>
+			<description>
+<![CDATA[
+Ароматный микс лесных ягод. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466257</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000420">
+			<name>КОНЦЕНТРАТ «ЛИМОН ИМБИРЬ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_LEMONGINGER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Классика согревающих напитков: свежий лимон и пряный имбирь. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467148</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000421">
+			<name>КОНЦЕНТРАТ «МАЛИНА ИМБИРЬ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_RASPBERRYGINGER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Сладкая малина с тёплой пряностью имбиря. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>429.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467414</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000422">
+			<name>КОНЦЕНТРАТ «МАНГО» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_MANGO_1KG</vendorCode>
+			<description>
+<![CDATA[
+Сочное спелое манго — тропическое настроение в каждом напитке. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>321.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467469</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000423">
+			<name>КОНЦЕНТРАТ «МАНГО МАРАКУЙЯ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_MANGOPASSION_1KG</vendorCode>
+			<description>
+<![CDATA[
+Тропический дуэт сладкого манго и кисловатой маракуйи. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>397.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467001</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000424">
+			<name>КОНЦЕНТРАТ «ОБЛЕПИХА ИМБИРЬ» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_SEABUCKTHORNGINGER_1KG</vendorCode>
+			<description>
+<![CDATA[
+Облепиха с имбирём — яркий, согревающий и полезный вкус. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467438</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000425">
+			<name>КОНЦЕНТРАТ «РЕВЕНЬ» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_RHUBARB_1KG</vendorCode>
+			<description>
+<![CDATA[
+Свежий кисло-сладкий вкус ревеня. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467025</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000426">
+			<name>КОНЦЕНТРАТ «ЧЕРНАЯ СМОРОДИНА МАЛИНА» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BLACKCURRANTRASPBERRY_1KG</vendorCode>
+			<description>
+<![CDATA[
+Ароматная чёрная смородина и сладкая малина. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466295</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000427">
+			<name>КОНЦЕНТРАТ «ЧЕРНАЯ СМОРОДИНА МЯТА» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BLACKCURRANTMINT_1KG</vendorCode>
+			<description>
+<![CDATA[
+Чёрная смородина с освежающей мятой. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>299.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466318</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000428">
+			<name>КОНЦЕНТРАТ «ЧЕРНАЯ СМОРОДИНА КРАСНАЯ СМОРОДИНА» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BLACKREDCURRANT_1KG</vendorCode>
+			<description>
+<![CDATA[
+Два вида смородины: насыщенная чёрная и кисловатая красная. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467018</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000429">
+			<name>КОНЦЕНТРАТ «ЧЕРНИКА» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BLUEBERRY_1KG</vendorCode>
+			<description>
+<![CDATA[
+Глубокий ягодный вкус черники. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>288.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043465878</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000430">
+			<name>КОНЦЕНТРАТ «ЧЕРНИКА МЯТА» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BLUEBERRYMINT_1KG</vendorCode>
+			<description>
+<![CDATA[
+Черника с прохладной мятой. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043466233</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000431">
+			<name>КОНЦЕНТРАТ «ЮЗУ» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_YUZU_1KG</vendorCode>
+			<description>
+<![CDATA[
+Японский цитрус юзу — тонкий аромат на грани лимона, мандарина и грейпфрута. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>332.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467124</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000432">
+			<name>КОНЦЕНТРАТ «ЯБЛОКО» 1 КГ (ХАЛЯЛЬ)</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_APPLE_1KG</vendorCode>
+			<description>
+<![CDATA[
+Свежий вкус сочного яблока. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043465908</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+			<param name="Халяль">Да</param>
+		</offer>
+		<offer id="910000000433">
+			<name>КОНЦЕНТРАТ «ЯБЛОКО КОРИЦА» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_APPLECINNAMON_1KG</vendorCode>
+			<description>
+<![CDATA[
+Печёное яблоко с корицей — уютный осенний вкус. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>321.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467377</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		<offer id="910000000434">
+			<name>КОНЦЕНТРАТ «ЯГОДНЫЙ МИКС БАЗИЛИК» 1 КГ</name>
+			<vendor>Barinoff</vendor>
+			<vendorCode>BARINOFF_BERRYBASIL_1KG</vendorCode>
+			<description>
+<![CDATA[
+Ягодный микс с пряной свежестью базилика. Концентрат для приготовления лимонадов, морсов, чаёв и горячих напитков. Разбавляется водой. Упаковка: пластиковая бутылка 1 кг. Срок годности: 18 мес.
+]]>
+			</description>
+			<count>9999</count>
+			<price>343.00</price>
+			<currencyId>RUR</currencyId>
+			<categoryId>367001772802</categoryId>
+			<weight>1.1</weight>
+			<barcode>4630043467223</barcode>
+			<param name="Страна производства">Россия</param>
+			<param name="ОБЬЕМ">1 кг</param>
+		</offer>
+		</offers>
+	</shop>
+</yml_catalog>

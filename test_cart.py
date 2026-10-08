@@ -1,6 +1,7 @@
 """Проверка корзины в реальном браузере: клики, ступени опта, печать."""
 import json
 import pathlib
+import re
 from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).parent
@@ -13,6 +14,29 @@ PRODUCTS = json.loads((ROOT / "src" / "products.json").read_text(encoding="utf-8
 N_SKU = len(PRODUCTS)
 # у эспрессо одна позиция, но три ячейки-ступени
 N_CELLS = N_SKU + sum(len(p["tiers"]) - 1 for p in PRODUCTS if p.get("tiers"))
+
+
+def product(name, unit=None):
+    for p in PRODUCTS:
+        if p["name"] == name and (unit is None or p["unit"] == unit):
+            return p
+    raise AssertionError(f"в каталоге нет позиции «{name}» {unit or ''}")
+
+
+# суммы в проверках считаем от каталога, иначе правка прайса роняет тест
+FILTER_250 = product("Колумбия супремо", "250 г")["price"]
+ESPRESSO_TIERS = product("Блю спешл")["tiers"]
+TIER2_TOTAL = ESPRESSO_TIERS[1] * 20 + FILTER_250
+
+
+def rub(n):
+    """35960 -> '35 960'"""
+    return f"{n:,}".replace(",", " ")
+
+
+def norm(s):
+    """разрядка в вёрстке набрана неразрывными пробелами"""
+    return re.sub(r"[\s\u00a0\u202f]+", " ", s)
 
 fails = []
 
@@ -67,7 +91,8 @@ with sync_playwright() as pw:
           page.locator(".buyctl.is-on .buyctl__n").inner_text() == "1")
     check("плашка перестала быть пустой",
           "is-empty" not in (page.locator("#cartbar").get_attribute("class") or ""))
-    check("сумма 660 ₽", "660" in page.locator("#cartSum").inner_text(),
+    check(f"сумма {rub(FILTER_250)} ₽",
+          rub(FILTER_250) in norm(page.locator("#cartSum").inner_text()),
           page.locator("#cartSum").inner_text())
     check("приписка про количество позиций",
           page.locator("#cartNote").inner_text() == "· 1 позиция",
@@ -99,9 +124,9 @@ with sync_playwright() as pw:
           f'tier={live.get_attribute("data-tier")}')
     check("у эспрессо один общий счётчик на позицию",
           page.locator('.buyctl--wide.is-on').count() == 1)
-    # 20 кг по 1700 + фильтр 660
+    # 20 кг по второй ступени + фильтр 250 г
     check("сумма пересчиталась по новой ступени",
-          "34 660" in page.locator("#cartSum").inner_text().replace(" ", " "),
+          rub(TIER2_TOTAL) in norm(page.locator("#cartSum").inner_text()),
           page.locator("#cartSum").inner_text())
     page.screenshot(path=str(SHOTS / "03-tier.png"))
 

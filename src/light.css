@@ -1,0 +1,283 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   СВЕТЛАЯ ТЕМА — дневной двойник прайса, а не инверсия тёмного.
+
+   Тёмная версия держится на «тёплом стекле над обжаркой»: полупрозрачные
+   карточки из кремового с низкой альфой поверх коричневого градиента.
+   Светлая берёт ту же конструкцию, но переворачивает материал: лист тёплой
+   бумаги, карточки — плотная бумага чуть белее фона, рамка волосяная,
+   тень низкая и мягкая. Стекло остаётся, но наливается не светом, а чернилами.
+
+   Главное решение — акцент. Янтарный #ec9a4d на белом даёт контраст около
+   2:1 и для текста не годится: цены читались бы с трудом. Поэтому для
+   текста и цифр взят затемнённый обжарочный #b4631c (≈5:1 на бумаге), а
+   исходный янтарный остался только в заливках и рамках, где контраст
+   не требуется. Та же история с чайным зелёным.
+
+   Всё подвешено под [data-theme="light"] на <html> — тёмная версия
+   не затрагивается ни одним правилом.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"]{
+  --amber:#b4631c;              /* акцент для текста и цен */
+  --amber-fill:#ec9a4d;         /* исходный — только заливки и рамки */
+  --cream:#1f1409;              /* бывший «самый светлый» стал самым тёмным */
+  --text:#2a1d13;
+  --muted:rgba(42,29,19,.64);
+  --faint:rgba(42,29,19,.42);
+  --tea:#4a7c2a;
+  --paper:#fffdfa;
+  --line:rgba(58,36,20,.12);
+  --glass-bg:linear-gradient(150deg, rgba(255,255,255,.86), rgba(255,252,246,.70) 48%, rgba(255,250,242,.64));
+  --glass-border:rgba(58,36,20,.12);
+  --glass-shadow:0 18px 40px rgba(74,48,26,.10), 0 2px 8px rgba(74,48,26,.06), inset 0 1px 0 rgba(255,255,255,.9);
+  --blur:saturate(118%) blur(18px);
+}
+
+/* ── лист ──────────────────────────────────────────────────────────────────── */
+
+[data-theme="light"] body{
+  background:radial-gradient(140% 120% at 50% 4%, #fdfaf5 0%, #f7f0e6 46%, #f1e8db 100%);
+  color:var(--text);
+}
+
+/* пятна остаются — без них лист мёртвый, но приглушены до акварели */
+[data-theme="light"] .bg{ filter:blur(80px) saturate(104%); opacity:.55; }
+[data-theme="light"] .blob.b1{ background:#f7dcbb; opacity:.70; }
+[data-theme="light"] .blob.b2{ background:#ffd9a8; opacity:.55; }
+[data-theme="light"] .blob.b3{ background:#fff1dc; opacity:.85; }
+[data-theme="light"] .blob.b4{ background:#dfe9e0; opacity:.50; }
+[data-theme="light"] .grain{ opacity:.05; mix-blend-mode:multiply; }
+
+/* ── карточка-слайд ────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .card,
+[data-theme="light"] .footer{
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+}
+/* блик сверху в тёмной версии добавлял света; на бумаге он только мылит */
+[data-theme="light"] .card::before,
+[data-theme="light"] .footer::before{ display:none; }
+
+[data-theme="light"] .marker{
+  background:linear-gradient(160deg,#e08a35,#b4521a);
+  box-shadow:0 4px 14px rgba(180,82,26,.30);
+}
+[data-theme="light"] .marker--tea{
+  background:linear-gradient(160deg,#7fb34a,#4a7c2a);
+  box-shadow:0 4px 14px rgba(74,124,42,.28);
+}
+
+/* ── обложка ───────────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .hero h1 .ln2{ color:var(--amber); }
+[data-theme="light"] .hero__rule{
+  background:linear-gradient(90deg,transparent,rgba(58,36,20,.26),transparent);
+}
+[data-theme="light"] .hero__site{
+  color:var(--amber);
+  text-shadow:none;                  /* тень от тёмного фона на бумаге грязнит */
+}
+[data-theme="light"] .hero__site::after{
+  background:linear-gradient(90deg,transparent,rgba(180,99,28,.55),transparent);
+}
+
+/* ── о нас ─────────────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .story__copy p{ color:rgba(42,29,19,.80); }
+
+[data-theme="light"] .note,
+[data-theme="light"] .probat,
+[data-theme="light"] .tier{
+  background:linear-gradient(150deg, rgba(236,154,77,.20), rgba(236,154,77,.06));
+  border:1px solid rgba(180,99,28,.26);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75), 0 6px 16px rgba(74,48,26,.07);
+}
+[data-theme="light"] .proof{
+  background:linear-gradient(150deg, rgba(236,154,77,.26), rgba(236,154,77,.10));
+  border:1px solid rgba(180,99,28,.32);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75), 0 6px 16px rgba(74,48,26,.08);
+}
+[data-theme="light"] .note__proof{ border-top:1px solid rgba(58,36,20,.16); }
+
+[data-theme="light"] .fact{
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(74,48,26,.06);
+}
+[data-theme="light"] .fact b{ color:var(--amber); }
+[data-theme="light"] .probat__tag{ border-top:1px solid rgba(180,99,28,.30); color:var(--amber); }
+[data-theme="light"] .probat__num,
+[data-theme="light"] .tier__v,
+[data-theme="light"] .proof b{ color:var(--cream); }
+[data-theme="light"] .tier__cap{ color:var(--amber); }
+
+/* ── направления ───────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .kp{
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(74,48,26,.06);
+}
+[data-theme="light"] .kp:nth-child(even){
+  background:linear-gradient(150deg, rgba(236,154,77,.16), rgba(236,154,77,.05));
+  border-color:rgba(180,99,28,.24);
+}
+[data-theme="light"] .kp__copy{ color:rgba(42,29,19,.74); }
+
+/* ── карточка товара ───────────────────────────────────────────────────────── */
+
+[data-theme="light"] .item{
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(74,48,26,.06);
+}
+[data-theme="light"] .item__proc .val,
+[data-theme="light"] .price-legend b{ color:var(--cream); }
+[data-theme="light"] .item__from{ color:var(--amber); }
+
+/* ── цены ──────────────────────────────────────────────────────────────────── */
+
+/* иерархия как в тёмной: обычная цена чернилами, янтарь — только у «лучшей» */
+[data-theme="light"] .pcell__opt{ color:var(--cream); }
+[data-theme="light"] .pcell--best .pcell__opt,
+[data-theme="light"] .pp__opt,
+[data-theme="light"] .single__opt,
+[data-theme="light"] .variant--min .pp__opt,
+[data-theme="light"] .variant--min .variant__opt{ color:var(--amber); }
+[data-theme="light"] .pp__rrc,
+[data-theme="light"] .single__rrc,
+[data-theme="light"] .tea-price__rrc{ color:var(--faint); }
+
+[data-theme="light"] .box,
+[data-theme="light"] .singles{
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 4px 12px rgba(74,48,26,.06);
+}
+[data-theme="light"] .box__num,
+[data-theme="light"] .concept__title,
+[data-theme="light"] .part__title,
+[data-theme="light"] .subhead{ color:var(--cream); }
+[data-theme="light"] .box__kind{ color:var(--amber); }
+[data-theme="light"] .variant{ border-top:1px solid rgba(58,36,20,.12); }
+[data-theme="light"] .single{ border-top:1px solid rgba(58,36,20,.12); }
+
+[data-theme="light"] .part__title::after,
+[data-theme="light"] .subhead::after{ background:rgba(58,36,20,.14); }
+[data-theme="light"] .part__title::before,
+[data-theme="light"] .subhead::before{
+  background:linear-gradient(160deg,#e08a35,#b4521a);
+  box-shadow:0 0 8px rgba(180,82,26,.35);
+}
+[data-theme="light"] .part__title--tea::before{
+  background:linear-gradient(160deg,#7fb34a,#4a7c2a);
+  box-shadow:0 0 8px rgba(74,124,42,.35);
+}
+
+/* ── чай ───────────────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .concept__block{
+  border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85), 0 8px 20px rgba(74,48,26,.07);
+}
+[data-theme="light"] .concept__block.is-base{
+  background:linear-gradient(150deg, rgba(236,154,77,.20), rgba(236,154,77,.05));
+  border-color:rgba(180,99,28,.26);
+}
+[data-theme="light"] .concept__block.is-tisane{
+  background:linear-gradient(150deg, rgba(143,191,94,.22), rgba(143,191,94,.06));
+  border-color:rgba(74,124,42,.28);
+}
+[data-theme="light"] .is-base .concept__kicker{ color:var(--amber); }
+[data-theme="light"] .is-tisane .concept__kicker,
+[data-theme="light"] .tea-cat.is-tisane .tea-cat__name{ color:var(--tea); }
+[data-theme="light"] .cat-chip{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(58,36,20,.14);
+}
+[data-theme="light"] .tea-cat__name{ color:var(--amber); }
+[data-theme="light"] .tea-cat__h{ border-bottom:1px solid rgba(58,36,20,.18); }
+[data-theme="light"] .tea-row{ border-bottom:1px solid rgba(58,36,20,.09); }
+[data-theme="light"] .tea-price__opt{ color:var(--cream); }
+
+/* ── условия заказа ────────────────────────────────────────────────────────── */
+
+[data-theme="light"] .hl{
+  color:var(--cream);
+  background:rgba(236,154,77,.20);
+  border:1px solid rgba(180,99,28,.38);
+}
+[data-theme="light"] .footer__link{ color:var(--amber); }
+
+/* ── корзина ───────────────────────────────────────────────────────────────── */
+
+[data-theme="light"]{
+  --cart-amber:#b4631c;
+  --cart-tea:#4a7c2a;
+  --cart-cream:#1f1409;
+  --cart-text:#2a1d13;
+  --cart-mute:rgba(42,29,19,.64);
+  --cart-faint:rgba(42,29,19,.42);
+  --cart-glass:linear-gradient(150deg,rgba(255,253,250,.97),rgba(252,246,238,.96) 48%,rgba(250,243,233,.97));
+  --cart-line:rgba(58,36,20,.12);
+}
+
+[data-theme="light"] .buyctl__b{
+  color:var(--amber);
+  background:rgba(236,154,77,.14);
+  border:1px solid rgba(180,99,28,.38);
+}
+[data-theme="light"] .buyctl__b:hover{ background:rgba(236,154,77,.26); }
+[data-theme="light"] .buyctl.is-on .buyctl__b{
+  background:rgba(236,154,77,.24);
+  border-color:rgba(180,99,28,.55);
+}
+[data-theme="light"] .buyctl--tea .buyctl__b{
+  color:var(--tea);
+  background:rgba(143,196,92,.16);
+  border-color:rgba(74,124,42,.38);
+}
+[data-theme="light"] .buyctl--tea .buyctl__b:hover{ background:rgba(143,196,92,.28); }
+[data-theme="light"] .buyctl.is-on.buyctl--tea .buyctl__b{
+  background:rgba(143,196,92,.26);
+  border-color:rgba(74,124,42,.55);
+}
+[data-theme="light"] .buyctl__n{ color:var(--cream); }
+
+[data-theme="light"] .pcell.is-live{
+  background:rgba(236,154,77,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+[data-theme="light"] .pcell.is-live .pcell__cap{ color:rgba(42,29,19,.78); }
+
+[data-theme="light"] .cartbar,
+[data-theme="light"] .sheet{
+  color:var(--cart-text);
+  background:var(--cart-glass);
+  border:1px solid rgba(58,36,20,.14);
+}
+[data-theme="light"] .cartbar{ box-shadow:0 12px 32px rgba(74,48,26,.18), inset 0 1px 0 rgba(255,255,255,.9); }
+[data-theme="light"] .sheet{
+  border-bottom:0;
+  box-shadow:0 -16px 48px rgba(74,48,26,.22), inset 0 1px 0 rgba(255,255,255,.9);
+}
+[data-theme="light"] .cartbar__count{ color:#fffaf3; background:var(--amber); }
+[data-theme="light"] .cartbar__sum{ background:rgba(58,36,20,.07); }
+[data-theme="light"] .scrim{ background:rgba(58,36,20,.34); }
+[data-theme="light"] .sheet__grip{ background:rgba(58,36,20,.22); }
+[data-theme="light"] .cart-toast{ color:#fffaf3; background:rgba(180,99,28,.95); }
+
+/* ── печать ────────────────────────────────────────────────────────────────── */
+
+@media print{
+  [data-theme="light"] html,
+  [data-theme="light"] body{ background:#ffffff !important; }
+  [data-theme="light"] .card,
+  [data-theme="light"] .footer{
+    background:#ffffff !important;
+    border:1px solid rgba(58,36,20,.20) !important;
+    box-shadow:none !important;
+  }
+}

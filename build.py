@@ -7,7 +7,9 @@
   1) размечает покупаемые ценовые ячейки data-атрибутами;
   2) ставит у каждой позиции кнопку + (она же становится счётчиком −N+);
   3) вшивает src/cart.css, src/cart.html и src/cart.js;
-  4) выгружает src/products.json — машиночитаемый список позиций.
+  4) выгружает src/products.json — машиночитаемый список позиций;
+  5) собирает светлую версию light.html — тот же контент, сверху
+     src/light.css и data-theme="light" на <html>.
 
 Флаг --no-cart собирает страницу без корзины и без разметки.
 Результат обязан быть байт в байт равен исходному index.html —
@@ -24,6 +26,8 @@ ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 BASE = SRC / "price-base.html"
 OUT = ROOT / "index.html"
+LIGHT_CSS = SRC / "light.css"
+LIGHT_OUT = ROOT / "light.html"
 
 TEA_SLIDES = {"09", "10", "11"}
 COFFEE_WEIGHT_SLIDES = {"04", "05"}          # кофе на вес — формирует ступень опта
@@ -339,6 +343,16 @@ def main():
 
     OUT.write_text(html, encoding="utf-8")
     print(f"index.html собран: {len(html)} символов, позиций: {len(products)}")
+
+    if with_cart and LIGHT_CSS.exists():
+        light = html.replace(
+            "</head>",
+            f"<style>\n{LIGHT_CSS.read_text(encoding='utf-8')}\n</style>\n</head>", 1)
+        light = light.replace('<html lang="ru">', '<html lang="ru" data-theme="light">', 1)
+        light = light.replace("<title>CULTURA COFFEE — прайс (полный)</title>",
+                              "<title>CULTURA COFFEE — прайс (светлая версия)</title>", 1)
+        LIGHT_OUT.write_text(light, encoding="utf-8")
+        print(f"light.html собран: {len(light)} символов")
     if products:
         from collections import Counter
         for g, n in Counter(p["group"] for p in products).most_common():

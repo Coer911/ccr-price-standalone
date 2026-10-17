@@ -832,10 +832,35 @@ body.has-hint{padding-bottom:152px}
   --tea:#4a7c2a;
   --paper:#fffdfa;
   --line:rgba(58,36,20,.12);
-  --glass-bg:linear-gradient(150deg, rgba(255,255,255,.86), rgba(255,252,246,.70) 48%, rgba(255,250,242,.64));
+  --glass-bg:linear-gradient(150deg, rgba(255,255,255,.94), rgba(255,252,246,.88) 48%, rgba(255,250,242,.85));
   --glass-border:rgba(58,36,20,.12);
   --glass-shadow:0 18px 40px rgba(74,48,26,.10), 0 2px 8px rgba(74,48,26,.06), inset 0 1px 0 rgba(255,255,255,.9);
   --blur:saturate(118%) blur(18px);
+}
+
+/* ── чёткость текста ───────────────────────────────────────────────────────────
+   backdrop-filter заставляет Safari растрировать элемент в картинку, и при
+   пинч-зуме на телефоне увеличивается она, а не сам шрифт — цифры расползаются.
+   На светлой теме блюр и так не виден: подложка сглажена, карточки почти
+   непрозрачные. Снимаем его — текст начинает рисоваться вектором на любом зуме. */
+[data-theme="light"] .card,
+[data-theme="light"] .footer,
+[data-theme="light"] .item,
+[data-theme="light"] .kp,
+[data-theme="light"] .fact,
+[data-theme="light"] .note,
+[data-theme="light"] .proof,
+[data-theme="light"] .probat,
+[data-theme="light"] .tier,
+[data-theme="light"] .box,
+[data-theme="light"] .singles,
+[data-theme="light"] .concept__block,
+[data-theme="light"] .cartbar,
+[data-theme="light"] .sheet,
+[data-theme="light"] .cartbar__main,
+[data-theme="light"] .sheet__panel{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
 }
 
 /* ── лист ──────────────────────────────────────────────────────────────────── */

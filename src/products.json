@@ -98,11 +98,11 @@
     "sku": "blek-end-strong",
     "name": "Блэк энд стронг",
     "unit": "кг",
-    "price": 1700,
+    "price": 1680,
     "tiers": [
-      1700,
-      1530,
-      1440
+      1680,
+      1580,
+      1480
     ],
     "kg": 1.0,
     "group": "espresso",

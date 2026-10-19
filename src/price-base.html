@@ -277,6 +277,9 @@
   .prices{ margin-top:14px; padding-top:13px; border-top:1px solid rgba(255,238,214,.16); display:grid; gap:8px; justify-items:center; }
   .prices.cols-2{ grid-template-columns:1fr 1fr; }
   .prices.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+  /* одна фасовка: колонка одна, иначе цена падает влево — на гриде
+     justify-content ничего не центрирует, колонки уже заняли ширину */
+  .prices.cols-1{ grid-template-columns:1fr; }
   .pcell{ text-align:center; }
   .pcell__cap{ font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap; }
   .pcell__opt{ margin-top:4px; font-family:var(--mono); font-weight:600; font-size:17px; letter-spacing:-.01em;
@@ -444,11 +447,20 @@
         </div>
 
         <div class="item">
-          <div class="item__name">Кения элгон</div>
-          <div class="item__taste">мармелад / абрикос / чёрная смородина</div>
-          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
+          <div class="item__name">Кения кири</div>
+          <div class="item__taste">цветы / карамель / смородина</div>
+          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
+          <div class="prices cols-1">
+            <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 690 ₽</div></div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="item__name">Уганда элгон</div>
+          <div class="item__taste">йогурт / персик / ананас</div>
+          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">анаэробная</span></div>
           <div class="prices cols-2">
-            <div class="pcell"><div class="pcell__cap">250 г</div><div class="pcell__opt">860 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">250 г</div><div class="pcell__opt">840 ₽</div></div>
             <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 590 ₽</div></div>
           </div>
         </div>
@@ -457,7 +469,7 @@
           <div class="item__name">Руанда ньярусиза</div>
           <div class="item__taste">вишня / абрикос / карамель</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
-          <div class="prices cols-2" style="justify-content:center;">
+          <div class="prices cols-1">
             <div class="pcell pcell--best"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 160 ₽</div></div>
           </div>
         </div>
@@ -492,9 +504,9 @@
           <div class="item__taste">горький шоколад / орехи</div>
           <div class="item__proc"><span class="lbl">Состав</span><span class="val">бразилия арабика · уганда робуста</span></div>
           <div class="prices cols-3">
-            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 650 ₽</div></div>
-            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 485 ₽</div></div>
-            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 400 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 700 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 530 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 440 ₽</div></div>
           </div>
         </div>
 
@@ -503,9 +515,9 @@
           <div class="item__taste">голубика / шоколад</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 850 ₽</div></div>
-            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 665 ₽</div></div>
-            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 575 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 905 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 715 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 620 ₽</div></div>
           </div>
         </div>
 
@@ -514,9 +526,9 @@
           <div class="item__taste">сухофрукты / мёд / орех</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 860 ₽</div></div>
-            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 675 ₽</div></div>
-            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 580 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 915 ₽</div></div>
+            <div class="pcell"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 725 ₽</div></div>
+            <div class="pcell pcell--best"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 625 ₽</div></div>
           </div>
         </div>
 

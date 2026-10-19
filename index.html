@@ -277,6 +277,9 @@
   .prices{ margin-top:14px; padding-top:13px; border-top:1px solid rgba(255,238,214,.16); display:grid; gap:8px; justify-items:center; }
   .prices.cols-2{ grid-template-columns:1fr 1fr; }
   .prices.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+  /* одна фасовка: колонка одна, иначе цена падает влево — на гриде
+     justify-content ничего не центрирует, колонки уже заняли ширину */
+  .prices.cols-1{ grid-template-columns:1fr; }
   .pcell{ text-align:center; }
   .pcell__cap{ font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap; }
   .pcell__opt{ margin-top:4px; font-family:var(--mono); font-weight:600; font-size:17px; letter-spacing:-.01em;
@@ -906,12 +909,21 @@ body.has-hint{padding-bottom:152px}
         </div>
 
         <div class="item">
-          <div data-buy-name="keniya-elgon-1-kg keniya-elgon-250-g" data-buy-accent="coffee" class="item__name">Кения элгон</div>
-          <div class="item__taste">мармелад / абрикос / чёрная смородина</div>
-          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
+          <div data-buy-name="keniya-kiri-1-kg" data-buy-accent="coffee" class="item__name">Кения кири</div>
+          <div class="item__taste">цветы / карамель / смородина</div>
+          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
+          <div class="prices cols-1">
+            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="keniya-kiri-1-kg" data-name="Кения кири" data-unit="1 кг" data-price="2690" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 690 ₽</div><div class="buyctl" data-ctl="keniya-kiri-1-kg"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div data-buy-name="uganda-elgon-1-kg uganda-elgon-250-g" data-buy-accent="coffee" class="item__name">Уганда элгон</div>
+          <div class="item__taste">йогурт / персик / ананас</div>
+          <div class="item__proc"><span class="lbl">Обработка</span><span class="val">анаэробная</span></div>
           <div class="prices cols-2">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="keniya-elgon-250-g" data-name="Кения элгон" data-unit="250 г" data-price="860" data-kg="0.25" data-accent="coffee"><div class="pcell__cap">250 г</div><div class="pcell__opt">860 ₽</div><div class="buyctl" data-ctl="keniya-elgon-250-g"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="keniya-elgon-1-kg" data-name="Кения элгон" data-unit="1 кг" data-price="2590" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 590 ₽</div><div class="buyctl" data-ctl="keniya-elgon-1-kg"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="uganda-elgon-250-g" data-name="Уганда элгон" data-unit="250 г" data-price="840" data-kg="0.25" data-accent="coffee"><div class="pcell__cap">250 г</div><div class="pcell__opt">840 ₽</div><div class="buyctl" data-ctl="uganda-elgon-250-g"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
+            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="uganda-elgon-1-kg" data-name="Уганда элгон" data-unit="1 кг" data-price="2590" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 590 ₽</div><div class="buyctl" data-ctl="uganda-elgon-1-kg"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
           </div>
         </div>
 
@@ -919,7 +931,7 @@ body.has-hint{padding-bottom:152px}
           <div data-buy-name="ruanda-nyarusiza-1-kg" data-buy-accent="coffee" class="item__name">Руанда ньярусиза</div>
           <div class="item__taste">вишня / абрикос / карамель</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">мытая</span></div>
-          <div class="prices cols-2" style="justify-content:center;">
+          <div class="prices cols-1">
             <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="ruanda-nyarusiza-1-kg" data-name="Руанда ньярусиза" data-unit="1 кг" data-price="2160" data-kg="1" data-accent="coffee"><div class="pcell__cap">1 кг</div><div class="pcell__opt">2 160 ₽</div><div class="buyctl" data-ctl="ruanda-nyarusiza-1-kg"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div></div>
           </div>
         </div>
@@ -954,9 +966,9 @@ body.has-hint{padding-bottom:152px}
           <div class="item__taste">горький шоколад / орехи</div>
           <div class="item__proc"><span class="lbl">Состав</span><span class="val">бразилия арабика · уганда робуста</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-kg="1" data-accent="coffee" data-tiers="1650,1485,1400" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 650 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-kg="1" data-accent="coffee" data-tiers="1650,1485,1400" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 485 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1650" data-kg="1" data-accent="coffee" data-tiers="1650,1485,1400" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 400 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1700" data-kg="1" data-accent="coffee" data-tiers="1700,1530,1440" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 700 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1700" data-kg="1" data-accent="coffee" data-tiers="1700,1530,1440" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 530 ₽</div></div>
+            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="blek-end-strong" data-name="Блэк энд стронг" data-unit="кг" data-price="1700" data-kg="1" data-accent="coffee" data-tiers="1700,1530,1440" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 440 ₽</div></div>
           </div><div class="buyctl buyctl--wide" data-ctl="blek-end-strong"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div>
         </div>
 
@@ -965,9 +977,9 @@ body.has-hint{padding-bottom:152px}
           <div class="item__taste">голубика / шоколад</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-kg="1" data-accent="coffee" data-tiers="1850,1665,1575" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 850 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-kg="1" data-accent="coffee" data-tiers="1850,1665,1575" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 665 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1850" data-kg="1" data-accent="coffee" data-tiers="1850,1665,1575" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 575 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1905" data-kg="1" data-accent="coffee" data-tiers="1905,1715,1620" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 905 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1905" data-kg="1" data-accent="coffee" data-tiers="1905,1715,1620" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 715 ₽</div></div>
+            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="efiopiya-irgacheff-4" data-name="Эфиопия иргачефф 4" data-unit="кг" data-price="1905" data-kg="1" data-accent="coffee" data-tiers="1905,1715,1620" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 620 ₽</div></div>
           </div><div class="buyctl buyctl--wide" data-ctl="efiopiya-irgacheff-4"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div>
         </div>
 
@@ -976,9 +988,9 @@ body.has-hint{padding-bottom:152px}
           <div class="item__taste">сухофрукты / мёд / орех</div>
           <div class="item__proc"><span class="lbl">Обработка</span><span class="val">натуральная</span></div>
           <div class="prices cols-3">
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-kg="1" data-accent="coffee" data-tiers="1860,1675,1580" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 860 ₽</div></div>
-            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-kg="1" data-accent="coffee" data-tiers="1860,1675,1580" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 675 ₽</div></div>
-            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1860" data-kg="1" data-accent="coffee" data-tiers="1860,1675,1580" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 580 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1915" data-kg="1" data-accent="coffee" data-tiers="1915,1725,1625" data-tier="0"><div class="pcell__cap">1–19 кг</div><div class="pcell__opt">1 915 ₽</div></div>
+            <div class="pcell is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1915" data-kg="1" data-accent="coffee" data-tiers="1915,1725,1625" data-tier="1"><div class="pcell__cap">20–49 кг</div><div class="pcell__opt">1 725 ₽</div></div>
+            <div class="pcell pcell--best is-buy" role="button" tabindex="0" data-sku="braziliya-serrado-montanari" data-name="Бразилия серрадо монтанари" data-unit="кг" data-price="1915" data-kg="1" data-accent="coffee" data-tiers="1915,1725,1625" data-tier="2"><div class="pcell__cap">от 50 кг</div><div class="pcell__opt">1 625 ₽</div></div>
           </div><div class="buyctl buyctl--wide" data-ctl="braziliya-serrado-montanari"><button class="buyctl__b buyctl__minus" type="button" tabindex="-1" aria-label="Убрать одну единицу">−</button><span class="buyctl__n">0</span><button class="buyctl__b buyctl__plus" type="button" aria-label="Добавить в заказ">+</button></div>
         </div>
 

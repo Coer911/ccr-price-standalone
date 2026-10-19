@@ -40,8 +40,18 @@
     "slide": "04"
   },
   {
-    "sku": "keniya-elgon-1-kg",
-    "name": "Кения элгон",
+    "sku": "keniya-kiri-1-kg",
+    "name": "Кения кири",
+    "unit": "1 кг",
+    "price": 2690,
+    "kg": 1.0,
+    "group": "coffee",
+    "accent": "coffee",
+    "slide": "04"
+  },
+  {
+    "sku": "uganda-elgon-1-kg",
+    "name": "Уганда элгон",
     "unit": "1 кг",
     "price": 2590,
     "kg": 1.0,
@@ -50,10 +60,10 @@
     "slide": "04"
   },
   {
-    "sku": "keniya-elgon-250-g",
-    "name": "Кения элгон",
+    "sku": "uganda-elgon-250-g",
+    "name": "Уганда элгон",
     "unit": "250 г",
-    "price": 860,
+    "price": 840,
     "kg": 0.25,
     "group": "coffee",
     "accent": "coffee",
@@ -88,11 +98,11 @@
     "sku": "blek-end-strong",
     "name": "Блэк энд стронг",
     "unit": "кг",
-    "price": 1650,
+    "price": 1700,
     "tiers": [
-      1650,
-      1485,
-      1400
+      1700,
+      1530,
+      1440
     ],
     "kg": 1.0,
     "group": "espresso",
@@ -103,11 +113,11 @@
     "sku": "efiopiya-irgacheff-4",
     "name": "Эфиопия иргачефф 4",
     "unit": "кг",
-    "price": 1850,
+    "price": 1905,
     "tiers": [
-      1850,
-      1665,
-      1575
+      1905,
+      1715,
+      1620
     ],
     "kg": 1.0,
     "group": "espresso",
@@ -118,11 +128,11 @@
     "sku": "braziliya-serrado-montanari",
     "name": "Бразилия серрадо монтанари",
     "unit": "кг",
-    "price": 1860,
+    "price": 1915,
     "tiers": [
-      1860,
-      1675,
-      1580
+      1915,
+      1725,
+      1625
     ],
     "kg": 1.0,
     "group": "espresso",

@@ -137,6 +137,10 @@
   .kp__idx{ font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint); }
   .kp__title{ margin-top:8px;font-size:18px;line-height:1.14;letter-spacing:-.025em;font-weight:500; }
   .kp__copy{ margin-top:9px;font-size:14px;line-height:1.34;letter-spacing:-.01em;color:rgba(247,236,220,.82); }
+  /* пункт-ссылка: вся карточка кликабельна, цвет наследуется от соседей */
+  .kp--link{ display:block; text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  .kp--link:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+  .kp__go{ display:inline-block; margin-top:12px; font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--amber); }
 
   /* ЛЕГЕНДА ЦЕН */
   .price-legend{ margin-top:14px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
@@ -1185,6 +1189,7 @@ body.has-hint{padding-bottom:152px}
         <div class="kp"><div class="kp__idx">→ 03</div><div class="kp__title">Обучение бариста</div><div class="kp__copy">Знание + практика, чтобы вкус держался каждый день, а не только на установке.</div></div>
         <div class="kp"><div class="kp__idx">→ 04</div><div class="kp__title">Сервис и оборудование</div><div class="kp__copy">Nuova Simonelli · La Marzocco · Sanremo. Сервис — строкой, а не наценкой в зерне.</div></div>
         <div class="kp"><div class="kp__idx">→ 05</div><div class="kp__title">Аренда кофемашин</div><div class="kp__copy">Старая или сломанная машина? Арендуем — без привязки к кофе.</div></div>
+        <a class="kp kp--link" href="https://docs.google.com/spreadsheets/d/1CkEdSSHi7S8qzvXbRf1RzeDP5Lb36bnr27FhZmYt30c/edit?usp=sharing" target="_blank" rel="noopener noreferrer"><div class="kp__idx">→ 06</div><div class="kp__title">Сиропы Herbarista</div><div class="kp__copy">Своя линейка сиропов под кофейные напитки. Цены — в отдельном прайсе.</div><span class="kp__go">Открыть прайс →</span></a>
       </div>
       <div class="card__scroll" aria-hidden="true">↓</div>
     </section>

@@ -9,11 +9,18 @@
   3) вшивает src/cart.css, src/cart.html и src/cart.js;
   4) выгружает src/products.json — машиночитаемый список позиций;
   5) собирает светлую версию light.html — тот же контент, сверху
-     src/light.css и data-theme="light" на <html>.
+     src/light.css и data-theme="light" на <html>;
+  6) обновляет копии для отправки клиентам: «Cultura Coffee - прайс.html»
+     (та же база один в один) и «… (standalone).html» (база, упакованная
+     в оболочку бандлера).
 
 Флаг --no-cart собирает страницу без корзины и без разметки.
 Результат обязан быть байт в байт равен исходному index.html —
 этим проверяется, что перенос не тронул визуал.
+
+Флаг --check ничего не пишет: собирает всё в памяти, сравнивает с файлами
+в репозитории и проверяет цены на явные ошибки. Код выхода 1 — что-то
+разъехалось. Его гоняют CI и автоматизация перед коммитом.
 """
 
 import json
@@ -28,6 +35,10 @@ BASE = SRC / "price-base.html"
 OUT = ROOT / "index.html"
 LIGHT_CSS = SRC / "light.css"
 LIGHT_OUT = ROOT / "light.html"
+PRODUCTS = SRC / "products.json"
+COPY_OUT = ROOT / "Cultura Coffee - прайс.html"
+STANDALONE_OUT = ROOT / "Cultura Coffee - прайс (standalone).html"
+STANDALONE_TPL = re.compile(r'(<script type="__bundler/template">\s*)(".*?")(\s*</script>)', re.S)
 
 TEA_SLIDES = {"09", "10", "11"}
 COFFEE_WEIGHT_SLIDES = {"04", "05"}          # кофе на вес — формирует ступень опта
@@ -187,7 +198,9 @@ def build_html(base: str, with_cart: bool):
             prices = [to_num(c.group(3)) for c in cells]
             products.append({"sku": sku, "name": pname, "unit": "кг", "price": prices[0],
                              "tiers": prices, "kg": 1.0, "group": "espresso",
-                             "accent": "coffee", "slide": no})
+                             "accent": "coffee", "slide": no,
+                             "_at": [(cont.start() + c.start(3), cont.start() + c.end(3))
+                                     for c in cells]})
             new = block
             for ci in range(len(cells) - 1, -1, -1):
                 c = cells[ci]
@@ -215,7 +228,8 @@ def build_html(base: str, with_cart: bool):
             sku = uniq(f"{slug(pname)}-{slug(cap)}")
             products.append({"sku": sku, "name": pname, "unit": cap, "price": price,
                              "kg": kg, "group": "coffee" if accent == "coffee" else "tea",
-                             "accent": accent, "slide": no})
+                             "accent": accent, "slide": no,
+                             "_at": [(cont.start() + c.start(3), cont.start() + c.end(3))]})
             bind(anc, sku, accent)
             rep = ('<div class="pcell' + c.group(1)
                    + cell_attrs(sku, pname, cap, price, kg, accent)
@@ -239,7 +253,8 @@ def build_html(base: str, with_cart: bool):
         kind = "caps" if no in CAPSULE_SLIDES else "drip"
         sku = uniq(f"{kind}-{slug(nm)}-{slug(cap)}")
         products.append({"sku": sku, "name": nm, "unit": cap, "price": price, "kg": 0.0,
-                         "group": kind, "accent": "coffee", "slide": no})
+                         "group": kind, "accent": "coffee", "slide": no,
+                         "_at": [m.span(1)]})
         replacements.append((m.start(), m.end(),
             '<span class="pp' + cell_attrs(sku, nm, cap, price, 0.0, "coffee")
             + '><span class="pp__lbl">опт</span>'
@@ -270,7 +285,8 @@ def build_html(base: str, with_cart: bool):
         kind = "caps" if no in CAPSULE_SLIDES else "drip"
         sku = uniq(f"{kind}-sht-{slug(nm)}")
         products.append({"sku": sku, "name": nm, "unit": "шт", "price": price, "kg": 0.0,
-                         "group": kind, "accent": "coffee", "slide": no})
+                         "group": kind, "accent": "coffee", "slide": no,
+                         "_at": [m.span(1)]})
         replacements.append((m.start(), m.end(),
             '<span class="spp' + cell_attrs(sku, nm, "шт", price, 0.0, "coffee")
             + '><span class="spp__lbl">опт</span>'
@@ -299,7 +315,8 @@ def build_html(base: str, with_cart: bool):
         no = slide_of(spans, m.start())
         sku = uniq(f"tea-{slug(nm)}-{slug(cap)}")
         products.append({"sku": sku, "name": nm, "unit": cap, "price": price, "kg": 0.0,
-                         "group": "tea", "accent": "tea", "slide": no})
+                         "group": "tea", "accent": "tea", "slide": no,
+                         "_at": [m.span(1)]})
         bind(anc, sku, "tea")
         replacements.append((m.start(), m.end(),
             '<div class="tea-price' + cell_attrs(sku, nm, cap, price, 0.0, "tea")
@@ -323,36 +340,110 @@ def build_html(base: str, with_cart: bool):
     return out, products
 
 
-def main():
-    with_cart = "--no-cart" not in sys.argv
+def bundle_standalone(base: str, shell: str) -> str:
+    """Standalone-версия: база строкой JSON внутри оболочки бандлера.
+
+    Бандлер при выгрузке пропускал страницу через DOMParser, поэтому его
+    нормализация повторяется: <head> на одной строке с <html>, а миниатюры
+    <template id="__bundler_thumbnail"> нет — она уже нарисована в оболочке.
+    """
+    page = base.replace('<html lang="ru">\n<head>', '<html lang="ru"><head>', 1)
+    page = re.sub(r'<template id="__bundler_thumbnail".*?</template>\n</body>\n</html>\n?',
+                  "\n\n\n</body></html>", page, count=1, flags=re.S)
+    data = json.dumps(page, ensure_ascii=False).replace("</", "<\\u002F")
+    m = STANDALONE_TPL.search(shell)
+    if not m:
+        raise SystemExit(f"в {STANDALONE_OUT.name} не найден блок __bundler/template")
+    return shell[:m.start(2)] + data + shell[m.end(2):]
+
+
+def public(products):
+    """Служебные поля (позиции цен в базе) в products.json не выгружаются."""
+    return [{k: v for k, v in p.items() if not k.startswith("_")} for p in products]
+
+
+def render(with_cart: bool = True):
+    """Все выходные файлы в памяти: ({путь: текст}, позиции)."""
     base = BASE.read_text(encoding="utf-8")
     html, products = build_html(base, with_cart)
+    if not with_cart:
+        return {OUT: html}, products
 
-    if with_cart:
-        # в чае колонки ррц нет — легенда убирается
-        html = re.sub(
-            r'\s*<div class="price-legend">В колонке: <b>опт</b> сверху · <i>ррц</i> снизу</div>\n',
-            "\n", html)
-        css = (SRC / "cart.css").read_text(encoding="utf-8")
-        js = (SRC / "cart.js").read_text(encoding="utf-8")
-        markup = (SRC / "cart.html").read_text(encoding="utf-8")
-        html = html.replace("</head>", f"<style>\n{css}\n</style>\n</head>", 1)
-        html = html.replace("</body>", f"{markup}\n<script>\n{js}\n</script>\n</body>", 1)
-        (SRC / "products.json").write_text(
-            json.dumps(products, ensure_ascii=False, indent=2), encoding="utf-8")
+    # в чае колонки ррц нет — легенда убирается
+    html = re.sub(
+        r'\s*<div class="price-legend">В колонке: <b>опт</b> сверху · <i>ррц</i> снизу</div>\n',
+        "\n", html)
+    css = (SRC / "cart.css").read_text(encoding="utf-8")
+    js = (SRC / "cart.js").read_text(encoding="utf-8")
+    markup = (SRC / "cart.html").read_text(encoding="utf-8")
+    html = html.replace("</head>", f"<style>\n{css}\n</style>\n</head>", 1)
+    html = html.replace("</body>", f"{markup}\n<script>\n{js}\n</script>\n</body>", 1)
 
-    OUT.write_text(html, encoding="utf-8")
-    print(f"index.html собран: {len(html)} символов, позиций: {len(products)}")
-
-    if with_cart and LIGHT_CSS.exists():
+    out = {OUT: html,
+           PRODUCTS: json.dumps(public(products), ensure_ascii=False, indent=2)}
+    if LIGHT_CSS.exists():
         light = html.replace(
             "</head>",
             f"<style>\n{LIGHT_CSS.read_text(encoding='utf-8')}\n</style>\n</head>", 1)
         light = light.replace('<html lang="ru">', '<html lang="ru" data-theme="light">', 1)
         light = light.replace("<title>CULTURA COFFEE — прайс (полный)</title>",
                               "<title>CULTURA COFFEE — прайс (светлая версия)</title>", 1)
-        LIGHT_OUT.write_text(light, encoding="utf-8")
-        print(f"light.html собран: {len(light)} символов")
+        out[LIGHT_OUT] = light
+    out[COPY_OUT] = base
+    if STANDALONE_OUT.exists():
+        out[STANDALONE_OUT] = bundle_standalone(base, STANDALONE_OUT.read_text(encoding="utf-8"))
+    return out, products
+
+
+def lint(products):
+    """Явные ошибки в ценах — то, что глазами легко пропустить."""
+    errors = []
+    packs = {}                   # (раздел, позиция без фасовки) -> {фасовка: цена}
+    for p in products:
+        if p["price"] <= 0:
+            errors.append(f"{p['sku']}: цена {p['price']}")
+        tiers = p.get("tiers")
+        if tiers and any(a < b for a, b in zip(tiers, tiers[1:])):
+            errors.append(f"{p['sku']}: ступени опта должны идти по убыванию, а тут {tiers}")
+        m = re.fullmatch(rf"(.+)-{re.escape(slug(p['unit']))}(-\d+)?", p["sku"])
+        if m:
+            packs.setdefault((p["slide"], m.group(1) + (m.group(2) or "")), {})[p["unit"]] = p
+    for units in packs.values():
+        for small, big in (("250 г", "1 кг"), ("200 г", "500 г"), ("100 г", "500 г")):
+            if small in units and big in units and units[big]["price"] <= units[small]["price"]:
+                errors.append(f"{units[big]['sku']}: {big} ({units[big]['price']} ₽) не дороже"
+                              f" {small} ({units[small]['price']} ₽)")
+    return errors
+
+
+def check(outputs, products) -> int:
+    stale = [p.name for p, text in outputs.items()
+             if not p.exists() or p.read_text(encoding="utf-8") != text]
+    errors = lint(products)
+    for name in stale:
+        print(f"❌ {name} не совпадает со сборкой — запустите python3 build.py")
+    for e in errors:
+        print(f"❌ {e}")
+    if not stale and not errors:
+        print(f"✅ все {len(outputs)} файлов совпадают со сборкой, позиций: {len(products)},"
+              f" ошибок в ценах нет")
+    return 1 if stale or errors else 0
+
+
+def main():
+    with_cart = "--no-cart" not in sys.argv
+    outputs, products = render(with_cart)
+    if "--check" in sys.argv:
+        sys.exit(check(outputs, products))
+
+    for path, text in outputs.items():
+        path.write_text(text, encoding="utf-8")
+    print(f"index.html собран: {len(outputs[OUT])} символов, позиций: {len(products)}")
+    if LIGHT_OUT in outputs:
+        print(f"light.html собран: {len(outputs[LIGHT_OUT])} символов")
+    for path in (COPY_OUT, STANDALONE_OUT):
+        if path in outputs:
+            print(f"{path.name} обновлён")
     if products:
         from collections import Counter
         for g, n in Counter(p["group"] for p in products).most_common():
